@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<schema name="main" version="1.0">
+    <types>
+        <fieldType name="pmid" class="solr.StrField" indexed="true" stored="true" multiValued="false"  required="true"/>
+
+        <fieldType name="date" class="solr.TrieDateField" indexed="true" stored="true"/>
+
+        <fieldType name="journal" class="solr.TextField" indexed="true" stored="true" multiValued="false"/>
+
+        <fieldType name="authors" class="solr.TextField" indexed="true" stored="true" multiValued="true">
+            <analyzer type="index">
+                <!--<charFilter class="solr.PatternReplaceCharFilterFactory" pattern="<sub>" replacement=""/>-->
+                <tokenizer class="solr.StandardTokenizerFactory"/>
+                <filter class="solr.HyphenatedWordsFilterFactory"/>
+                <filter class="solr.ASCIIFoldingFilterFactory"/>
+            </analyzer>
+            <analyzer type="query">
+                <tokenizer class="solr.StandardTokenizerFactory"/>
+                <filter class="solr.HyphenatedWordsFilterFactory"/>
+                <filter class="solr.ASCIIFoldingFilterFactory"/>
+            </analyzer>
+        </fieldType>
+
+        <fieldType name="text" class="solr.TextField" indexed="true" stored="true" multiValued="false" omitNorms="false"
+                   termVectors="true" termPositions="true">
+              <analyzer type="index">
+                <tokenizer class="solr.StandardTokenizerFactory"/>
+                <filter class="solr.HyphenatedWordsFilterFactory"/>
+                <filter class="solr.LowerCaseFilterFactory"/>
+                <filter class="solr.ASCIIFoldingFilterFactory"/>
+              </analyzer>
+              <analyzer type="query">
+                <tokenizer class="solr.StandardTokenizerFactory"/>
+                <filter class="solr.LowerCaseFilterFactory"/>
+                <filter class="solr.ASCIIFoldingFilterFactory"/>
+              </analyzer>
+        </fieldType>
+
+        <fieldType name="all_text" class="solr.TextField" indexed="true" stored="true" multiValued="true" omitNorms="false"
+                   termVectors="true" termPositions="true">
+              <analyzer type="index">
+                <tokenizer class="solr.StandardTokenizerFactory"/>
+                <filter class="solr.HyphenatedWordsFilterFactory"/>
+                <filter class="solr.LowerCaseFilterFactory"/>
+                <filter class="solr.ASCIIFoldingFilterFactory"/>
+              </analyzer>
+              <analyzer type="query">
+                <tokenizer class="solr.StandardTokenizerFactory"/>
+                <filter class="solr.LowerCaseFilterFactory"/>
+                <filter class="solr.ASCIIFoldingFilterFactory"/>
+              </analyzer>
+        </fieldType>
+    </types>
+
+    <fields>
+        <field name="pmid" type="pmid"/>
+        <field name="title" type="text"/>
+        <field name="journal" type="journal"/>
+        <field name="date" type="date"/>
+        <field name="authors" type="authors"/>
+
+        <field name="abstract" type="text"/>
+        <field name="intro-results" type="text"/>
+        <field name="discussion-conclusion" type="text"/>
+
+        <field name="query" type="all_text"/>
+        <field name="full_text" type="all_text"/>
+
+        <!--todo: dynamic fields-->
+
+    </fields>
+
+    <uniqueKey>pmid</uniqueKey>
+
+    <solrQueryParser defaultOperator="AND"/>
+
+    <!--todo: query parser default operator-->
+    <copyField source="abstract" dest="query"/>
+    <copyField source="title" dest="query"/>
+
+    <copyField source="title" dest="full_text"/>
+    <copyField source="abstract" dest="full_text"/>
+    <copyField source="intro-results" dest="full_text"/>
+    <copyField source="discussion-conclusion" dest="full_text"/>
+
+</schema>

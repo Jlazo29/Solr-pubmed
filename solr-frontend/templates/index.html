@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>GSC Query</title>
+    <!--framework css-->
+    <link rel="stylesheet" href="{{ url_for('.static', filename='css/reuters.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/tooltipster.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/tooltipster-noir.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/jquery-ui.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/jquery-ui.structure.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='font-awesome/css/font-awesome.min.css') }}" />
+
+  <!--JQuery libraries-->
+    <!--<script src="{{ url_for('.static', filename='js/libs/jquery-1.10.2.min.js') }}"></script> Compressed version-->
+    <script src="{{ url_for('.static', filename='js/libs/jquery-1.11.2.js') }}"></script> <!--Expanded version -->
+    <script src="{{ url_for('.static', filename='js/jquery-ui.js') }}"></script>
+    <script src="{{ url_for('.static', filename='js/jquery.tooltipster.min.js') }}"></script>
+    <script src="{{url_for('.static', filename='js/d3.js') }}"></script>
+  <!--Core Javascripts-->
+    <script src="{{ url_for('.static', filename='Abstract/reuters.js') }}"></script>
+    <script src="{{ url_for('.static', filename='Abstract/Core.js') }}"></script>
+    <script src="{{ url_for('.static', filename='Abstract/AbstractManager.js') }}"></script>
+    <script src="{{ url_for('.static', filename='Abstract/Manager.jquery.js') }}"></script>
+    <script src="{{ url_for('.static', filename='Abstract/Parameter.js') }}"></script>
+    <script src="{{ url_for('.static', filename='Abstract/ParameterStore.js') }}"></script>
+    <script src="{{ url_for('.static', filename='Abstract/AbstractWidget.js') }}"></script>
+    <script src="{{ url_for('.static', filename='Abstract/AbstractFacetWidget.js') }}"></script>
+    <script src="{{ url_for('.static', filename='Abstract/AbstractTextWidget.js') }}"></script>
+    <!--Widget Javascripts-->
+    <script src="{{ url_for('.static', filename='Widgets/ResultWidget.js') }}"></script>
+    <script src="{{ url_for('.static', filename='Widgets/PagerWidget.js') }}"></script>
+    <script src="{{ url_for('.static', filename='Widgets/CurrentSearchWidget.js') }}"></script>
+    <script src="{{ url_for('.static', filename='Widgets/TagcloudWidget.js') }}"></script>
+    <script src="{{ url_for('.static', filename='Widgets/TextWidget.js') }}"></script>
+    <script src="{{ url_for('.static', filename='Widgets/TooltipWidget.js') }}"></script>
+    <!--<script src="{{ url_for('.static', filename='Widgets/AutocompleteWidget.7.0.js') }}"></script>-->
+    <script src="{{ url_for('.static', filename='Widgets/ClustersWidget.js') }}"></script>
+    <!--<script src="{{ url_for('.static', filename='Widgets/DateWidget.js') }}"></script>-->
+
+</head>
+<body id="general">
+
+<div class="header">
+  <div id="header-left">
+    <form id="query-options">
+      <div><label><input id="full_text" type="checkbox" name="query"> Full Text Search</label></div>
+    </form>
+<!--Home button here-->
+  </div>
+  <div id="header-middle">
+    <p>Search</p> <!--  <small>(press ESC to close suggestions)</small> -->
+    <div id="search">
+     <input id="search-box" type="text" autocomplete="off">
+    </div>
+  </div>
+  <div id="header-right">
+    <button id="changelog">Changelog</button>
+  </div>
+</div>
+
+  <div id="sidebar">
+    <h2>Current Selection</h2>
+    <ul class="fa-ul" id="selection"></ul>
+
+    <div id="tabs">
+      <ul>
+        <li id="tab1"><a href="#tab-tagcloud">TagCloud</a></li>
+        <li id="tab2"><a href="#tab-clusters">Clusters</a></li>
+      </ul>
+      <div id="tab-tagcloud">
+        <h3 class="sidebar-title" >By Journal Title</h3>
+        <div class="tagcloud" id="journal"></div>
+        <h3 class="sidebar-title">By Date</h3>
+        <div class="tagcloud" id="date"></div>
+        <div id="calendar">Date</div>
+          <!--<h3 class="sidebar-title">MeSH Heading List</h3>-->
+          <!--<div class="tagcloud" id="mesh_term"></div>-->
+      </div>
+      <div id="tab-clusters">
+        <div id="clusters"></div>
+      </div>
+    </div>
+
+    <div class="clear"></div>
+  </div>
+
+  <div id="response">
+    <div id="result">
+      <div class="navigation">
+        <ul class="pager"></ul>
+      </div>
+      <div id="docs"></div>
+      <div class="navigation">
+      <ul class="pager"></ul>
+      </div>
+    </div>
+    <div id="no_result">
+    </div>
+  </div>
+
+  <div class="clear"></div>
+
+<script>
+    $(function() {
+        $( "#tabs" ).tabs();
+        $( "#changelog" ).button();
+    });
+  var content = $('<pre class="align-center">-----Changelog-----</pre>');
+  content = content.add($('<ul><b>Week 7 (Feb 16 to 20): </b></ul> ' +
+  '<li>Fixed long abstracts not being handled correctly, as well adjusting the amount of overflow text and authors to show. </li>' +
+  '<li>Added Tooltipster, a small interactive tooltip plugin (eg: this changelog), selecting a specific document will show additional information and what facets it belongs to.</li>' +
+  '<li>Fixed a serious crash involving making a request to Solr that yields no documents (now an error handling message prompts). </li>' +
+  '<li>Fully integrated AJAX Solr, queries are now done asynchronously allowing dynamic features such as current search manipulation and suggested terms on the fly. </li>' +
+  '<ul><b>Week 8 (Feb 23 to 27)</b></ul>' +
+  '<li>Fixed some CSS issues regarding tooltip Widget.</li>' +
+  '<li>Reworked the click handler in all Widgets, requests sent to Solr are now dependant on the Widget source.</li>' +
+  '<li>Reworked pagination: it now follows the current page and adjusts accordingly. </li>' +
+  '<li>Added the clustering component (separate widget: ClustersWidget) this works as a separate request just after the initial documents arrive.</li>' +
+  '<ul><b>Week 9 (Mar 2 to 6): </b></ul>' +
+  '<li>Added a D3 visual clustering component, rendering the clusters as a force directed node graph</li>' +
+  '<li>Added a substantial amount of interactivity to the cluster component, this includes being able to drag and move nodes, select graph clusters via folders or clicking them. ' +
+  'And finally, a normalize function which converts all the nodes into a fixed grid for better readability.</li>' +
+  '<ul><b>Week 10 (Mar 10 to 13): </b></ul>' +
+  '<li>Project cleanup: removed unnecessary python dependencies. On a side note: if we only use SolrJ for indexing and AJAX for requests, do we really need Pysolr?</li>' +
+  '<li>Fully reworked Frontend CSS: Removed Groundworks CSS. We only need JQuery and JQuery UI for all the CSS effects anyway.</li>' +
+  '<li>Added some customization on query time regarding amount of docs to return/cluster and some further clustering tweaking which affect quality of clusters.</li>'));
+
+  var $changelog = $('#changelog');
+  $changelog.tooltipster({
+    minWidth: 500,
+    maxWidth: 500,
+    content: content,
+    interactive: true,
+    trigger: 'click'
+  })
+</script>
+</body>
+</html>

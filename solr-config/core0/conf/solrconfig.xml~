@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config>
+    <luceneMatchVersion>4.10.0</luceneMatchVersion>
+
+    <lib dir="../lib/" regex=".*\.jar" />
+    <lib dir="../dist/" regex="solr-clustering-\d.*\.jar" />
+
+    <updateRequestProcessorChain name="uuid">
+        <processor class="solr.UUIDUpdateProcessorFactory">
+            <str name="fieldName">id</str>
+        </processor>
+        <processor class="solr.RunUpdateProcessorFactory"/>
+    </updateRequestProcessorChain>
+
+    <requestDispatcher handleSelect="false">
+        <requestParsers enableRemoteStreaming="true" multipartUploadLimitInKB="2048000" />
+        <httpCaching never304="true"/>
+    </requestDispatcher>
+
+    <updateHandler class="solr.DirectUpdateHandler2">
+        <autoSoftCommit>
+            <maxTime>${solr.autoSoftCommit.maxTime:-1}</maxTime>
+        </autoSoftCommit>
+    </updateHandler>
+
+    <!-- ping/healthcheck -->
+    <requestHandler name="/admin/ping" class="solr.PingRequestHandler">
+        <lst name="invariants">
+            <str name="q">solrpingquery</str>
+        </lst>
+        <lst name="defaults">
+            <str name="echoParams">all</str>
+        </lst>
+    </requestHandler>
+
+    <searchComponent class="solr.HighlightComponent" name="highlight">
+        <highlighting>
+            <!-- Configure the standard formatter -->
+            <formatter name="html"
+                       default="true"
+                       class="solr.highlight.HtmlFormatter">
+                <lst name="defaults">
+                    <str name="hl.simple.pre"><![CDATA[<mark>]]></str>
+                    <str name="hl.simple.post"><![CDATA[</mark>]]></str>
+                </lst>
+            </formatter>
+
+            <!-- Configure the standard encoder -->
+            <encoder name="html"
+                     class="solr.highlight.HtmlEncoder"/>
+        </highlighting>
+    </searchComponent>
+
+    <requestHandler name="/select" class="solr.SearchHandler" default="true">
+        <!-- default values for query parameters can be specified, these
+             will be overridden by parameters in the request
+          -->
+        <lst name="defaults">
+            <str name="echoParams">explicit</str>
+            <int name="rows">50</int>
+
+            <!--highlighting defaults-->
+            <str name="hl">on</str>
+            <str name="hl.fl">all_queries</str>
+
+            <!--faceting defaults-->
+            <!--<str name="facet">on</str>-->
+            <!--<str name="facet.field">mesh_term</str>-->
+            <!--<str name="facet.field">gene_symbol_list</str>-->
+            <!--<str name="facet.field">journal_title</str>>-->
+
+            <!--default search field-->
+            <str name="df">all_queries</str>
+        </lst>
+    </requestHandler>
+
+    <requestHandler name="/clustering" class="solr.SearchHandler">
+          <lst name="defaults">
+            <bool name="clustering">true</bool>
+            <bool name="clustering.results">true</bool>
+
+        <!--<bool name="clustering.collection">true</bool>-->
+         
+            <!-- Logical field to physical field mapping. -->
+            <str name="carrot.title">article_title</str>
+            <str name="carrot.snippet">abstract_text</str>
+         
+            <str name="rows">100</str>
+            <str name="fl">*,score</str>
+
+            <!--default search field-->
+            <str name="df">abstract_text</str>
+          </lst>
+         
+          <!-- Append clustering at the end of the list of search components. -->
+          <arr name="last-components">
+            <str>clustering</str>
+          </arr>
+    </requestHandler>
+
+    <requestHandler name="/admin/"
+                    class="solr.admin.AdminHandlers" />
+
+    <searchComponent name="clustering" class="solr.clustering.ClusteringComponent">
+          <!-- Lingo clustering algorithm -->
+          <lst name="engine">
+            <str name="name">lingo</str>
+            <str name="carrot.algorithm">org.carrot2.clustering.lingo.LingoClusteringAlgorithm</str>
+            <str name="carrot.resourcesDir">clustering/carrot2</str>
+          </lst>
+
+    </searchComponent>
+
+</config>

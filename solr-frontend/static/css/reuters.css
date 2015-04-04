@@ -1,0 +1,284 @@
+
+body#general {
+  background: #e9eeff url(../images/blue-gloss.png) repeat-x;
+  color: #333;
+  font-size: 13px;
+  font-family: quicksand,Helvetica,Arial,Geneva,sans-serif;
+}
+p{
+  margin: 0;
+}
+
+a {
+  color: #6998f0;
+  text-decoration: none;
+}
+a:hover{
+  text-decoration: underline;
+
+}
+.clear {
+  clear: both;
+}
+
+/* header */
+.header {
+  height: 90px;
+}
+#header-left{
+  width: 20%;
+  float: left;
+}
+#query-options{
+  margin-top: 10%;
+  float: right;
+}
+#header-middle {
+  width: 50%;
+  float: left;
+  font-size: 20px;
+  margin-bottom: 8px;
+  margin-left: 20px;
+  margin-top: 10px;
+}
+#search-box {
+  width: 70%;
+  height: 18px;
+  font-family: source-sans-pro,Helvetica,Arial,Geneva,sans-serif;
+}
+#search-help {
+  font-size: 85%;
+}
+#header-right {
+  width: 25%
+  float: left;
+}
+
+/* right */
+#response{
+  position: relative;
+    width: 50%;
+    float: left;
+}
+#result a {
+  margin-right: 5px;
+}
+#no_result{
+  margin-left: 5px;
+  font-size: 130%;
+}
+.navigation {
+  margin-top: 10px;
+}
+.pager,
+#pager-header {
+  display: inline;
+}
+.pager li,
+.links li {
+  display: inline;
+}
+#docs {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-top:    1px solid #000;
+  border-bottom: 1px solid #000;
+}
+.title h2{
+  margin-bottom: 2px;
+}
+.document{
+  margin-bottom: 5px;
+  margin-left: 30px;
+  border-left: 1px dotted #3d5da0;
+  padding-left: 0.5em;
+}
+.rank{
+  position: absolute;
+  left: -5px;
+  width: 1.8em;
+  font-weight: bold;
+  color: #6492a0;
+  text-align: right;
+}
+.fa.fa-info-circle{
+  color: #0078ae;
+  cursor: help;
+
+}
+.links{
+  font-size: 90%;
+  margin-bottom: 10px;
+}
+a.author-link, a.author-link:active, a.author-link:visited, a.author-link:hover {
+  color: mediumseagreen;
+}
+.document p {
+  line-height: 140%;
+  overflow: hidden;
+  text-align: justify;
+}
+.external{
+  margin: 5px;
+}
+/* left */
+#sidebar{
+    width: 30%;
+    float: left;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+#selection{
+  width: 45%;
+}
+#tab-tagcloud{
+  height: 1000px
+}
+#tab-clusters{
+  padding:0;
+}
+.sidebar-title{
+  text-decoration: underline;
+  padding-top: 10px;
+  margin-top: 0;
+  margin-bottom: 5px;
+  clear: left;
+}
+.tagcloud {
+  display: block;
+}
+.tagcloud_item {
+  line-height: 20px;
+  font-weight: bold;
+  color: #77b8f0;
+  margin-right: 10px;
+  margin-bottom: 5px;
+  float:left;
+  display: block;
+}
+#calendar{
+  clear: left;
+}
+
+/* tagcloud */
+
+a.tagcloud_size_0 {
+font-size: 80%;
+}
+a.tagcloud_size_1 {
+font-size: 85%;
+}
+a.tagcloud_size_2 {
+font-size: 93%;
+}
+a.tagcloud_size_3 {
+font-size: 100%;
+}
+a.tagcloud_size_4 {
+font-size: 110%;
+}
+a.tagcloud_size_5 {
+font-size: 130%;
+}
+a.tagcloud_size_6 {
+font-size: 150%;
+}
+a.tagcloud_size_7 {
+font-size: 160%
+}
+a.tagcloud_size_8 {
+font-size: 168%;
+}
+a.tagcloud_size_9 {
+font-size: 175%;
+}
+a.tagcloud_size_10 {
+font-size: 180%;
+}
+
+/* others */
+
+#cluster-svg{
+  margin: 0;
+  padding: 0;
+}
+.cluster-options{
+  margin-top: 15px;
+  margin-bottom: 30px;
+}
+#text_rows{
+  margin-top: 0;
+  margin-bottom: 10px;
+  float:left;
+  width: 35%;
+}
+#text_count{
+  clear: left;
+  margin-top: 0;
+  margin-bottom: 10px;
+  float:left;
+  width: 35%;
+}
+.cluster-text {
+  font-size: 110%;
+}
+.link {
+  stroke: #aaa7b4;
+  stroke-width: 0.5px;
+}
+.nucleus{
+  cursor: move;
+  fill: #50c1cc;
+  stroke: #000;
+  stroke-width: 2px;
+}
+.node{
+  cursor: move;
+  fill: #50c1cc;
+}
+.tombstone{
+  display: none;
+}
+.node.selected {
+  fill: #08ff7e;
+}
+.nucleus.selected {
+  fill: #08ff7e;
+}
+
+.tooltip_title{
+  font-weight: 600;
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  font-size: 130%;
+}
+
+table {
+  width: 100%;
+  font-size: 80%;
+}
+th{
+  font-size: 150%;
+}
+td{
+  height: 120%;
+  width: 16.2%;
+  vertical-align: middle;
+}
+
+.bar rect {
+  fill: steelblue;
+  shape-rendering: crispEdges;
+}
+
+.bar text {
+  fill: #fff;
+}
+
+.axis path, .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
