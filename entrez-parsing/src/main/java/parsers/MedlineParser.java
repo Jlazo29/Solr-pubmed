@@ -5,6 +5,9 @@ import parsers.medline.*;
 import org.apache.solr.common.SolrInputDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import parsers.medline.Date;
+import parsers.medline.ObjectFactory;
+import parsers.medline.Suffix;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -13,6 +16,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -34,6 +39,9 @@ public class MedlineParser {
 
     public MedlineCitationSet unmarshall(InputStream inputStream) throws JAXBException {
         return (MedlineCitationSet) unmarshaller.unmarshal(inputStream);
+    }
+    public MedlineCitationSet unmarshallPath(Path path)throws Exception{
+        return (parsers.medline.MedlineCitationSet) unmarshaller.unmarshal(Files.newInputStream(path));
     }
 
     public Collection<SolrInputDocument> mapToSolrInputDocumentCollection(MedlineCitationSet citationSet) {
@@ -78,13 +86,12 @@ public class MedlineParser {
         document.addField(name, result);
     }
 
-    private void addDateField(SolrInputDocument document, String name, DateCreated date) {
+    private void addDateField(SolrInputDocument document, String name, Date date) {
         if (date != null) {
             try {
-                document.addField(name, date.getDate());
-            } catch (Exception e) {
-                System.out.println("Could not parse date!");
-                e.printStackTrace();
+                document.addField(name, date.getConvertedDate());
+            } catch (ParseException e) {
+                logger.error(String.format("Failed to add date to field %s", name), e);
             }
         }
     }

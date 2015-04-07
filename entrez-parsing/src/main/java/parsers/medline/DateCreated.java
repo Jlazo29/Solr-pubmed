@@ -9,9 +9,6 @@
 package parsers.medline;
 
 import javax.xml.bind.annotation.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.TimeZone;
 
 
 /**
@@ -24,7 +21,7 @@ import java.util.TimeZone;
     "day"
 })
 @XmlRootElement(name = "DateCreated")
-public class DateCreated{
+public class DateCreated extends DateBase {
 
     @XmlElement(name = "Year", required = true)
     protected Year year;
@@ -32,31 +29,6 @@ public class DateCreated{
     protected Month month;
     @XmlElement(name = "Day", required = true)
     protected Day day;
-
-    public java.util.Date getDate() throws ParseException {
-        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-        String dayStr = "00",
-                monthStr = "00",
-                yearStr = "2000";
-            if (day != null) {
-                dayStr = day.getvalue();
-            }
-
-            if (month != null){
-                monthStr = month.getvalue();
-                monthStr = monthStr.replaceAll("\n", "");
-                monthStr = monthStr.replaceAll("\t", "");
-            }
-            if (year != null){
-                yearStr = year.getvalue();
-                yearStr = yearStr.replaceAll("\n", "");
-                yearStr = yearStr.replaceAll("\t", "");
-            }
-
-        String dateInString = String.format("%s-%s-%s", dayStr, monthStr, yearStr);
-        return formatter.parse(dateInString);
-    }
 
     /**
      * Gets the value of the year property.

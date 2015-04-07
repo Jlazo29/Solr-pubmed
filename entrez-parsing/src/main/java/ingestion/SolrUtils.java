@@ -2,6 +2,8 @@ package ingestion;
 
 import com.google.common.io.Files;
 import com.google.common.io.Resources;
+import parsers.PMC.Article;
+import parsers.PMCParser;
 import parsers.medline.MedlineCitationSet;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.solr.common.SolrInputDocument;
@@ -18,6 +20,7 @@ public class  SolrUtils {
     public static SolrClient client;
     public static Collection<SolrInputDocument> collection;
     public static MedlineParser medlineParser;
+    public static PMCParser pmcParser;
     public static Integer count;
 
     public static void deleteRecords() throws Exception {
@@ -28,29 +31,34 @@ public class  SolrUtils {
 
     public static void importMedline(File f) {
         try{
-            MedlineParser medlineParser = new MedlineParser();
             MedlineCitationSet set = medlineParser.unmarshall(f);
-            Collection<SolrInputDocument> collection = medlineParser.mapToSolrInputDocumentCollection(set);
+            collection = medlineParser.mapToSolrInputDocumentCollection(set);
             count += collection.size();
             client.update(collection);
         }catch(Exception e){
             System.out.println("Could not index collection at file " + f.getName() + " at " + f.getAbsolutePath());
             e.printStackTrace();
         }
-
-
     }
 
 
-    public static void importPubmed() throws Exception {
-        BasicConfigurator.configure();
-        SolrClient client = new SolrClient(false);
+    public static void importPMC(File f) throws Exception {
+        try{
+            Article article = pmcParser.unmarshall(f);
+            String articleType = article.getArticleType();
+            if (articleType.equals("case-report") || articleType.equals("research-article")) {
+                SolrInputDocument document = pmcParser.mapToSolrInputDocument(article);
+                count++;
+                collection.add(document);
+            }
+            else{
+                System.out.println("This file: " + f.getName() + " is not a research article or a case-report, it is a " + article.getArticleType());
+            }
 
-        PubMedParser pubMedParser = new PubMedParser();
-        PubmedArticleSet set = pubMedParser.unmarshall(Resources.getResource(SAMPLE_FILE_2).openStream());
-        Collection<SolrInputDocument> collection = pubMedParser.mapToSolrInputDocumentCollection(set);
-        client.update(collection);
-
+        }catch(Exception e){
+            System.out.println("Could not index file " + f.getName() + " at " + f.getAbsolutePath());
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -64,6 +72,7 @@ public class  SolrUtils {
     public static void main(String[] args) throws Exception {
         BasicConfigurator.configure();
         client = new SolrClient(false);
+        collection = new ArrayList<>();
         long startTime = System.nanoTime();
         count = 0;
 
@@ -79,6 +88,17 @@ public class  SolrUtils {
                 }
             }
         }
+        if(args[0].equals("pmc")){
+            pmcParser = new PMCParser();
+            File rootDir = new File(args[1]);
+            for (File f : Files.fileTreeTraverser().postOrderTraversal(rootDir)) {
+                if (f.isFile()){
+                    importPMC(f);
+                }
+            }
+            client.update(collection);
+        }
+
 
         long elapsedTime = System.nanoTime() - startTime;
         String time = String.valueOf(elapsedTime / 1000000000.0 );
@@ -86,4 +106,4 @@ public class  SolrUtils {
 
     }
 
- }
+}

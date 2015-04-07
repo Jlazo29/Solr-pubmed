@@ -48,7 +48,7 @@ public class PubMedParser {
     public SolrInputDocument mapToSolrInputDocument(PubmedArticle article) {
         SolrInputDocument document = new SolrInputDocument();
         MedlineCitation citation = article.getMedlineCitation();
-        addField(document, "id", citation.getPMID().getvalue());
+        addField(document, "pmid", citation.getPMID().getvalue());
         addDateField(document, "date", citation.getDateCreated());
 //        addDateField(document, "date_revised", citation.getDateRevised());
         addField(document, "title", citation.getArticle().getArticleTitle());
