@@ -48,7 +48,7 @@ public class PMCParser {
         message = "!ERROR: ";
         SolrInputDocument document = new SolrInputDocument();
 
-        addPMID(document, "pmid", article.getFront().getArticleMeta().getArticleId());
+        String id = addPMID(document, "pmid", article.getFront().getArticleMeta().getArticleId());
         String title = addTitle(document, "title", article.getFront().getArticleMeta().getTitleGroup());
         addJournal(document, "journal", article.getFront().getJournalMeta());
         if (article.getFront().getArticleMeta().getHistory() != null){
@@ -67,24 +67,28 @@ public class PMCParser {
             return document;
         }
         else{
-            message += "Title: " + title + ". ";
+            message += "Title: " + title + ". " + id;
             System.out.println(message);
             throw new Exception();
         }
     }
 
-    public void addPMID(SolrInputDocument document, String name, List<ArticleId> IDs){
+    public String addPMID(SolrInputDocument document, String name, List<ArticleId> IDs){
+        String result = "";
         for (ArticleId id : IDs){
             if (id.getPubIdType().equals("pmid")){
+                result = id.getContent();
                 document.addField(name, id.getContent());
                 break;
             }
             else{
                 if(id.getPubIdType().equals("pmc")){
+                    result = id.getContent();
                     document.addField(name, "PMC" + id.getContent());
                 }
             }
         }
+        return result;
     }
 
     public void addJournal(SolrInputDocument document, String name, JournalMeta JM){
