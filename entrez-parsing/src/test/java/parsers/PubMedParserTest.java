@@ -50,35 +50,11 @@ public class PubMedParserTest {
     }
 
     @Test
-    public void testToInputDocument() throws Exception {
-        SolrInputDocument inputDocument = ingestion.mapToSolrInputDocument(generateMockCitation());
-
-        SolrInputField field = inputDocument.getField("date_created");
-        assertTrue(field.getValueCount() > 0);
-
-        field = inputDocument.getField("journal_title");
-        assertEquals("test", field.getValue());
-    }
-
-    @Test
     public void testUnmarshallSetsJournalTitle() throws Exception {
         PubmedArticleSet set = ingestion.unmarshall(testFile);
         PubmedArticle article = set.getPubmedArticle().get(0);
         assertEquals("Journal of the National Comprehensive Cancer Network : JNCCN", article.getMedlineCitation().getArticle().getJournal().getTitle());
     }
-
-    @Test
-    public void testToInputSetsAuthorList() throws Exception {
-        PubmedArticleSet set = ingestion.unmarshall(testFile);
-        PubmedArticle article = set.getPubmedArticle().get(0);
-        SolrInputDocument document = ingestion.mapToSolrInputDocument(article);
-        SolrInputField field = document.getField("author_list");
-        Collection<java.lang.Object> values = field.getValues();
-        ArrayList expected = new ArrayList<>();
-        Collections.addAll(expected, new String[]{"A Lipton", "R Uzzo", "RJ Amato", "GK Ellis", "B Hakimian", "GD Roodman", "MR Smith"});
-        assertTrue(values.containsAll(expected));
-    }
-
 
     @Test
     public void testUnmarshallCollection() throws Exception {
