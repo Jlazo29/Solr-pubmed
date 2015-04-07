@@ -58,17 +58,6 @@ public class MedlineParserTest {
     }
 
     @Test
-    public void testToInputDocument() throws Exception {
-        SolrInputDocument inputDocument = ingestion.mapToSolrInputDocument(generateMockCitation());
-
-        SolrInputField field = inputDocument.getField("date_created");
-        assertTrue(field.getValueCount() > 0);
-
-        field = inputDocument.getField("journal_title");
-        assertEquals("test", field.getValue());
-    }
-
-    @Test
     public void testToInputDocumentCollection() throws Exception {
         int collectionSize = 5;
         List<MedlineCitation> medlineCitations = new ArrayList<>(collectionSize);
