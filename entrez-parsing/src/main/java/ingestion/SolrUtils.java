@@ -1,5 +1,6 @@
 package ingestion;
 
+import com.google.common.collect.TreeTraverser;
 import com.google.common.io.Files;
 import com.google.common.io.Resources;
 import parsers.PMC.Article;
@@ -50,6 +51,7 @@ public class  SolrUtils {
                 SolrInputDocument document = pmcParser.mapToSolrInputDocument(article);
                 count++;
                 collection.add(document);
+                System.out.println("Successfully parsed" + f.getName());
             }
             else{
                 System.out.println("This file: " + f.getName() + " is not a research article or a case-report, it is a " + article.getArticleType());
@@ -91,7 +93,12 @@ public class  SolrUtils {
         if(args[0].equals("pmc")){
             pmcParser = new PMCParser();
             File rootDir = new File(args[1]);
-            for (File f : Files.fileTreeTraverser().postOrderTraversal(rootDir)) {
+            TreeTraverser<File> tree = Files.fileTreeTraverser();
+            for (File f : tree.postOrderTraversal(rootDir)) {
+                if (collection.size() >= 500){ //batches of 500
+                    client.update(collection);
+                    collection.clear();
+                }
                 if (f.isFile()){
                     importPMC(f);
                 }
