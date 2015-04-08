@@ -64,8 +64,8 @@ public class MedlineParser {
         if (citation.getArticle().getAbstract() != null) {
             addAbstractText(document, "abstract", citation.getArticle().getAbstract().getAbstractText());
         }
-        System.out.println(document);
-        return document;
+//        System.out.println(document);
+        return document ;
     }
 
     private void addAuthors(SolrInputDocument document, String name, List<Author> authors) {

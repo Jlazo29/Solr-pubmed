@@ -70,6 +70,7 @@ AjaxSolr.TagcloudWidget = AjaxSolr.AbstractFacetWidget.extend({
   tagClick: function(facet, field, manager){
     var self = this;
     return function(){
+      facet = facet.replace("&", "%26");
       var result = field +  ':"' + facet + '"';
       if (manager.curr[field][facet] != undefined){ //delete selection
         manager.curr[field][facet] = undefined;

@@ -66,6 +66,7 @@ AjaxSolr.CurrentSearchWidget = AjaxSolr.AbstractWidget.extend({
 
   formatFacet: function (facet){
     var result = facet.replace(/_/g, " ");
+    result = result.replace("%26", "&");
     result = result.replace(/:/g, ": ");
     result = result.replace(/\+/g, " ");
     return result;

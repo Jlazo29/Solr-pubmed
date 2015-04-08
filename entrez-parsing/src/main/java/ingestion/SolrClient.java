@@ -16,7 +16,7 @@ import java.util.Collection;
 public class SolrClient {
     private static final String BASE_URL = "http://localhost:8983/core0";
     private SolrServer solrServer;
-    private final Logger logger;
+//    private final Logger logger;
 
     public SolrClient(boolean useConcurrentUpdate) {
         if (useConcurrentUpdate) {
@@ -25,7 +25,7 @@ public class SolrClient {
         } else {
             this.solrServer = new HttpSolrServer(BASE_URL);
         }
-        logger = LoggerFactory.getLogger(SolrClient.class);
+//        logger = LoggerFactory.getLogger(SolrClient.class);
     }
 
     public void update(Collection<SolrInputDocument> documents) {
@@ -33,7 +33,7 @@ public class SolrClient {
             solrServer.add(documents);
             solrServer.commit();
         } catch (SolrServerException | IOException e) {
-            logger.error("Failed to update solr server", e);
+//            logger.error("Failed to update solr server", e);
         }
     }
 

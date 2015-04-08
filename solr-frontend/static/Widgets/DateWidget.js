@@ -7,6 +7,7 @@
 
 
         afterRequest: function (){
+            return;
             var w = $("#general").width() * 0.25;
             // Generate a Bates distribution of 10 random variables.
             var values = this.formatValues(this.manager.response.facet_counts.facet_ranges.date);

@@ -50,6 +50,17 @@ public class PubMedParserTest {
     }
 
     @Test
+    public void testToInputDocument() throws Exception {
+        SolrInputDocument inputDocument = ingestion.mapToSolrInputDocument(generateMockCitation());
+
+        SolrInputField field = inputDocument.getField("date_created");
+        assertTrue(field.getValueCount() > 0);
+
+        field = inputDocument.getField("journal_title");
+        assertEquals("test", field.getValue());
+    }
+
+    @Test
     public void testUnmarshallSetsJournalTitle() throws Exception {
         PubmedArticleSet set = ingestion.unmarshall(testFile);
         PubmedArticle article = set.getPubmedArticle().get(0);
