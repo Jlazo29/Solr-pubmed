@@ -47,11 +47,11 @@ The build artifacts will be installed to your local maven repository (typically 
 
 Starting the Solr Server and Frontend
 -------------
-To run the configured Solr instance on a local Jetty server, use the start.sh script. It accepts one argument only, either "run" or "stop":
+To run the configured Solr instance on a local Jetty server, use the `start.sh script`. It accepts one argument only, either "run" or "stop":
 
     bash start.sh run
 
-Note that the Jetty server will keep running in the background, to terminate it you need to use the sript or run 'mvn jetty:stop' in the solr-config folder.
+Note that the Jetty server will keep running in the background, to terminate it you need to use the sript or run `mvn jetty:stop` in the solr-config folder.
 
 Alternatively, the independant commands to run the solr server are:
 
@@ -70,26 +70,14 @@ Downloading Pubmed and PMC records
 -------------
 To download the Pubmed/PMC files, you can use wget to download them directly from the ftp server:
 
-The script download.sh will facilitate this; running 'bash download.sh pmc' will download the whole pubmed open access subset through wget into the "files" folder. After it finishes, running 'bash download.sh medline' will download the medline subset with the same configuration.
-Each of this downloads is greater than 5GB so the time taken will depend on the download speed. You can also use wget to manually download smaller subsets, opening the script is a good example to start with. 
+The script `download.sh` will facilitate this; running `bash download.sh pmc` will download the whole pubmed open access subset through wget into the "files" folder. After it finishes, running `bash download.sh medline` will download the medline subset with the same configuration.
+Each of this downloads is greater than 5GB so the time taken will depend on the download speed. You can also use wget to manually download smaller subsets, opening this script is a good example to start with. 
 
 Indexing the files
 -------------
-The indexing is done through the main class of ingestion.SolrUtils, inside the entrez-parsing folder. To compile and run it, simply run 'bash index.sh', this script takes 1 mandatory first argument and a optional second argument. The first one is the absolute path to the directory in which the XML files are located (if downloaded through the script they will be located in solr-pubmed/files). The second possible argument is "del" and it tells Solr to delete all the files previous to indexing. 
+The indexing is done through the main class of ingestion.SolrUtils, inside the entrez-parsing folder. To compile and run it, simply run `bash index.sh`, this script takes 1 mandatory first argument and a optional second argument. The first one is the absolute path to the directory in which the XML files are located (if downloaded through the script they will be located in `solr-pubmed/files`). The second possible argument is "del" and it tells Solr to delete all the files previous to indexing. 
 
 Note that the Solr instance needs to be running in order for the indexing to take place, and SolrUtils will only work with XML files, all other files and compressed folders cannot be in the same folder. 
-
-The `solr-frontend` module consists of a lightweight [Flask](http://flask.pocoo.org/) application, which is essentially a thin presentation layer built on the Solr REST interface. The UI provides several features including keyword search, faceted searching, dynamic faceting using document clustering and highlighting. 
-
-If you haven't set up a virtualenv environment already you can run:
-
-    cd solr-pubmed/solr-frontend
-    virtualenv .
-    source bin/activate
-    
-Then install the python packages:
-
-    pip install -r requirements.txt
     
 If you're on Windows using the Anaconda python distribution, you may run into issues installing the MarkupSafe package. If so, you can solve this issue by modifying `cygwinccompiler.py` as desribed here: [http://bugs.python.org/issue21821](http://bugs.python.org/issue21821)
 
