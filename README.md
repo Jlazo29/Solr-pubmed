@@ -28,6 +28,8 @@ Installation
 ---------
 To install the project, go to the scripts folder and run install.sh
 
+    cd solr-pubmed
+    cd scripts
     bash install.sh
 
 Alternatively, you can install them by running maven and pip independently:
