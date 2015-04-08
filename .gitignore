@@ -69,8 +69,6 @@ docs/_build/
 solr/core0/data/
 
 # Solr lib/dist exception
-!solr/dist
-!solr/lib
 ### VirtualEnv template
 # Virtualenv
 # http://iamzed.com/2009/05/07/a-primer-on-virtualenv/
