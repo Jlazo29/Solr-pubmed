@@ -1,6 +1,10 @@
 # Author: Jorge Lazo
 # Purpose: Script to download PMC/medline files from the medline ftp server using wget.
 
+cd ..;
+pwd;
+mkdir files;
+
 if [ $# -eq 0 ]; then
 	echo "	ERROR: No Arguments supplied to script!";
 	echo  "	USAGE: pass either 'pmc' or 'medline' arguments; 
@@ -17,7 +21,7 @@ fi
 
 if [ "$1" = "pmc" ]; 
 then
-	cd ../files;
+	cd files;
 	wget  -erobots=off  "ftp://ftp.ncbi.nlm.nih.gov/pub/pmc/articles.A-B.tar.gz"
 	wget  -erobots=off  "ftp://ftp.ncbi.nlm.nih.gov/pub/pmc/articles.C-H.tar.gz"
 	wget  -erobots=off  "ftp://ftp.ncbi.nlm.nih.gov/pub/pmc/articles.I-N.tar.gz"
@@ -26,7 +30,7 @@ then
 
 elif [ "$1" = "medline" ]; 
 then
-	cd ../files;
-	wget -r --reject "*.md5" ftp://ftp.nlm.nih.gov/nlmdata/.medleasebaseline/zip/
+	cd files;
+	wget -r --reject "*.md5" "ftp://ftp.nlm.nih.gov/nlmdata/.medleasebaseline/zip/"
 
 fi
