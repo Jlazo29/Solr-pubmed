@@ -26,8 +26,9 @@ If you've already cloned the repository and you need to initialize the submodule
 
 Installation
 ---------
-To install the project, go to the scripts folder and run install.sh:
-	'bash install.sh'
+To install the project, go to the scripts folder and run install.sh
+
+    bash install.sh
 
 Alternatively, you can install them by running maven and pip independently:
 
@@ -35,10 +36,11 @@ Alternatively, you can install them by running maven and pip independently:
     	mvn install
 
 and then:
-	cd solr-pubmed/solr-frontend
-    	virtualenv .
-    	source bin/activate
-	pip install -r requirements.txt
+
+    cd solr-pubmed/solr-frontend
+    virtualenv .
+    source bin/activate
+    pip install -r requirements.txt
     
 The build artifacts will be installed to your local maven repository (typically `~/.m2` on Unix systems or `C:\Documents and Settings\{your-username}\.m2` on Windows). This is a one time installation only.
 
@@ -46,18 +48,20 @@ The build artifacts will be installed to your local maven repository (typically 
 Starting the Solr Server and Frontend
 -------------
 To run the configured Solr instance on a local Jetty server, use the start.sh script. It accepts one argument only, either "run" or "stop":
-	'bash start.sh run'
+
+    bash start.sh run
 
 Note that the Jetty server will keep running in the background, to terminate it you need to use the sript or run 'mvn jetty:stop' in the solr-config folder.
 
 Alternatively, the independant commands to run the solr server are:
 
-    	cd solr-pubmed/solr-config
-    	mvn jetty:run-war
+    cd solr-pubmed/solr-config
+    mvn jetty:run-war
 
 While the commands to run the frontend:
-	cd solr-pubmed/solr-frontend
-	python app.py
+
+    cd solr-pubmed/solr-frontend
+    python app.py
 
 The Solr instance will run on [http://localhost:8983/core0/](http://localhost:8983/core0/) by default.
 The Flask server will run on [http://localhost:5000](http://localhost:5000) by default.
