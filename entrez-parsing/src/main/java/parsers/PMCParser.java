@@ -193,6 +193,11 @@ public class PMCParser {
                         result += paragraph.toString();
                     }
                 }
+                if (abs.getSec() != null){
+                    for (Sec section: abs.getSec()){
+                        result += section.getAllText();
+                    }
+                }
             }
         }
         if (!result.equals("")){

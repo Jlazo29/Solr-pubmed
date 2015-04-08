@@ -2,16 +2,12 @@ package ingestion;
 
 import com.google.common.collect.TreeTraverser;
 import com.google.common.io.Files;
-import com.google.common.io.Resources;
 import parsers.PMC.Article;
 import parsers.PMCParser;
 import parsers.medline.MedlineCitationSet;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.solr.common.SolrInputDocument;
 import parsers.MedlineParser;
-import parsers.PubMedParser;
-import parsers.pubmed.PubmedArticleSet;
-
 import java.io.*;
 import java.util.*;
 
