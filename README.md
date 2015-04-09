@@ -33,11 +33,13 @@ To install the project, go to the scripts folder and run install.sh
     bash install.sh
 
 Alternatively, you can install them by running maven and pip independently:
+1)
 
     	cd solr-pubmed
     	mvn install
 
 and then:
+2)
 
     cd solr-pubmed/solr-frontend
     virtualenv .
@@ -56,11 +58,13 @@ To run the configured Solr instance on a local Jetty server, use the `start.sh s
 Note that the Jetty server will keep running in the background, to terminate it you need to use the sript or run `mvn jetty:stop` in the solr-config folder.
 
 Alternatively, the independant commands to run the solr server are:
+1)
 
     cd solr-pubmed/solr-config
     mvn jetty:run-war
 
 While the commands to run the frontend:
+2)\
 
     cd solr-pubmed/solr-frontend
     python app.py
