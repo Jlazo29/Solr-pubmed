@@ -46,7 +46,7 @@ and then:
     source bin/activate
     pip install -r requirements.txt
     
-The build artifacts will be installed to your local maven repository (typically `~/.m2` on Unix systems or `C:\Documents and Settings\{your-username}\.m2` on Windows). This is a one time installation only.
+The build artifacts will be installed to your local maven repository (typically `~/.m2` on Unix systems or `C:\Documents and Settings\{your-username}\.m2` on Windows). *This is a one time installation only.*
 
 
 Starting the Solr Server and Frontend
@@ -76,8 +76,8 @@ Downloading Pubmed and PMC records
 -------------
 To download the Pubmed/PMC files, you can use wget to download them directly from the ftp server:
 
-The script `download.sh` will facilitate this; running `bash download.sh pmc` will download the whole pubmed open access subset through wget into the "files" folder. After it finishes, running `bash download.sh medline` will download the medline subset with the same configuration.
-Each of this downloads is greater than 5GB so the time taken will depend on the download speed. You can also use wget to manually download smaller subsets, opening this script is a good example to start with. 
+The script `download.sh` will facilitate this; running `bash download.sh pmc` will download the whole pubmed open access subset through wget into the "files" folder. After it finishes, running `bash download.sh medline` will download the medline subset with the same configuration. You then need to extract them.
+Both of these bulk downloads are greater than 5GB so the time taken will depend on the download speed. You can also use wget to manually download smaller subsets, opening this script is a good example to start with. 
 
 Indexing the files
 -------------
