@@ -74,7 +74,7 @@
             var clusterOptions = $("<div class='cluster-options'></div>").append(leftOptions).append(rightOptions);
             $(this.target).append(clusterOptions);
 
-            if(clusters.slice(-1)[0].labels[0] == "Other Topics"){clusters.pop();} //Removing other topics
+            if(clusters.slice(-1)[0].labels[0] == "Other Topics" && clusters.length > 1){clusters.pop();} //Removing other topics
 
             var data_nodes = this.nodeify(clusters);
             this.renderNodeGraph(data_nodes);
@@ -182,10 +182,26 @@
 
 
             function tick() {
-                link.attr("x1", function(d) { return d.source.x; })
-                    .attr("y1", function(d) { return d.source.y; })
-                    .attr("x2", function(d) { return d.target.x; })
-                    .attr("y2", function(d) { return d.target.y; });
+                link.attr("x1", function(d) {
+                    if (d.source.x < 8){ return 10;}
+                    if (d.source.x > (width * 1.2)){ return (width * 1.2);}
+                    return d.source.x;
+                })
+                    .attr("y1", function(d) {
+                        if (d.source.y < 8){ return 8;}
+                        if (d.source.y > (height - 10)) {return (height - 10);}
+                        return d.source.y;
+                    })
+                    .attr("x2", function(d) {
+                        if (d.target.x < 8){ return 10;}
+                        if (d.target.x > (width * 1.2)){ return (width * 1.2);}
+                        return d.target.x;
+                    })
+                    .attr("y2", function(d) {
+                        if (d.target.y < 8){ return 8;}
+                        if (d.target.y > (height - 10)) {return (height - 10);}
+                        return d.target.y;
+                    });
 
                 node.attr("transform", function(d) {
                     var d_x = d.x,
