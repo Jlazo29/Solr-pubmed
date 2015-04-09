@@ -69,7 +69,7 @@ public class PMCParser {
         else{
             message += "Title: " + title + ". " + id;
             System.out.println(message);
-            throw new Exception();
+            return null;
         }
     }
 
