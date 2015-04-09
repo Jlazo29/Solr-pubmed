@@ -167,7 +167,8 @@ AjaxSolr.Manager = AjaxSolr.AbstractManager.extend(
         var servlet = "clustering",
             string_query = "q=" + this.store.get("q").val()+ "&",
             query_options = this.store.string(),
-            query = {dataType: 'json'};
+            query = {dataType: 'json'},
+            clusterOptions = this.clusterOptions.rows + this.clusterOptions.baseCount;
 
         for (var i in this.clusterOptions){
           String += this.clusterOptions[i];
@@ -178,7 +179,7 @@ AjaxSolr.Manager = AjaxSolr.AbstractManager.extend(
           query.type = 'POST';
         }
         else {
-          query.url = this.solrUrl + servlet + '?' + string_query + query_options + '&wt=json&json.wrf=?';
+          query.url = this.solrUrl + servlet + '?' + string_query + query_options + clusterOptions + '&wt=json&json.wrf=?';
           console.log(query.url);
         }
         jQuery.ajax(query).success(function(data){
