@@ -47,12 +47,16 @@ public class  SolrUtils {
             try{
                 Article article = pmcParser.unmarshall(f);
                 String articleType = article.getArticleType();
-                tries = 0;
                 if (articleType.equals("case-report") || articleType.equals("research-article")) {
                     SolrInputDocument document = pmcParser.mapToSolrInputDocument(article);
                     count++;
-                    collection.add(document);
-                    System.out.println("Successfully parsed " + f.getName());
+                    if (document != null){
+                        collection.add(document);
+                        System.out.println("Successfully parsed " + f.getName());
+                    }
+                    else{
+                        System.out.println("Could not parse " + f.getName());
+                    }
                 }
                 else{
                     System.out.println("This file: " + f.getName() + " is not a research article or a case-report, it is a " + article.getArticleType());
@@ -73,7 +77,6 @@ public class  SolrUtils {
                 collection = medlineParser.mapToSolrInputDocumentCollection(set);
                 count += collection.size();
                 pmc = false;
-                tries = 0;
                 System.out.println("Successfully parsed collection " + f.getName());
             }catch(Exception e){
                 if (tries > 2){
