@@ -64,7 +64,7 @@ public class  SolrUtils {
             }catch(Exception e){
                 if (tries > 2){
                     e.printStackTrace();
-                    throw new RuntimeException("The file supplied is neither medline or PMC! '" + f.getName() + "' Located at: " + f.getAbsolutePath());
+                    return;
                 }
                 //Try again with medline
                 pmc = false;
@@ -81,7 +81,7 @@ public class  SolrUtils {
             }catch(Exception e){
                 if (tries > 2){
                     e.printStackTrace();
-                    throw new RuntimeException("The file supplied is neither medline or PMC! " + f.getName() + " Located at: " + f.getAbsolutePath());
+                    return;
                 }
                 //try again with pmc
                 pmc = true;
