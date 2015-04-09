@@ -14,7 +14,7 @@ if [ $# -eq 0 ]; then
 				 WARNING: you need at least 50GB of space to download & extract.
 
 		This script downloads the files from the ftp server into the 'files' folder of solr-pubmed,
-		you can just simply use wget to get them, as the script simply runs this and extracts them. 
+		you can just simply use wget to get them, as the script simply runs this. 
 		Note that for the medline baseline access you need a valid license IP access."
 	exit 1;
 fi
