@@ -96,7 +96,7 @@ AjaxSolr.TooltipWidget = AjaxSolr.AbstractFacetWidget.extend({
             lists = lists.append(" | ");
             lists = lists.append($('<a href="#">Date created: ' + this.formatDate(doc.date[0]) + '</a>'));
             lists = lists.append(" | ");
-            lists = lists.append($('<a href="#">' + doc.journal_title + '</a>').click(this.clickHandler(doc.journal[0], "journal", this.manager)));
+            lists = lists.append($('<a href="#">' + doc.journal + '</a>').click(this.clickHandler(doc.journal[0], "journal", this.manager)));
 
             var sub1 = $('');
             var sub2 = sub1;
@@ -141,4 +141,3 @@ AjaxSolr.TooltipWidget = AjaxSolr.AbstractFacetWidget.extend({
 });
 
 })(jQuery);
-
