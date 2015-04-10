@@ -1,163 +1,143 @@
-(function (callback) {
-  if (typeof define === 'function' && define.amd) {
-    define(['core/Core'], callback);
-  }
-  else {
-    callback();
-  }
-}(function () {
-
 /**
- * The Manager acts as the controller in a Model-View-Controller framework. All
- * public calls should be performed on the manager object.
- *
- * @param properties A map of fields to set. Refer to the list of public fields.
- * @class AbstractManager
+ * Created by Jorge lazo on 2/25/15.
  */
-AjaxSolr.AbstractManager = AjaxSolr.Class.extend(
-  /** @lends AjaxSolr.AbstractManager.prototype */
-  {
-  /**
-   * @param {Object} [attributes]
-   * @param {String} [attributes.solrUrl] The fully-qualified URL of the Solr
-   *   application. You must include the trailing slash. Do not include the path
-   *   to any Solr servlet. Defaults to "http://localhost:8983/solr/"
-   * @param {String} [attributes.proxyUrl] If we want to proxy queries through a
-   *   script, rather than send queries to Solr directly, set this field to the
-   *   fully-qualified URL of the script.
-   * @param {String} [attributes.servlet] The default Solr servlet. You may
-   *   prepend the servlet with a core if using multiple cores. Defaults to
-   *   "servlet".
-   */
-  constructor: function (attributes) {
-    AjaxSolr.extend(this, {
-      solrUrl: 'http://localhost:8983/solr/',
-      proxyUrl: null,
-      servlet: 'select',
-      // The most recent response from Solr.
-      response: {},
-      // the Cluster documents retrieved.
-      clustersDocs: [],
-      clusterLabels: [],
-      // A collection of all registered widgets.
-      widgets: {},
-      // The parameter store for the manager and its widgets.
-      store: null,
-      // Whether <tt>init()</tt> has been called yet.
-      initialized: false,
-      curr : {
-        "journal": {},
-        "date": {}
-      },
-      'full_text': false,
-        'sortOptions': "&sort=score desc",
-      'rows': "&rows=20",
-      'clusterOptions': { //defaults, configurable at runtime
-        'rows': "&rows=150",
-        'baseCount': "&LingoClusteringAlgorithm.desiredClusterCountBase=20"
-      }
-    }, attributes);
-  },
+(function ($) {
+AjaxSolr.TooltipWidget = AjaxSolr.AbstractFacetWidget.extend({
+    rows: "50",
 
-  /**
-   * An abstract hook for child implementations.
-   *
-   * <p>This method should be called after the store and the widgets have been
-   * added. It should initialize the widgets and the store, and do any other
-   * one-time initializations, e.g., perform the first request to Solr.</p>
-   *
-   * <p>If no store has been set, it sets the store to the basic <tt>
-   * AjaxSolr.ParameterStore</tt>.</p>
-   */
-  init: function () {
-  },
+    formatDate: function(date){
+        date = date.substring(0,10);
+        return date;
+    },
+    //Had to borrow helper functions from abstractTextWidget, any way to extend both without conflict?
+    tooltipHandler: function (facet,field,manager){
+      var self = this;
+      return function(){
+          self = self.manager.widgets[field];
+          manager.curr[field][facet] = facet;
+          if (self.set(facet)) {
+            self.doRequest(null, "select", true);
+          }
+          return false;
+      };
+    },
+    set: function (q) {
+        return this.changeSelection(function () {
+            this.manager.store.get('q').val(q);
+        });},
 
-  /**
-   * Set the manager's parameter store.
-   *
-   * @param {AjaxSolr.ParameterStore} store
-   */
-  setStore: function (store) {
-  },
+    clear: function () {
+        return this.changeSelection(function () {
+            this.manager.store.remove('q');
+        });},
 
-  /**
-   * Adds a widget to the manager.
-   *
-   * @param {AjaxSolr.AbstractWidget} widget
-   */
-  addWidget: function (widget) {
-  },
+    changeSelection: function (func) {
+        var before = this.manager.store.get('q').val();
+        func.apply(this);
+        var after = this.manager.store.get('q').val();
+        if (after !== before)
+            this.afterChangeSelection(after);
+        return after !== before;},
 
-  /**
-   * Stores the Solr parameters to be sent to Solr and sends a request to Solr.
-   *
-   * @param {Boolean} [start] The Solr start offset parameter.
-   * @param {String} [servlet] The Solr servlet to send the request to.
-   * @param {Boolean} [cluster] Whether to cluster or not.
-   */
-  doRequest: function (start, servlet, cluster) {
-  },
+    afterChangeSelection: function (value) {},
 
-  /**
-   * An abstract hook for child implementations.
-   *
-   * <p>Sends the request to Solr, i.e. to <code>this.solrUrl</code> or <code>
-   * this.proxyUrl</code>, and receives Solr's response. It should pass Solr's
-   * response to <code>handleResponse()</code> for handling.</p>
-   *
-   * <p>See <tt>managers/Manager.jquery.js</tt> for a jQuery implementation.</p>
-   *
-   * @param {String} servlet The Solr servlet to send the request to.
-   * @param {String} string The query string of the request. If not set, it
-   *   should default to <code>this.store.string()</code>
-   * @throws If not defined in child implementation.
-   */
-  executeRequest: function (start,servlet, string) {
-    throw 'Abstract method executeRequest must be overridden in a subclass.';
-  },
+    afterRequest: function () {
+        for (var i = 0, l = this.manager.response.response.docs.length; i < l; i++) {
+            var doc = this.manager.response.response.docs[i];
+            var lists = $('<div class="tooltip_title"></div>');
+            lists = lists.append($('<a href="#">ID: ' + doc.pmid + '</a>'));
+            lists = lists.append(" | ");
+            lists = lists.append($('<a href="#">Date created: ' + this.formatDate(doc.date[0]) + '</a>'));
+            lists = lists.append(" | ");
+            lists = lists.append($('<a href="#">'+doc.journal+'</a>').click(this.clickHandler(doc.journal[0], "journal", this.manager)));
 
-  /**
-   * An abstract hook for child implementations.
-   *
-   * <p>Sends the request to Solr, i.e. to <code>this.solrUrl</code> or <code>
-   * this.proxyUrl</code>, and receives Solr's response. It should pass Solr's
-   * response to <code>handleResponse()</code> for handling.</p>
-   *
-   * <p>See <tt>managers/Manager.jquery.js</tt> for a jQuery implementation.</p>
-   *
-   * @param {String} servlet The Solr servlet to send the request to.
-   * @param {String} string The query string of the request. If not set, it
-   *   should default to <code>this.store.string()</code>
-   * @throws If not defined in child implementation.
-   */
-  clusterExecute: function (start,servlet, string) {
-    throw 'Abstract method clusterExecute must be overridden in a subclass.';
-  },
+            var sub1 = $('');
+            var sub2 = sub1;
 
-  /**
-   * This method is executed after the Solr response data arrives. Allows each
-   * widget to handle Solr's response separately.
-   *
-   * @param {Object} data The Solr response.
-   * @param {Boolean} cluster Whether to cluster or not
-   */
-  handleResponse: function (data, cluster) {
-  },
+            if (doc.gene_symbol_list){
+                sub1 = $('<div style="float:left;width:33%"><b>Gene Symbol List:</b></div>');
+                for (var k = 0; k< doc.gene_symbol_list.length; k++){
+                    sub1 = sub1.append($('<li><a href="#">' + doc.gene_symbol_list[k] + '</a></li>').click(this.tooltipHandler(doc.gene_symbol_list[k],"gene_symbol_list",this.manager)));
+                }
+            }
+            if (doc.mesh_term){
+                sub2 = $('<div style="float:left;width:33%"><b>MeSH Heading List:</b></div>');
+                for (var k = 0; k< doc.mesh_term.length; k++){
+                    if (doc.mesh_term_major){
+                        if (doc.mesh_term_major.indexOf(doc.mesh_term[k]) > -1){sub2 = sub2.append($('<li><a href="#">' + doc.mesh_term[k] + '<i style="display:inline-block" class="ui-icon ui-icon-star"></i></a></li>')
+                            .click(this.tooltipHandler(doc.mesh_term[k],"mesh_term",this.manager)));
+                        }
+                        else{
+                            sub2= sub2.append($('<li><a href="#">' + doc.mesh_term[k] + '</a></li>').click(this.tooltipHandler(doc.mesh_term[k],"mesh_term",this.manager)));}}
+                    else{
+                        sub2= sub2.append($('<li><a href="#">' + doc.mesh_term[k] + '</a></li>').click(this.tooltipHandler(doc.mesh_term[k],"mesh_term",this.manager)));}
+                }
+            }
+            lists = lists.add(sub1);
+            lists = lists.add(sub2);
 
-  handleClusters: function(data){
-  },
+            var $info = $('#info-' + doc.pmid);
+            $info.tooltipster({
+                minWidth: 1000,
+                maxWidth: 1000,
+                theme: 'tooltipster-noir',
+                content: lists,
+                interactive: true
+                //trigger: 'click'
+            })
+        }
+    },
 
-  requestClusterDocs: function(IDs){
-  },
+    clusterResults: function () {
+        for (var i = 0, l = this.manager.clustersDocs.length; i < l; i++) {
+            var doc = this.manager.clustersDocs[i];
+            var lists = $('<div class="tooltip_title"></div>');
+            lists = lists.append($('<a href="#">ID: ' + doc.pmid + '</a>'));
+            lists = lists.append(" | ");
+            lists = lists.append($('<a href="#">Date created: ' + this.formatDate(doc.date[0]) + '</a>'));
+            lists = lists.append(" | ");
+            lists = lists.append($('<a href="#">' + doc.journal + '</a>').click(this.clickHandler(doc.journal[0], "journal", this.manager)));
 
-  /**
-   * This method is executed if Solr encounters an error.
-   *
-   * @param {String} message An error message.
-   */
-  handleError: function (message) {
-    window.console && console.log && console.log(message);
-  }
+            var sub1 = $('');
+            var sub2 = sub1;
+
+            if (doc.gene_symbol_list) {
+                sub1 = $('<div style="float:left;width:33%"><b>Gene Symbol List:</b></div>');
+                for (var k = 0; k < doc.gene_symbol_list.length; k++) {
+                    sub1 = sub1.append($('<li><a href="#">' + doc.gene_symbol_list[k] + '</a></li>').click(this.tooltipHandler(doc.gene_symbol_list[k], "gene_symbol_list", this.manager)));
+                }
+            }
+            if (doc.mesh_term) {
+                sub2 = $('<div style="float:left;width:33%"><b>MeSH Heading List:</b></div>');
+                for (var k = 0; k < doc.mesh_term.length; k++) {
+                    if (doc.mesh_term_major) {
+                        if (doc.mesh_term_major.indexOf(doc.mesh_term[k]) > -1) {
+                            sub2 = sub2.append($('<li><a href="#">' + doc.mesh_term[k] + '<i style="display:inline-block" class="ui-icon ui-icon-star"></i></a></li>')
+                                .click(this.tooltipHandler(doc.mesh_term[k], "mesh_term", this.manager)));
+                        }
+                        else {
+                            sub2 = sub2.append($('<li><a href="#">' + doc.mesh_term[k] + '</a></li>').click(this.tooltipHandler(doc.mesh_term[k], "mesh_term", this.manager)));
+                        }
+                    }
+                    else {
+                        sub2 = sub2.append($('<li><a href="#">' + doc.mesh_term[k] + '</a></li>').click(this.tooltipHandler(doc.mesh_term[k], "mesh_term", this.manager)));
+                    }
+                }
+            }
+            lists = lists.add(sub1);
+            lists = lists.add(sub2);
+
+            var $info = $('#info-' + doc.pmid);
+            $info.tooltipster({
+                minWidth: 1000,
+                maxWidth: 1000,
+                theme: 'tooltipster-noir',
+                content: lists,
+                interactive: true
+                //trigger: 'click'
+            })
+        }
+    }
 });
 
-}));
+})(jQuery);
