@@ -69,15 +69,14 @@ docs/_build/
 solr/core0/data/
 
 # Solr lib/dist exception
-!solr/dist
-!solr/lib
+!solr-config/lib
 ### VirtualEnv template
 # Virtualenv
 # http://iamzed.com/2009/05/07/a-primer-on-virtualenv/
 .Python
+#lib/python2.7
 [Bb]in
 [Ii]nclude
-[Ll]ib
 [Ll]ocal
 pyvenv.cfg
 
