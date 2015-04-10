@@ -76,6 +76,14 @@
 
             if(clusters.slice(-1)[0].labels[0] == "Other Topics" && clusters.length > 1){clusters.pop();} //Removing other topics
 
+            for (var i =0; i< clusters.length; i++){//FIX THIS
+                var index = clusters[i].labels[0].indexOf("Sup ");
+                if(index > -1){
+                    clusters.splice(i,1);
+                    break;
+                }
+            }
+
             var data_nodes = this.nodeify(clusters);
             this.renderNodeGraph(data_nodes);
         },
@@ -83,7 +91,7 @@
 
         renderNodeGraph: function(graph) {
             var self = this;
-            var width = $("#general").width() * 0.32,
+            var width = $("#general").width() * 0.35,
                 height = this.height,
                 ctrlKey,
                 grav,
