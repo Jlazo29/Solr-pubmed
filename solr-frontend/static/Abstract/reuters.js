@@ -18,7 +18,7 @@ var Manager;
       innerWindow: 1
     }));
 
-    var fields = [ 'journal', 'date'];
+    var fields = [ 'journal', 'gene-mention', 'date'];
     for (var i = 0, l = fields.length; i < l; i++) {
       Manager.addWidget(new AjaxSolr.TagcloudWidget({
         id: fields[i],
@@ -61,7 +61,7 @@ var Manager;
     Manager.store.addByValue('q', '*:*');
     var params = {
       facet: true,
-      'facet.field': [ 'journal', 'date' ],
+      'facet.field': [ 'journal', 'gene-mention', 'date' ],
       'facet.limit': 20,
       'facet.mincount': 1,
       //'facet.range': 'date',

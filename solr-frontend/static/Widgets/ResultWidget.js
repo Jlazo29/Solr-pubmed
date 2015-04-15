@@ -150,10 +150,6 @@ AjaxSolr.ResultWidget = AjaxSolr.AbstractWidget.extend({
     };
   },
 
-  handleSort: function(option, self){
-      self.manager.sortOptions = option;
-  },
-
   init: function () {
     var self = this;
     $(document).on('click', 'a.more', function () {
@@ -172,12 +168,6 @@ AjaxSolr.ResultWidget = AjaxSolr.AbstractWidget.extend({
     });
     $("#tab-tagcloud").prepend($('<div id="filters">Apply Selected Filters</div>').button({disabled: true}).click(function(){return self.doRequest(null, "select", false)}));
     $("#full_text").change(self.handleQueryChange(self));
-      $("#relevance").click(function(){
-          if($('#relevance').is(':checked')) { self.handleSort("&sort=score desc", self) }
-      });
-      $("#recent").click(function(){
-          if($('#recent').is(':checked')) { self.handleSort("&sort=_docid_ desc", self); }
-      });
   }
 });
 

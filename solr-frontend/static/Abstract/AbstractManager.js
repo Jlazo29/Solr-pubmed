@@ -47,10 +47,10 @@ AjaxSolr.AbstractManager = AjaxSolr.Class.extend(
       initialized: false,
       curr : {
         "journal": {},
+        "gene-mention": {},
         "date": {}
       },
       'full_text': false,
-        'sortOptions': "&sort=score desc",
       'rows': "&rows=20",
       'clusterOptions': { //defaults, configurable at runtime
         'rows': "&rows=150",

@@ -34,6 +34,8 @@ AjaxSolr.TagcloudWidget = AjaxSolr.AbstractFacetWidget.extend({
     //}
     //tagCloud_total = tagCloud_total / objectedItems.length;
 
+    console.log(objectedItems);
+
     for (var j = 0, l = objectedItems.length; j < l; j++) {
       if (objectedItems[j].facet == this.manager.curr[this.field][objectedItems[j].facet]){
         continue;
@@ -70,7 +72,7 @@ AjaxSolr.TagcloudWidget = AjaxSolr.AbstractFacetWidget.extend({
   tagClick: function(facet, field, manager){
     var self = this;
     return function(){
-      facet = facet.replace("&", "%26");
+      facet = facet.replace("&", "%26"); //replace & with +
       var result = field +  ':"' + facet + '"';
       if (manager.curr[field][facet] != undefined){ //delete selection
         manager.curr[field][facet] = undefined;

@@ -141,7 +141,7 @@ AjaxSolr.Manager = AjaxSolr.AbstractManager.extend(
         query.type = 'POST';
       }
       else {
-        query.url = this.solrUrl + servlet + '?' + string_query + string_options + this.sortOptions + string_fq + date + '&wt=json&json.wrf=?';
+        query.url = this.solrUrl + servlet + '?' + string_query + string_options + string_fq + date + '&wt=json&json.wrf=?';
       }
       console.log(query.url);
       jQuery.ajax(query).success(handler);
@@ -179,7 +179,7 @@ AjaxSolr.Manager = AjaxSolr.AbstractManager.extend(
           query.type = 'POST';
         }
         else {
-          query.url = this.solrUrl + servlet + '?' + string_query + query_options + this.sortOptions + clusterOptions + '&wt=json&json.wrf=?';
+          query.url = this.solrUrl + servlet + '?' + string_query + query_options + clusterOptions + '&wt=json&json.wrf=?';
           console.log(query.url);
         }
         jQuery.ajax(query).success(function(data){

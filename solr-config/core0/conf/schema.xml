@@ -2,29 +2,32 @@
 
 <schema name="main" version="1.0">
     <types>
-        <fieldType name="pmid" class="solr.StrField" indexed="true" stored="true" multiValued="false"  required="true"/>
+        <fieldType name="pmid" class="solr.StrField" indexed="true" stored="true" multiValued="false" required="true"/>
 
         <fieldType name="date" class="solr.TrieDateField" indexed="true" stored="true"/>
 
-        <fieldType name="journal" class="solr.TextField" indexed="true" stored="true" multiValued="false"/>
+        <fieldType name="simple" class="solr.TextField" indexed="true" stored="true" multiValued="false"/>
 
-        <fieldType name="authors" class="solr.TextField" indexed="true" stored="true" multiValued="true">
-            <analyzer type="index">
-                <!--<charFilter class="solr.PatternReplaceCharFilterFactory" pattern="<sub>" replacement=""/>-->
-                <tokenizer class="solr.StandardTokenizerFactory"/>
-                <filter class="solr.HyphenatedWordsFilterFactory"/>
+        <fieldType name="word-list" class="solr.TextField" indexed="true" stored="true" multiValued="true">
+            <!--<analyzer type="index">-->
+                <!--<tokenizer class="solr.StandardTokenizerFactory"/>-->
+                <!--<filter class="solr.HyphenatedWordsFilterFactory"/>-->
                 <filter class="solr.ASCIIFoldingFilterFactory"/>
-            </analyzer>
-            <analyzer type="query">
-                <tokenizer class="solr.StandardTokenizerFactory"/>
-                <filter class="solr.HyphenatedWordsFilterFactory"/>
+            <!--</analyzer>-->
+            <!--<analyzer type="query">-->
+                <!--<tokenizer class="solr.StandardTokenizerFactory"/>-->
+                <!--<filter class="solr.HyphenatedWordsFilterFactory"/>-->
                 <filter class="solr.ASCIIFoldingFilterFactory"/>
-            </analyzer>
+            <!--</analyzer>-->
         </fieldType>
 
         <fieldType name="text" class="solr.TextField" indexed="true" stored="true" multiValued="false" omitNorms="false"
                    termVectors="true" termPositions="true">
               <analyzer type="index">
+            <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="&lt;sub&gt;" replacement=""/>
+            <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="&lt;/sub&gt;" replacement=""/>
+            <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="&lt;sup&gt;" replacement=""/>
+            <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="&lt;/sup&gt;" replacement=""/>
                 <tokenizer class="solr.StandardTokenizerFactory"/>
                 <filter class="solr.HyphenatedWordsFilterFactory"/>
                 <filter class="solr.LowerCaseFilterFactory"/>
@@ -40,6 +43,10 @@
         <fieldType name="all_text" class="solr.TextField" indexed="true" stored="true" multiValued="true" omitNorms="false"
                    termVectors="true" termPositions="true">
               <analyzer type="index">
+            <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="&lt;sub&gt;" replacement=""/>
+            <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="&lt;/sub&gt;" replacement=""/>
+            <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="&lt;sup&gt;" replacement=""/>
+            <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="&lt;/sup&gt;" replacement=""/>
                 <tokenizer class="solr.StandardTokenizerFactory"/>
                 <filter class="solr.HyphenatedWordsFilterFactory"/>
                 <filter class="solr.LowerCaseFilterFactory"/>
@@ -54,20 +61,23 @@
     </types>
 
     <fields>
+        <!--MetaData-->
         <field name="pmid" type="pmid"/>
         <field name="title" type="text"/>
-        <field name="journal" type="journal"/>
+        <field name="journal" type="simple"/>
         <field name="date" type="date"/>
-        <field name="authors" type="authors"/>
+        <field name="authors" type="word-list"/>
+        <field name="gene-mention" type="word-list"/>
 
+        <!--Textual data-->
         <field name="abstract" type="text"/>
         <field name="intro-results" type="text"/>
         <field name="discussion-conclusion" type="text"/>
 
+        <!--Copy fields to use for queries-->
         <field name="query" type="all_text"/>
         <field name="full_text" type="all_text"/>
 
-        <!--todo: dynamic fields-->
 
     </fields>
 
@@ -75,7 +85,6 @@
 
     <solrQueryParser defaultOperator="AND"/>
 
-    <!--todo: query parser default operator-->
     <copyField source="abstract" dest="query"/>
     <copyField source="title" dest="query"/>
 
