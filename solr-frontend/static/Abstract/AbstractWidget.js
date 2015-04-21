@@ -66,16 +66,16 @@ AjaxSolr.AbstractWidget = AjaxSolr.Class.extend(
 
   clusterResults: function() {},
 
-  /**
-   * A proxy to the manager's doRequest method.
-   *
-   * @param {Boolean} [start] The Solr start offset parameter.
-   * @param {String} [servlet] The Solr servlet to send the request to.
-   * @param {string} [rows] Number of rows to request
-   */
-  doRequest: function (start, servlet, rows) {
+      /**
+       * Stores the Solr parameters to be sent to Solr and sends a request to Solr.
+       *
+       * @param {Boolean} [start] The Solr start offset parameter.
+       * @param {String} [servlet] The Solr servlet to send the request to.
+       * @param {Boolean} [cluster] Whether to cluster or not.
+       */
+  doRequest: function (start, servlet, cluster) {
     //console.log("caller is " + arguments.callee.caller);
-    this.manager.doRequest(start || this.start, servlet || this.servlet, rows);
+    this.manager.doRequest(start || this.start, servlet || this.servlet, cluster);
   },
 
   clusterRequest: function(start, servlet, rows){

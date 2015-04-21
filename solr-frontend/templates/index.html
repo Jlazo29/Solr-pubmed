@@ -10,7 +10,6 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/jquery-ui.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='css/jquery-ui.structure.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ url_for('.static', filename='font-awesome/css/font-awesome.min.css') }}" />
-
   <!--JQuery libraries-->
     <!--<script src="{{ url_for('.static', filename='js/libs/jquery-1.10.2.min.js') }}"></script> Compressed version-->
     <script src="{{ url_for('.static', filename='js/libs/jquery-1.11.2.js') }}"></script> <!--Expanded version -->
@@ -43,9 +42,7 @@
 
 <div class="header">
   <div id="header-left">
-    <form id="query-options">
-      <div><label><input id="full_text" type="checkbox" name="query"> Full Text Search</label></div>
-    </form>
+      &nbsp;
 <!--Home button here-->
   </div>
   <div id="header-middle">
@@ -55,6 +52,7 @@
     </div>
   </div>
   <div id="header-right">
+      <button id="settings">Settings</button>
     <button id="changelog">Changelog</button>
   </div>
 </div>
@@ -73,9 +71,9 @@
         <div class="tagcloud" id="journal"></div>
         <h3 class="sidebar-title">Gene mentions</h3>
         <div class="tagcloud" id="gene-mention"></div>
-        <h3 class="sidebar-title">By Date</h3>
+        <h3 class="sidebar-title"></h3> <!-- By Date</h3> -->
         <div class="tagcloud" id="date"></div>
-        <div id="calendar">Date</div>
+        <!--<div id="calendar">Date</div>-->
       </div>
       <div id="tab-clusters">
         <div id="clusters"></div>
@@ -104,10 +102,19 @@
 <script>
     $(function() {
         $( "#tabs" ).tabs();
+        $("#settings").button();
         $( "#changelog" ).button();
     });
-  var content = $('<pre class="align-center">-----Changelog-----</pre>');
-  content = content.add($('<ul><b>Week 7 (Feb 16 to 20): </b></ul> ' +
+
+    var settings = $('<div class="tooltip_title">Query Settings</div>');
+    settings = settings.add($('<form id="query-options"><div><label><input id="full_text" type="checkbox" name="query" checked="checked"> Full Text Search</label></div></form>' +
+                '<div><form><div>Sort By:<label><input class="sort_order" id="relevance" type="radio" name="sort" checked="checked">relevance</label>' +
+                                '<label><input class="sort_order" id="recent" type="radio" name="sort">Most recent </label></div></form></div>' +
+                '<div><form><div><label><input id="highlight-toggle" type="checkbox" name="highlight" checked="checked">Highlight gene mentions</label></div></form></div>'));
+
+
+  var changelog = $('<pre class="align-center">-----Changelog-----</pre>');
+  changelog = changelog.add($('<ul><b>Week 7 (Feb 16 to 20): </b></ul> ' +
   '<li>Fixed long abstracts not being handled correctly, as well adjusting the amount of overflow text and authors to show. </li>' +
   '<li>Added Tooltipster, a small interactive tooltip plugin (eg: this changelog), selecting a specific document will show additional information and what facets it belongs to.</li>' +
   '<li>Fixed a serious crash involving making a request to Solr that yields no documents (now an error handling message prompts). </li>' +
@@ -130,10 +137,20 @@
   $changelog.tooltipster({
     minWidth: 500,
     maxWidth: 500,
-    content: content,
+    content: changelog,
     interactive: true,
     trigger: 'click'
-  })
+  });
+
+  var $settings = $('#settings');
+    $settings.tooltipster({
+        minWidth:500,
+        maxWidth: 500,
+        theme: 'tooltipster-noir',
+        content: settings,
+        interactive: true,
+        trigger: 'click'
+    });
 </script>
 </body>
 </html>

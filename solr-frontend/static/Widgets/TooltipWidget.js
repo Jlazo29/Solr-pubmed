@@ -37,7 +37,55 @@ AjaxSolr.TooltipWidget = AjaxSolr.AbstractFacetWidget.extend({
         var after = this.manager.store.get('q').val();
         if (after !== before)
             this.afterChangeSelection(after);
-        return after !== before;},
+        return after !== before;
+    },
+
+    tagInfo: function(mention){
+        var self = this;
+        //tooltips in text for tagged entities
+        mention = $(mention);
+        var text = mention.text();
+
+        var outline = $('<div><p>Gene Mention: <b>' + text + '</b></p></div>');
+
+        var sub1 = $('<div class="clickable"><i class="fa fa-search"></i> Search documents with this mention </div>')
+            .click(self.tooltipHandler(text, "gene-mention", self.manager));
+        var sub2 = $('<div class="clickable"><i class="fa fa-search"></i> Do a fuzzy search on this mention</div>')
+            .click(self.fuzzy(mention.text(),self.manager));
+
+        outline = outline.add(sub1).add(sub2);
+
+        mention.tooltipster({
+            minWidth: 310,
+            maxWidth: 310,
+            theme: 'tooltipster-noir',
+            content: outline,
+            position: "right",
+            interactive: true
+        })
+    },
+
+    fuzzy: function(text, manager){
+        var words = text.split(/\s+/);
+        return function(){
+            for (var i = 0; i < words.length; i++){
+                if (words[i].length > 5){
+                    words[i] = words[i] + "~";
+                }
+                else{
+                    if(words[i].length > 1){
+                        words[i] = words[i] + "*";
+                    }
+                }
+            }
+            var result = words.join(" ");
+            manager.store.remove('q');
+            manager.store.addByValue('q', result);
+            manager.doRequest(null,"select",true);
+        };
+
+        //text = text.replaceAll(" ", "~ ")
+    },
 
     afterChangeSelection: function (value) {},
 
@@ -45,19 +93,19 @@ AjaxSolr.TooltipWidget = AjaxSolr.AbstractFacetWidget.extend({
         for (var i = 0, l = this.manager.response.response.docs.length; i < l; i++) {
             var doc = this.manager.response.response.docs[i];
             var lists = $('<div class="tooltip_title"></div>');
-            lists = lists.append($('<a href="#">ID: ' + doc.pmid + '</a>'));
+            lists = lists.append($('<span class="clickable">ID: ' + doc.pmid + '</span>'));
             lists = lists.append(" | ");
-            lists = lists.append($('<a href="#">Date created: ' + this.formatDate(doc.date[0]) + '</a>'));
+            lists = lists.append($('<span class="clickable">Date created: ' + this.formatDate(doc.date[0]) + '</span>'));
             lists = lists.append(" | ");
-            lists = lists.append($('<a href="#">'+doc.journal+'</a>').click(this.clickHandler(doc.journal[0], "journal", this.manager)));
+            lists = lists.append($('<span class="clickable">'+doc.journal+'</span>').click(this.clickHandler(doc.journal[0], "journal", this.manager)));
 
             var sub1 = $('');
             var sub2 = sub1;
 
-            if (doc.gene_symbol_list){
-                sub1 = $('<div style="float:left;width:33%"><b>Gene Symbol List:</b></div>');
-                for (var k = 0; k< doc.gene_symbol_list.length; k++){
-                    sub1 = sub1.append($('<li><a href="#">' + doc.gene_symbol_list[k] + '</a></li>').click(this.tooltipHandler(doc.gene_symbol_list[k],"gene_symbol_list",this.manager)));
+            if (doc["gene-mention"]){
+                sub1 = $('<div style="float:left;width:33%"><b>Gene mentions:</b></div>');
+                for (var k = 0; k< doc["gene-mention"].length; k++){
+                    sub1 = sub1.append($('<li><span class="clickable">' + doc["gene-mention"][k] + '</span></li>').click(this.tooltipHandler(doc["gene-mention"][k],"gene-mention",this.manager)));
                 }
             }
             if (doc.mesh_term){
@@ -83,7 +131,7 @@ AjaxSolr.TooltipWidget = AjaxSolr.AbstractFacetWidget.extend({
                 theme: 'tooltipster-noir',
                 content: lists,
                 interactive: true
-                //trigger: 'click'
+                //trigger: 'click' //debugging
             })
         }
     },
@@ -101,10 +149,10 @@ AjaxSolr.TooltipWidget = AjaxSolr.AbstractFacetWidget.extend({
             var sub1 = $('');
             var sub2 = sub1;
 
-            if (doc.gene_symbol_list) {
-                sub1 = $('<div style="float:left;width:33%"><b>Gene Symbol List:</b></div>');
-                for (var k = 0; k < doc.gene_symbol_list.length; k++) {
-                    sub1 = sub1.append($('<li><a href="#">' + doc.gene_symbol_list[k] + '</a></li>').click(this.tooltipHandler(doc.gene_symbol_list[k], "gene_symbol_list", this.manager)));
+            if (doc["gene-mention"]){
+                sub1 = $('<div style="float:left;width:33%"><b>Gene mentions</b></div>');
+                for (var k = 0; k< doc["gene-mention"].length; k++){
+                    sub1 = sub1.append($('<li><a href="#">' + doc["gene-mention"][k] + '</a></li>').click(this.tooltipHandler(doc["gene-mention"][k],"gene-mention",this.manager)));
                 }
             }
             if (doc.mesh_term) {

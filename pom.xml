@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.gsc</groupId>
     <artifactId>reactor</artifactId>
@@ -10,17 +8,16 @@
 
     <modules>
         <module>solr-config</module>
-        <!--<module>uima-components</module> -->
         <module>entrez-parsing</module>
-    </modules>
+  </modules>
 
     <name>Project Root</name>
     <properties>
+        <root-dir>/home/jorge/Projects/solr-pubmed/</root-dir>
         <slf4j.version>1.7.7</slf4j.version>
         <jaxb2.version>0.9.0</jaxb2.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-    <!--todo: remove duplicate dependencies in ingestion/pom.xml jetty plugin-->
     <dependencies>
         <!--SLF4J LOG4J-12 Binding-->
         <dependency>
@@ -64,8 +61,10 @@
             <version>4.7</version>
         </dependency>
     </dependencies>
+
     <build>
         <plugins>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -132,7 +131,7 @@
                 <groupId>org.jvnet.jaxb2.maven2</groupId>
                 <artifactId>maven-jaxb2-plugin</artifactId>
                 <configuration>
-                    <!-- Changes the default schema directory -->
+                    <!-- Tried to change the default schema directory, does not read it -->
                     <schemaDirectory>entrez-parsing/src/main/resources/schema</schemaDirectory>
                     <schemaLanguage>DTD</schemaLanguage>
                     <schemaIncludes>

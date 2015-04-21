@@ -30,7 +30,7 @@ cd ../../../../../entrez-parsing/;
 mvn compile;
 
 echo "Running SolrUtils..";
-mvn exec:java -Dexec.mainClass="ingestion.SolrUtils" -Dexec.args="$1 $2"
+mvn  -e exec:java -Dexec.mainClass="ingestion.SolrUtils" -Dexec.args="$1 $2" -Dexec.additionalClasspathElements="banner-external/libs/dragontool.jar";
 echo "Done!"
 
 # 3: Return files to schema folder

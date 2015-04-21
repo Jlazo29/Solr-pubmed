@@ -109,6 +109,8 @@ AjaxSolr.Manager = AjaxSolr.AbstractManager.extend(
           string_options = this.store.string() + this.rows,
           date = "&facet.range=date";
 
+        console.log(string_options);
+
       var handler = function (data) {
         var result = $('#result');
         var no_result = $('#no_result');

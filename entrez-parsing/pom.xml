@@ -8,7 +8,6 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
     <artifactId>entrez-parsing</artifactId>
     <name>Medline and Pubmed Parsers</name>
 
@@ -31,11 +30,69 @@
             <artifactId>joda-time</artifactId>
             <version>2.4</version>
         </dependency>
+        <!--Apache UIMA-->
         <dependency>
             <groupId>org.apache.uima</groupId>
             <artifactId>uimafit-core</artifactId>
             <version>2.1.0</version>
         </dependency>
+        <!--The following dependencies need to be installed locally first (part of install.sh script) in order to be used-->
+        <!--Banner main library-->
+        <dependency>
+            <groupId>banner</groupId>
+            <artifactId>banner</artifactId>
+            <version>1.0</version>
+            </dependency>
+        <!--bsh library-->
+        <dependency>
+            <groupId>bsh</groupId>
+            <artifactId>bsh</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <!--Dragon NLP tools-->
+        <dependency>
+            <groupId>dragontool</groupId>
+            <artifactId>dragontool</artifactId>
+            <version>1.5</version>
+        </dependency>
+        <!--heptag tools-->
+        <dependency>
+            <groupId>heptag</groupId>
+            <artifactId>heptag</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <!--jdom-->
+        <dependency>
+            <groupId>jdom</groupId>
+            <artifactId>jdom</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <!--jwnl-->
+        <dependency>
+            <groupId>net.sf.jwordnet</groupId>
+            <artifactId>jwnl</artifactId>
+            <version>1.4_rc3</version>
+        </dependency>
+        <!--medpost-->
+        <dependency>
+            <groupId>medpost</groupId>
+            <artifactId>medpost</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <!--openJgraph-->
+        <dependency>
+            <groupId>openjgraph</groupId>
+            <artifactId>openjgraph</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <!--secondstring-->
+        <dependency>
+            <groupId>secondstring</groupId>
+            <artifactId>secondstring</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+
     </dependencies>
 
 </project>

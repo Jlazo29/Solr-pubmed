@@ -9,7 +9,9 @@ if [ $# -eq 0 ]; then
 			arg[1]: Optional argument, if 'del' is specified, all the indexed files will be cleared.
 
 		Make absolutely sure that there are no other file types or compressed folders inside the XML directory,
-		Or SolrUtils will complain. Depending on the file sizes, it may take ";
+		Or SolrUtils will complain. Depending on the file sizes, it may take up to 8 hours to fully index 
+		a whole subset (eg: all of PMC open access, 1 million files, ~40GB). Double amount of space for
+		indexing is required, so a total of 100GB of space is recommended for full indexing.";
 	exit 1;
 else
 	echo "Compiling SolrUtils..";
@@ -28,7 +30,7 @@ cd ../../../../../entrez-parsing/;
 mvn compile;
 
 echo "Running SolrUtils..";
-mvn exec:java -Dexec.mainClass="ingestion.SolrUtils" -Dexec.args="$1 $2"
+mvn  -e exec:java -Dexec.mainClass="ingestion.SolrUtils" -Dexec.args="$1 $2" -Dexec.additionalClasspathElements="banner/external-libs/";
 echo "Done!"
 
 # 3: Return files to schema folder

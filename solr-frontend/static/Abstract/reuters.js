@@ -63,9 +63,10 @@ var Manager;
       facet: true,
       'facet.field': [ 'journal', 'gene-mention', 'date' ],
       'facet.limit': 20,
+      'f.gene-mention.facet.limit': 50,
       'facet.mincount': 1,
-      //'facet.range': 'date',
-      'f.topics.facet.limit': 50
+        //'sort': "pmid desc"
+      //'facet.range': 'date'
     };
     for (var name in params) {
       Manager.store.addByValue(name, params[name]);

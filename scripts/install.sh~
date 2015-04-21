@@ -5,5 +5,6 @@ cd ../;
 mvn install;
 
 cd solr-frontend;
-    virtualenv . ;
-    source bin/activate ;
+virtualenv . ;
+source bin/activate ;
+pip install -r requirements.txt

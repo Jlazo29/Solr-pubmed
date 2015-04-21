@@ -30,8 +30,8 @@ a:hover{
   float: left;
 }
 #query-options{
-  margin-top: 10%;
-  float: right;
+  /*margin-top: 10%;*/
+  /*float: right;*/
 }
 #header-middle {
   width: 50%;
@@ -52,6 +52,9 @@ a:hover{
 #header-right {
   width: 25%
   float: left;
+}
+#settings{
+    float: left;
 }
 
 /* right */
@@ -88,10 +91,30 @@ a:hover{
   margin-bottom: 2px;
 }
 .document{
-  margin-bottom: 5px;
-  margin-left: 30px;
-  border-left: 1px dotted #3d5da0;
-  padding-left: 0.5em;
+    margin-left: 30px;
+    border-left: 1px dotted #3d5da0;
+    margin-bottom: 5px;
+    padding-left: 0.5em;
+    line-height: 140%;
+    overflow: hidden;
+    text-align: justify;
+    /*height: 150px;*/
+    /*MAKE DYNAMIC HEIGHT! */
+}
+.external{
+    line-height: 160%;
+    padding-left: 0.5em;
+    background-color: white;
+}
+.more{
+    cursor: pointer;
+    background-color: #d8d8d8;
+    text-align: center;
+}
+.results-text{
+    overflow: hidden;
+    margin-bottom: 5px;
+
 }
 .rank{
   position: absolute;
@@ -113,13 +136,10 @@ a:hover{
 a.author-link, a.author-link:active, a.author-link:visited, a.author-link:hover {
   color: mediumseagreen;
 }
-.document p {
-  line-height: 140%;
-  overflow: hidden;
-  text-align: justify;
+.GENE{ /*highlight*/
+    background-color: #72dfff;
 }
-.external{
-  margin: 5px;
+.NONE{ /*no highlight*/
 }
 /* left */
 #sidebar{
@@ -198,7 +218,14 @@ font-size: 180%;
 }
 
 /* others */
-
+.clickable {
+    color: #6998f0;
+    text-decoration: none;
+    cursor: pointer;
+}
+.clickable:hover{
+    text-decoration: underline;
+}
 #cluster-svg{
   margin: 0;
   padding: 0;
