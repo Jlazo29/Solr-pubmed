@@ -1,17 +1,13 @@
 package ingestion;
 
-import com.google.common.collect.TreeTraverser;
+import banner.Tag;
 import com.google.common.io.Files;
-import com.google.common.io.Resources;
 import parsers.PMC.Article;
 import parsers.PMCParser;
 import parsers.medline.MedlineCitationSet;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.solr.common.SolrInputDocument;
 import parsers.MedlineParser;
-import parsers.PubMedParser;
-import parsers.pubmed.PubmedArticleSet;
-
 import java.io.*;
 import java.util.*;
 
@@ -22,14 +18,10 @@ public class  SolrUtils {
     public static Collection<SolrInputDocument> collection;
     public static MedlineParser medlineParser;
     public static PMCParser pmcParser;
+    public static Tag tagger;
     public static Integer count;
     public static boolean pmc;
 
-    public static void deleteRecords() throws Exception {
-        BasicConfigurator.configure();
-        SolrClient client = new SolrClient(false);
-        client.deleteRecords();
-    }
 
     private static String printArgs(String[] arguments){
         String result = "";
@@ -42,20 +34,40 @@ public class  SolrUtils {
         return result;
     }
 
+    private static String formatTime(int time){
+        StringBuilder result = new StringBuilder("Total time taken: ");
+        if ((time/604800) >= 1) {
+            result.append(time / 604800).append("weeks ");
+            time = time % 604800;
+        }
+        if ((time/86400) >= 1){
+            result.append(time / 86400).append("days ");
+            time = time % 86400;
+        }
+        if ((time/3600) >= 1){
+            result.append(time / 3600).append("hrs ");
+            time = (time % 3600);
+        }
+        if ((time/60) >= 1){
+            result.append(time / 60).append("Mins ");
+            time = (time % 60);
+        }
+        result.append(time).append("Secs ");
+        return result.toString();
+    }
+
     public static void importFile(File f, int tries){
         if(pmc){
             try{
                 Article article = pmcParser.unmarshall(f);
                 String articleType = article.getArticleType();
                 if (articleType.equals("case-report") || articleType.equals("research-article")) {
-                    SolrInputDocument document = pmcParser.mapToSolrInputDocument(article);
-                    count++;
+                    SolrInputDocument document = pmcParser.mapToSolrInputDocument(article, tagger);
                     if (document != null){
+                        tries = 0;
+                        count++;
                         collection.add(document);
                         System.out.println("Successfully parsed " + f.getName());
-                    }
-                    else{
-                        System.out.println("Could not parse " + f.getName());
                     }
                 }
                 else{
@@ -64,9 +76,9 @@ public class  SolrUtils {
             }catch(Exception e){
                 if (tries > 2){
                     e.printStackTrace();
-                    return;
+                    throw new RuntimeException("The file supplied is neither medline or PMC! '" + f.getName() + "' Located at: " + f.getAbsolutePath());
                 }
-                //Try again with medline
+                //Try one more time as medline
                 pmc = false;
                 tries++;
                 importFile(f, tries);}
@@ -74,16 +86,17 @@ public class  SolrUtils {
         else{
             try{
                 MedlineCitationSet set = medlineParser.unmarshall(f);
-                collection = medlineParser.mapToSolrInputDocumentCollection(set);
+                collection = medlineParser.mapToSolrInputDocumentCollection(set, tagger);
                 count += collection.size();
                 pmc = false;
+                tries = 0;
                 System.out.println("Successfully parsed collection " + f.getName());
             }catch(Exception e){
                 if (tries > 2){
                     e.printStackTrace();
-                    return;
+                    throw new RuntimeException("The file supplied is neither medline or PMC! " + f.getName() + " Located at: " + f.getAbsolutePath());
                 }
-                //try again with pmc
+                //try one more time as pmc
                 pmc = true;
                 tries++;
                 importFile(f, tries);}
@@ -98,9 +111,8 @@ public class  SolrUtils {
      * @throws Exception
      */
     public static void main(String[] args) throws Exception {
-
         try{
-            String arg1 = args[0];
+            boolean Directory = (new File(args[0]).isDirectory());
         }catch(Exception e){
             e.printStackTrace();
             System.out.println("\n\nERROR: Invalid arguments passed.\nArguments passed: " + printArgs(args));
@@ -117,10 +129,12 @@ public class  SolrUtils {
         pmc = false;
         medlineParser = new MedlineParser();
         pmcParser = new PMCParser();
+        tagger = new Tag();
         File rootDir = new File(args[0]);
 
         if(args.length > 1){
             if(args[1].equals("del")){
+                System.out.println("----------DELETING ALL INDEXED FILES!----------");
                 client.deleteRecords();
             }
         }
@@ -140,8 +154,8 @@ public class  SolrUtils {
         }
 
         long elapsedTime = System.nanoTime() - startTime;
-        String time = String.valueOf(elapsedTime / 60000000000.0 );
-        System.out.println(System.getProperty("line.separator") + "Took " + time + " minutes to index " + count + " files!" + System.getProperty("line.separator"));
+        int time =(int) (elapsedTime / 1000000000.0);
+        System.out.println(System.getProperty("line.separator") + formatTime(time) +  ". To index " + count + " files!" + System.getProperty("line.separator"));
 
     }
 

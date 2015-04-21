@@ -1,19 +1,19 @@
 package parsers;
 
+import banner.Tag;
+import banner.tagging.Mention;
 import parsers.PMC.*;
 import org.apache.solr.common.SolrInputDocument;
+import parsers.PMC.Date;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.ParseException;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
 
 /**
@@ -24,8 +24,9 @@ public class PMCParser {
     private final Unmarshaller unmarshaller;
     private boolean indexable;
     private String message;
+    private Set<String> mentionTexts;
 
-    public PMCParser() throws JAXBException {
+    public PMCParser() throws JAXBException, IOException {
         JAXBContext jaxbContext = JAXBContext.newInstance("parsers.PMC", ObjectFactory.class.getClassLoader());
         unmarshaller = jaxbContext.createUnmarshaller();
     }
@@ -35,17 +36,13 @@ public class PMCParser {
     }
 
     public Article unmarshall(InputStream inputStream) throws JAXBException {
-        unmarshaller.setSchema(null);
         return (Article) unmarshaller.unmarshal(inputStream);
     }
 
-    public Article unmarshallPath(Path path)throws Exception{
-        return (Article) unmarshaller.unmarshal(Files.newInputStream(path));
-    }
-
-    public SolrInputDocument mapToSolrInputDocument(Article article) throws Exception {
+    public SolrInputDocument mapToSolrInputDocument(Article article, Tag tagger) throws Exception {
         indexable = true;
         message = "!ERROR: ";
+        mentionTexts = new HashSet<>();
         SolrInputDocument document = new SolrInputDocument();
 
         String id = addPMID(document, "pmid", article.getFront().getArticleMeta().getArticleId());
@@ -59,10 +56,13 @@ public class PMCParser {
         }
 
         addAuthors(document, "authors", article.getFront().getArticleMeta().getContribGroupOrAffOrAffAlternatives());
-        addAbstract(document, "abstract", article.getFront().getArticleMeta().getAbstract());
+        addAbstract(document, "abstract", article.getFront().getArticleMeta().getAbstract(), tagger);
         addBody(document, article.getBody());
+        addGeneMentions(document, "gene-mention");
 
 //        System.out.println(document);
+        System.out.println(mentionTexts);
+
         if (indexable){
             return document;
         }
@@ -183,7 +183,7 @@ public class PMCParser {
         }
     }
 
-    public void addAbstract(SolrInputDocument document, String name, List<Abstract> abstractList){
+    public void addAbstract(SolrInputDocument document, String name, List<Abstract> abstractList, Tag tagger){
         String result = "";
         for (Abstract abs: abstractList){
             if (abs.getAbstractType() == null){
@@ -205,6 +205,12 @@ public class PMCParser {
             result = result.replaceAll("\n", "");
             result = result.replaceAll("\t", "");
             result = result.replaceAll(" +", " ");
+
+            result = tagger.tagText(result);
+            System.out.println(result + "\n");
+
+            mentionTexts = tagger.getMentionSet();
+
             document.addField(name, result);
         }
     }
@@ -238,6 +244,7 @@ public class PMCParser {
         intro = intro.replaceAll(" +", " ");
         intro = intro.replaceAll(",(,*),", " ");
         intro = intro.replaceAll(", (, *),", " ");
+//        mentionTexts.addAll(tagger.tagText(intro));
         document.addField("intro-results", intro);
 
         discuss = discuss.replaceAll( "\\(\\)", "");
@@ -245,6 +252,7 @@ public class PMCParser {
         discuss = discuss.replaceAll(" +", " ");
         discuss = discuss.replaceAll(",(,*),", " ");
         discuss = discuss.replaceAll(", (, *),", " ");
+//        mentionTexts.addAll(tagger.tagText(discuss));
         document.addField("discussion-conclusion", discuss);
 
         if (intro.equals("") && discuss.equals("")){
@@ -254,5 +262,12 @@ public class PMCParser {
 
     }
 
+    private void addGeneMentions(SolrInputDocument document, String field){
+        if (mentionTexts.size() > 0){
+            for (String gene : mentionTexts){
+                document.addField(field, gene);
+            }
+        }
+    }
 
 }

@@ -265,7 +265,7 @@ public class Sub {
 
     @Override
     public String toString() {
-        String result = "<sub>";
+        String result = "_";
         if (content != null){
             for (Object o: content){
                 if (o instanceof String){
@@ -285,6 +285,6 @@ public class Sub {
                 }
             }
         }
-        return result + "</sub>";
+        return result + "";
     }
 }

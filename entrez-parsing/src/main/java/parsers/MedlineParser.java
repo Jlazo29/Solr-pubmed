@@ -1,5 +1,7 @@
 package parsers;
 
+import banner.Tag;
+import banner.tagging.Mention;
 import ingestion.SolrClient;
 import parsers.medline.*;
 import org.apache.solr.common.SolrInputDocument;
@@ -12,25 +14,24 @@ import parsers.medline.Suffix;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
+
 public class MedlineParser {
 
     private final Unmarshaller unmarshaller;
     private final Logger logger;
+    private Set<String> mentionText;
 
-    public MedlineParser() throws JAXBException {
+    public MedlineParser() throws JAXBException , IOException {
         logger = LoggerFactory.getLogger(SolrClient.class);
         JAXBContext jaxbContext = JAXBContext.newInstance("parsers.medline", ObjectFactory.class.getClassLoader());
         unmarshaller = jaxbContext.createUnmarshaller();
+
+
     }
 
     public MedlineCitationSet unmarshall(File xml) throws FileNotFoundException, JAXBException {
@@ -40,19 +41,18 @@ public class MedlineParser {
     public MedlineCitationSet unmarshall(InputStream inputStream) throws JAXBException {
         return (MedlineCitationSet) unmarshaller.unmarshal(inputStream);
     }
-    public MedlineCitationSet unmarshallPath(Path path)throws Exception{
-        return (parsers.medline.MedlineCitationSet) unmarshaller.unmarshal(Files.newInputStream(path));
-    }
 
-    public Collection<SolrInputDocument> mapToSolrInputDocumentCollection(MedlineCitationSet citationSet) {
+    public Collection<SolrInputDocument> mapToSolrInputDocumentCollection(MedlineCitationSet citationSet, Tag tagger) {
         Collection<SolrInputDocument> documentCollection = new ArrayList<>(citationSet.getMedlineCitation().size());
         for(MedlineCitation citation : citationSet.getMedlineCitation()) {
-            documentCollection.add(mapToSolrInputDocument(citation));
+            documentCollection.add(mapToSolrInputDocument(citation, tagger));
         }
         return documentCollection;
     }
 
-    public SolrInputDocument mapToSolrInputDocument(MedlineCitation citation) {
+    public SolrInputDocument mapToSolrInputDocument(MedlineCitation citation, Tag tagger) {
+        mentionText = new HashSet<>();
+
         SolrInputDocument document = new SolrInputDocument();
         addField(document, "pmid", citation.getPMID().getvalue());
         addDateField(document, "date", citation.getDateCreated());
@@ -62,9 +62,13 @@ public class MedlineParser {
             addAuthors(document, "authors", citation.getArticle().getAuthorList().getAuthor());
         }
         if (citation.getArticle().getAbstract() != null) {
-            addAbstractText(document, "abstract", citation.getArticle().getAbstract().getAbstractText());
+            addAbstractText(document, "abstract", citation.getArticle().getAbstract().getAbstractText(), tagger);
         }
+        addGeneMentions(document, "gene-mention");
+
 //        System.out.println(document);
+        System.out.println(mentionText);
+
         return document ;
     }
 
@@ -78,11 +82,14 @@ public class MedlineParser {
         }
     }
 
-    private void addAbstractText(SolrInputDocument document, String name, List<AbstractText> abstractTexts) {
+    private void addAbstractText(SolrInputDocument document, String name, List<AbstractText> abstractTexts, Tag tagger) {
         String result = "";
         for (AbstractText abstractText : abstractTexts) {
             result += abstractText.getvalue();
         }
+        result = tagger.tagText(result);
+        System.out.println(result);
+        mentionText = tagger.getMentionSet();
         document.addField(name, result);
     }
 
@@ -125,6 +132,14 @@ public class MedlineParser {
             return collectiveName;
         else
             throw new NullPointerException("Cannot process: " + author.toString());
+    }
+
+    private void addGeneMentions(SolrInputDocument document, String field){
+        if (mentionText.size() > 0){
+            for (String gene : mentionText){
+                document.addField(field,gene);
+            }
+        }
     }
 
 

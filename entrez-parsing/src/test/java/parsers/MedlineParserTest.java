@@ -1,5 +1,6 @@
 package parsers;
 
+import banner.Tag;
 import org.apache.commons.io.FileUtils;
 import parsers.medline.*;
 import org.apache.solr.common.SolrInputDocument;
@@ -23,11 +24,13 @@ public class MedlineParserTest {
     private static final String TEST_FILE= "/samples/medsamp2014.xml";
     private MedlineParser ingestion;
     private File testFile;
+    private static Tag tagger;
 
     @Before
     public void setUp() throws Exception {
         ingestion = new MedlineParser();
         testFile = getTestFile();
+        tagger = new Tag();
     }
 
     private File getTestFile() {
@@ -66,7 +69,7 @@ public class MedlineParserTest {
         }
         MedlineCitationSet citationSet = mock(MedlineCitationSet.class);
         when(citationSet.getMedlineCitation()).thenReturn(medlineCitations);
-        Collection<SolrInputDocument> inputDocuments = ingestion.mapToSolrInputDocumentCollection(citationSet);
+        Collection<SolrInputDocument> inputDocuments = ingestion.mapToSolrInputDocumentCollection(citationSet, tagger);
         assertEquals(5, inputDocuments.size());
     }
 

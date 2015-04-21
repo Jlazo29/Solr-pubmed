@@ -265,7 +265,7 @@ public class Sup {
 
     @Override
     public String toString() {
-        String result = "<sup>";
+        String result ="^";
         if (content != null){
             for (Object o: content){
                 if (o instanceof String){
@@ -285,6 +285,6 @@ public class Sup {
                 }
             }
         }
-        return result + "</sup>";
+        return result + "";
     }
 }
