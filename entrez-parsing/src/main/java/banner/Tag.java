@@ -29,9 +29,9 @@ public class Tag {
     private HashSet<String> mentionText; //mentions
 
 	public Tag() throws IOException {
-		banner.BannerProperties properties = banner.BannerProperties.load("banner-external/banner.properties");
+		banner.BannerProperties properties = banner.BannerProperties.load("entrez-parsing/banner-external/banner.properties");
 		tokenizer = properties.getTokenizer();
-		crfTagger = CRFTagger.load(new File("banner-external/models/model_BC2GM.bin"), properties.getLemmatiser(), properties.getPosTagger(), properties.getPreTagger());
+		crfTagger = CRFTagger.load(new File("entrez-parsing/banner-external/models/model_BC2GM.bin"), properties.getLemmatiser(), properties.getPosTagger(), properties.getPreTagger());
         postProcessor = properties.getPostProcessor();
 	}
 
@@ -86,7 +86,8 @@ public class Tag {
     /**
      * author: Jorge Luis Lazo
      * Adapated from the Main() function, to be used by any Parser as it indexes text into SolrInputDocuments
-     * @param text: The text to tag and extract mentions
+     * @param text: The text to tag and extract mentions.
+     * @return String: The new tagged text with HTML highlight spans.
      */
 	public String tagText(String text) {
         mentionText = new HashSet<>();
@@ -97,6 +98,7 @@ public class Tag {
 		int start = breaker.first();
 		for (int end = breaker.next(); end != BreakIterator.DONE; start = end, end = breaker.next()) {
 			String sentenceText = text.substring(start, end).trim();
+            int left_char = 0; //keep track of leftmost tag so we dont tag it twice.
 			if (sentenceText.length() > 0) {
 				Sentence sentence = new Sentence(null, sentenceText);
 				tokenizer.tokenize(sentence);
@@ -111,10 +113,12 @@ public class Tag {
                     StringBuilder sentenceString = new StringBuilder(sentence.getText());
 
                     for(Mention m : sentence.getMentions()){
-                        int start_char = sentenceString.indexOf(m.getText()); //start index
+                        int start_char = sentenceString.indexOf(m.getText(), left_char);
                         int end_char = start_char + m.getText().length(); //end index
                         sentenceString = sentenceString.insert(end_char, "</span>");//insert end tag first (so start char is preserved)
                         sentenceString = sentenceString.insert(start_char, ("<span class=\"" + m.getType().getText() + "\">")); //start tag
+
+                        left_char = end_char + 27; //27 is the amount of characters added <span class="GENE"></span>
                     }
                     result = result.append(sentenceString);
                 }
@@ -123,11 +127,6 @@ public class Tag {
                 }
 			}
 		}
-        text = text.replaceAll(" [,] ", ", ");
-        text = text.replaceAll(" [-] ", "-");
-        text = text.replaceAll(" [\\.] ", ". ");
-
-//        System.out.println(text);
 
         return result.toString();
 	}

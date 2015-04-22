@@ -56,7 +56,16 @@ public class  SolrUtils {
         return result.toString();
     }
 
-    public static void importFile(File f, int tries){
+    /**
+     * This method is called on every file inside the XML directory, it tries to unmarshall it as
+     * either a PMC or a medline file, if both fail, it wil throw a RuntimeException.
+     * @param f: a File to unmarshall and parse upon.
+     * @param tries: number of tries (starts as 0 when called using the FileTreeTraverser, so it is
+     *             reset on every new file call) if it reaches 2, a RuntimeException is thrown.
+     *
+     * @throws java.lang.RuntimeException
+     */
+     public static void importFile(File f, int tries){
         if(pmc){
             try{
                 Article article = pmcParser.unmarshall(f);
@@ -76,7 +85,7 @@ public class  SolrUtils {
             }catch(Exception e){
                 if (tries > 2){
                     e.printStackTrace();
-                    System.out.println("The file supplied is neither medline or PMC! " + f.getName() + " Located at: " + f.getAbsolutePath());
+                    throw new RuntimeException("The file supplied is neither medline or PMC! " + f.getName() + " Located at: " + f.getAbsolutePath());
                 }
                 //Try one more time as medline
                 pmc = false;
@@ -94,7 +103,7 @@ public class  SolrUtils {
             }catch(Exception e){
                 if (tries > 2){
                     e.printStackTrace();
-                    System.out.println("The file supplied is neither medline or PMC! " + f.getName() + " Located at: " + f.getAbsolutePath());
+                    throw new RuntimeException("The file supplied is neither medline or PMC! " + f.getName() + " Located at: " + f.getAbsolutePath());
                 }
                 //try one more time as pmc
                 pmc = true;
@@ -104,20 +113,17 @@ public class  SolrUtils {
     }
 
     /**
-     *
      * @param args:
      *            arg[0]: Absolute path to folder containing XML files.
      *            arg[1]: Optional argument, if "del" is specified, all the indexed files will be cleared.
-     * @throws Exception
+     * @throws java.lang.IllegalArgumentException
      */
     public static void main(String[] args) throws Exception {
-        try{
-            boolean Directory = (new File(args[0]).isDirectory());
-        }catch(Exception e){
-            e.printStackTrace();
+        boolean isDirectory = (new File(args[0]).isDirectory());
+        if (!isDirectory){
             System.out.println("\n\nERROR: Invalid arguments passed.\nArguments passed: " + printArgs(args));
             System.out.println("\n\nUSAGE: \n\targ[0]: Absolute path to folder containing XML files.\n\targ[1]: Optional argument, if \"del\" is specified, all the indexed files will be cleared.");
-            return;
+            throw new IllegalArgumentException();
         }
 
         // Initializations

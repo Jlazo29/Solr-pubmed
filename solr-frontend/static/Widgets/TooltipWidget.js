@@ -16,6 +16,7 @@ AjaxSolr.TooltipWidget = AjaxSolr.AbstractFacetWidget.extend({
           self = self.manager.widgets[field];
           manager.curr[field][facet] = facet;
           if (self.set(facet)) {
+              //manager.store.get('q').val('*:*');
             self.doRequest(null, "select", true);
           }
           return false;

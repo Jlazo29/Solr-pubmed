@@ -71,7 +71,7 @@ AjaxSolr.ResultWidget = AjaxSolr.AbstractWidget.extend({
 
       var $links = $('#links_' + doc.pmid);
       $links.empty();
-      var maxAuthors = 5;
+      var maxAuthors = 12;
       if (items.length > maxAuthors ){
         for (var j = 0; j < maxAuthors; j++) {
           $links.append($('<li></li>').append(items[j]));

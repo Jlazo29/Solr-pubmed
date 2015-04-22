@@ -65,7 +65,7 @@ var Manager;
       'facet.limit': 20,
       'f.gene-mention.facet.limit': 50,
       'facet.mincount': 1,
-        //'sort': "pmid desc"
+        'sort': "abstract desc"
       //'facet.range': 'date'
     };
     for (var name in params) {
