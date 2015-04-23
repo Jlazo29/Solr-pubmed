@@ -40,7 +40,6 @@ solr-frontend/lib/
 
 
 #BANNER models
-models/
 
 # PyInstaller
 #  Usually these files are written by a python script from a template

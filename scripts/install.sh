@@ -4,7 +4,8 @@
 # First install maven local dependencies required by BANNER
 cd ../entrez-parsing/
 
-mvn install:install-file -Dfile="src/main/resources/libs/banner.jar" -DgroupId=banner -DartifactId=banner -Dversion=1.0 -Dpackaging=jar
+mvn clean;
+
 mvn install:install-file -Dfile="src/main/resources/libs/bsh.jar" -DgroupId=bsh -DartifactId=bsh -Dversion=1.0 -Dpackaging=jar
 mvn install:install-file -Dfile="src/main/resources/libs/dragontool.jar" -DgroupId=dragontool -DartifactId=dragontool -Dversion=1.0 -Dpackaging=jar
 mvn install:install-file -Dfile="src/main/resources/libs/heptag.jar" -DgroupId=heptag -DartifactId=heptag -Dversion=1.0 -Dpackaging=jar
@@ -16,7 +17,9 @@ mvn install:install-file -Dfile="src/main/resources/libs/secondstring.jar" -Dgro
 
 # Now install the full project
 cd ../;
+mv entrez-parsing/src/main/resources/schema/archivearticle.dtd entrez-parsing/
 mvn install;
+mv entrez-parsing/archivearticle.dtd entrez-parsing/src/main/resources/schema/
 
 #Finally install some python dependencies for the frontend
 cd solr-frontend;

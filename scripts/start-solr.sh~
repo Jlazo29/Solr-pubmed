@@ -1,3 +1,0 @@
-echo "Starting Solr Server..";
-cd ../../solr-config/;
-mvn jetty:run-war;

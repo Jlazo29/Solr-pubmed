@@ -29,9 +29,9 @@ public class Tag {
     private HashSet<String> mentionText; //mentions
 
 	public Tag() throws IOException {
-		banner.BannerProperties properties = banner.BannerProperties.load("entrez-parsing/banner-external/banner.properties");
+		banner.BannerProperties properties = banner.BannerProperties.load("banner-external/banner.properties");
 		tokenizer = properties.getTokenizer();
-		crfTagger = CRFTagger.load(new File("entrez-parsing/banner-external/models/model_BC2GM.bin"), properties.getLemmatiser(), properties.getPosTagger(), properties.getPreTagger());
+		crfTagger = CRFTagger.load(new File("banner-external/models/model_BC2GM.bin"), properties.getLemmatiser(), properties.getPosTagger(), properties.getPreTagger());
         postProcessor = properties.getPostProcessor();
 	}
 

@@ -9,6 +9,7 @@ import org.apache.log4j.BasicConfigurator;
 import org.apache.solr.common.SolrInputDocument;
 import parsers.MedlineParser;
 import java.io.*;
+import java.nio.file.NoSuchFileException;
 import java.util.*;
 
 public class  SolrUtils {
@@ -84,8 +85,9 @@ public class  SolrUtils {
                 }
             }catch(Exception e){
                 if (tries > 2){
+                    System.out.println("The file supplied is neither medline or PMC! " + f.getName() + " Located at: " + f.getAbsolutePath());
                     e.printStackTrace();
-                    throw new RuntimeException("The file supplied is neither medline or PMC! " + f.getName() + " Located at: " + f.getAbsolutePath());
+                    return;
                 }
                 //Try one more time as medline
                 pmc = false;
@@ -102,8 +104,9 @@ public class  SolrUtils {
                 System.out.println("Successfully parsed collection " + f.getName());
             }catch(Exception e){
                 if (tries > 2){
+                    System.out.println("The file supplied is neither medline or PMC! " + f.getName() + " Located at: " + f.getAbsolutePath());
                     e.printStackTrace();
-                    throw new RuntimeException("The file supplied is neither medline or PMC! " + f.getName() + " Located at: " + f.getAbsolutePath());
+                    return;
                 }
                 //try one more time as pmc
                 pmc = true;
@@ -116,14 +119,14 @@ public class  SolrUtils {
      * @param args:
      *            arg[0]: Absolute path to folder containing XML files.
      *            arg[1]: Optional argument, if "del" is specified, all the indexed files will be cleared.
-     * @throws java.lang.IllegalArgumentException
+     * @throws java.nio.file.NoSuchFileException
      */
     public static void main(String[] args) throws Exception {
         boolean isDirectory = (new File(args[0]).isDirectory());
         if (!isDirectory){
-            System.out.println("\n\nERROR: Invalid arguments passed.\nArguments passed: " + printArgs(args));
+            System.out.println("\n\nERROR: Invalid arguments passed.");
             System.out.println("\n\nUSAGE: \n\targ[0]: Absolute path to folder containing XML files.\n\targ[1]: Optional argument, if \"del\" is specified, all the indexed files will be cleared.");
-            throw new IllegalArgumentException();
+            throw new NoSuchFileException(printArgs(args));
         }
 
         // Initializations

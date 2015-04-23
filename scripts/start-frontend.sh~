@@ -1,3 +1,0 @@
-echo "Starting frontend Application..";
-cd ../../solr-frontend/;
-python app.py;

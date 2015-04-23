@@ -53,7 +53,7 @@
         <dependency>
             <groupId>dragontool</groupId>
             <artifactId>dragontool</artifactId>
-            <version>1.5</version>
+            <version>1.0</version>
         </dependency>
         <!--heptag tools-->
         <dependency>
