@@ -47,6 +47,11 @@ AjaxSolr.Manager = AjaxSolr.AbstractManager.extend(
       this.widgets[widget.id] = widget;
     },
 
+    /**
+     * Formats the facet query string.
+     * @param array They array of fq parameter strings.
+     * @returns {string}
+     */
     stringFq: function(array){
       if(array.length > 0){
         var string_fq = "&fq=(";
@@ -55,7 +60,7 @@ AjaxSolr.Manager = AjaxSolr.AbstractManager.extend(
           if (i == array.length - 1){ //last
             string_fq += array[i] + ")";
           }
-          else{string_fq += array[i] + " OR ";}
+          else{string_fq += array[i] + " AND ";}
 
         }
         return string_fq;
@@ -65,9 +70,15 @@ AjaxSolr.Manager = AjaxSolr.AbstractManager.extend(
       }
     },
 
+    /**
+     * Retrieves the date parameter settings and adds it onto a string.
+     * @see https://wiki.apache.org/solr/SimpleFacetParameters#Facet_by_Range
+     * @param date The starting string to add on (&facet.range=date)
+     * @returns {string}
+     */
     dateQuery: function(date){
-      var obj = this.widgets['date'];
-      date = date + obj.begin + obj.finish + obj.gap;
+      var placeHolder = this.widgets['date'];
+      date = date + placeHolder.begin + placeHolder.finish + placeHolder.gap;
       return date;
     },
 
@@ -101,7 +112,15 @@ AjaxSolr.Manager = AjaxSolr.AbstractManager.extend(
       this.executeRequest(start,servlet, cluster);
     },
 
+    /**
+     * Executes the inital request to Solr, if successful, calls handleResponse.
+     *
+     * @param {Number} start The starting page. Generally {null} unless specified.
+     * @param {string} servlet The servlet to send the request to. Usually "select"
+     * @param {boolean} cluster whether to ask for further cluster data or not.
+     */
     executeRequest: function (start, servlet, cluster) {
+      console.log(start);
       var self = this,
           query = {dataType: 'json'},
           string_query = this.store.get("q").val(),
@@ -152,7 +171,8 @@ AjaxSolr.Manager = AjaxSolr.AbstractManager.extend(
 
     /**
      * This method is executed after the Solr response data arrives. Allows each
-     * widget to handle Solr's response separately.
+     * widget to handle Solr's response separately. Additional sends the second request
+     * to Solr for clustering data, if true.
      *
      * @param {Object} data The Solr response.
      * @param {Boolean} cluster Whether to cluster or not
@@ -191,11 +211,22 @@ AjaxSolr.Manager = AjaxSolr.AbstractManager.extend(
       }
     },
 
+    /**
+     * Method called after clustering data comes back and each widget acts accordingly.
+     *
+     * @param data The new data to be saved
+     */
     handleClusters: function(data){
       this.response.clusters = data.clusters;
       this.widgets["clusters"].afterClusters();
     },
 
+    /**
+     * This method is called when a cluster is selected, requested the current docs inside
+     * the cluster.
+     *
+     * @param IDs The array of IDs to request upon.
+     */
     requestClusterDocs: function(IDs){
       this.widgets["result"].beforeRequest();
       this.clustersDocs = []; //resetting

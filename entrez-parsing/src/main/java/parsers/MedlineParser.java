@@ -19,29 +19,49 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.ParseException;
 import java.util.*;
+/**
+ * An object representation of a JAXB parser to convert  medline XML data into {@link org.apache.solr.common.SolrInputDocument}s.
+ * @author Alex Purdy on 11/14.
+ */
 
 public class MedlineParser {
 
     private final Unmarshaller unmarshaller;
-    private final Logger logger;
     private Set<String> mentionText;
 
+    /**
+     * Constructor for {@link parsers.MedlineParser}. Creates a {@link javax.xml.bind.JAXBContext}
+     * and a {@link javax.xml.bind.Unmarshaller} to work with.
+     *
+     * @throws JAXBException
+     * @throws IOException
+     */
     public MedlineParser() throws JAXBException , IOException {
-        logger = LoggerFactory.getLogger(SolrClient.class);
         JAXBContext jaxbContext = JAXBContext.newInstance("parsers.medline", ObjectFactory.class.getClassLoader());
         unmarshaller = jaxbContext.createUnmarshaller();
-
-
     }
 
+    /**
+     * Unmarshalling step to read the data contents of an xml {@link File}.
+     *
+     * @param xml: A {@link File} to unmarshall.
+     * @return The {@link parsers.medline.MedlineCitationSet} associated with the {@link File}.
+     * @throws FileNotFoundException
+     * @throws JAXBException
+     */
     public MedlineCitationSet unmarshall(File xml) throws FileNotFoundException, JAXBException {
-        return unmarshall(new FileInputStream(xml));
+        return (MedlineCitationSet) unmarshaller.unmarshal(xml);
     }
 
-    public MedlineCitationSet unmarshall(InputStream inputStream) throws JAXBException {
-        return (MedlineCitationSet) unmarshaller.unmarshal(inputStream);
-    }
-
+    /**
+     * This method loops through the multiple {@link parsers.medline.MedlineCitation}
+     * inside a {@link parsers.medline.MedlineCitationSet} in order to extract the data from each one.
+     * A {@link banner.tagging.Tagger} Is passed along.
+     *
+     * @param citationSet: the {@link parsers.medline.MedlineCitationSet} to extract data from.
+     * @param tagger: the {@link banner.tagging.Tagger}to tag text.
+     * @return documentCollection: A {@link java.util.Collection} of {@link org.apache.solr.common.SolrInputDocument}.
+     */
     public Collection<SolrInputDocument> mapToSolrInputDocumentCollection(MedlineCitationSet citationSet, Tag tagger) {
         Collection<SolrInputDocument> documentCollection = new ArrayList<>(citationSet.getMedlineCitation().size());
         for(MedlineCitation citation : citationSet.getMedlineCitation()) {
@@ -50,6 +70,15 @@ public class MedlineParser {
         return documentCollection;
     }
 
+    /**
+     * This method is called for each {@link parsers.medline.MedlineCitation} to map
+     * data into a {@link org.apache.solr.common.SolrInputDocument}.
+     *
+     * @param citation: The {@link parsers.medline.MedlineCitation} to extract data from.
+     * @param tagger: the {@link banner.tagging.Tagger}to tag text.
+     * @return a {@link org.apache.solr.common.SolrInputDocument}, a java object with data
+     *         ready for indexing.
+     */
     public SolrInputDocument mapToSolrInputDocument(MedlineCitation citation, Tag tagger) {
         mentionText = new HashSet<>();
 
@@ -77,7 +106,7 @@ public class MedlineParser {
             try {
                 document.addField(name, formatAuthorName(author));
             } catch (NullPointerException e) {
-                logger.error(e.getMessage(), e);
+                e.printStackTrace();
             }
         }
     }
@@ -87,9 +116,11 @@ public class MedlineParser {
         for (AbstractText abstractText : abstractTexts) {
             result += abstractText.getvalue();
         }
-        result = tagger.tagText(result);
-        System.out.println(result);
-        mentionText = tagger.getMentionSet();
+        if (tagger != null){
+            result = tagger.tagText(result);
+            System.out.println(result);
+            mentionText = tagger.getMentionSet();
+        }
         document.addField(name, result);
     }
 
@@ -98,7 +129,7 @@ public class MedlineParser {
             try {
                 document.addField(name, date.getConvertedDate());
             } catch (ParseException e) {
-                logger.error(String.format("Failed to add date to field %s", name), e);
+                e.printStackTrace();
             }
         }
     }
@@ -116,9 +147,6 @@ public class MedlineParser {
             }
             if (o instanceof Initials) {
                 initials = ((Initials) o).getvalue();
-            }
-            if (o instanceof Suffix) {
-                suffix = ((Suffix) o).getvalue();
             }
             if (o instanceof CollectiveName) {
                 collectiveName = ((CollectiveName) o).getvalue();

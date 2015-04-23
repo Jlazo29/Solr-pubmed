@@ -1,0 +1,581 @@
+<?xml version="1.0"?>
+<!DOCTYPE article PUBLIC "-//NLM//DTD Journal Archiving and Interchange DTD v2.3 20070202//EN" "archivearticle.dtd">
+<article xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article">
+    <?properties open_access?>
+    <front>
+        <journal-meta>
+            <journal-id journal-id-type="nlm-ta">BMC Microbiol</journal-id>
+            <journal-title>BMC Microbiology</journal-title>
+            <issn pub-type="epub">1471-2180</issn>
+            <publisher>
+                <publisher-name>BioMed Central</publisher-name>
+                <publisher-loc>London</publisher-loc>
+            </publisher>
+        </journal-meta>
+        <article-meta>
+            <article-id pub-id-type="pmid">11329361</article-id>
+            <article-id pub-id-type="pmc">31413</article-id>
+            <article-id pub-id-type="publisher-id">1471-2180-1-4</article-id>
+            <article-id pub-id-type="doi">10.1186/1471-2180-1-4</article-id>
+            <article-categories>
+                <subj-group subj-group-type="heading">
+                    <subject>Research Article</subject>
+                </subj-group>
+            </article-categories>
+            <title-group>
+                <article-title>Envelope structure of <italic>Synechococcus</italic> sp. WH8113, a nonflagellated swimming cyanobacterium</article-title>
+            </title-group>
+            <contrib-group>
+                <contrib id="A1" corresp="yes" contrib-type="author">
+                    <name>
+                        <surname>Samuel</surname>
+                        <given-names>Aravinthan DT</given-names>
+                    </name>
+                    <xref ref-type="aff" rid="I1">1</xref>
+                    <email>asamuel@fas.harvard.edu</email>
+                </contrib>
+                <contrib id="A2" contrib-type="author">
+                    <name>
+                        <surname>Petersen</surname>
+                        <given-names>Jennifer D</given-names>
+                    </name>
+                    <xref ref-type="aff" rid="I2">2</xref>
+                    <email>petersej@ninds.nih.gov</email>
+                </contrib>
+                <contrib id="A3" contrib-type="author">
+                    <name>
+                        <surname>Reese</surname>
+                        <given-names>Thomas S</given-names>
+                    </name>
+                    <xref ref-type="aff" rid="I2">2</xref>
+                    <email>tsr@codon.nih.gov</email>
+                </contrib>
+            </contrib-group>
+            <aff id="I1">
+                <label>1</label>Rowland Institute for Science, Cambridge, Massachusetts, USA and Department of Molecular &amp; Cellular Biology, Harvard University, Cambridge, Massachusetts, USA</aff>
+            <aff id="I2">
+                <label>2</label>Laboratory of Neurobiology, NIH, NINDS at the Marine Biological Laboratory, Woods Hole, Massachusetts, USA</aff>
+            <pub-date pub-type="collection">
+                <year>2001</year>
+            </pub-date>
+            <pub-date pub-type="epub">
+                <day>24</day>
+                <month>4</month>
+                <year>2001</year>
+            </pub-date>
+            <volume>1</volume>
+            <fpage>4</fpage>
+            <lpage>4</lpage>
+            <ext-link ext-link-type="uri" xlink:href="http://www.biomedcentral.com/1471-2180/1/4"/>
+            <history>
+                <date date-type="received">
+                    <day>28</day>
+                    <month>3</month>
+                    <year>2001</year>
+                </date>
+                <date date-type="accepted">
+                    <day>24</day>
+                    <month>4</month>
+                    <year>2001</year>
+                </date>
+            </history>
+            <permissions>
+                <copyright-statement>Copyright &#xA9; 2001 Samuel et al; licensee BioMed Central Ltd. This is an Open Access article: verbatim copying and redistribution of this article are permitted in all media for any purpose, provided this notice is preserved along with the article's original URL.</copyright-statement>
+                <copyright-year>2001</copyright-year>
+                <copyright-holder>Samuel et al; licensee BioMed Central Ltd. This is an Open Access article: verbatim copying and redistribution of this article are permitted in all media for any purpose, provided this notice is preserved along with the article's original URL.</copyright-holder>
+            </permissions>
+            <abstract>
+                <sec>
+                    <title>Background</title>
+                    <p>Many bacteria swim by rotating helical flagellar filaments [<xref ref-type="bibr" rid="B1">1</xref>]. Waterbury et al. [<xref ref-type="bibr" rid="B15">15</xref>] discovered an exception, strains of the cyanobacterium <italic>Synechococcus</italic> that swim without flagella or visible changes in shape. Other species of cyanobacteria glide on surfaces [<xref ref-type="bibr" rid="B2">2</xref>,<xref ref-type="bibr" rid="B7">7</xref>]. The hypothesis that <italic>Synechococcus</italic> might swim using traveling surface waves [<xref ref-type="bibr" rid="B6">6</xref>,<xref ref-type="bibr" rid="B13">13</xref>] prompted this investigation.</p>
+                </sec>
+                <sec>
+                    <title>Results</title>
+                    <p>Using quick-freeze electron microscopy, we have identified a crystalline surface layer that encloses the outer membrane of the motile strain <italic>Synechococcus</italic> sp. WH8113, the components of which are arranged in a rhomboid lattice. Spicules emerge in profusion from the layer and extend up to 150 nm into the surrounding fluid. These spicules also send extensions inwards to the inner cell membrane where motility is powered by an ion-motive force [<xref ref-type="bibr" rid="B17">17</xref>].</p>
+                </sec>
+                <sec>
+                    <title>Conclusion</title>
+                    <p>The envelope structure of <italic>Synechococcus</italic> sp. WH8113 provides new constraints on its motile mechanism. The spicules are well positioned to transduce energy at the cell membrane into mechanical work at the cell surface. One model is that an unidentified motor embedded in the cell membrane utilizes the spicules as oars to generate a traveling wave external to the surface layer in the manner of ciliated eukaryotes.</p>
+                </sec>
+            </abstract>
+        </article-meta>
+    </front>
+    <body>
+        <sec>
+            <title>Results and discussion</title>
+            <p>The cell envelope of <italic>Synechococcus</italic> sp. WH8113 has multiple layers (Fig. <xref ref-type="fig" rid="F1">1</xref>). Proceeding from inside, the cell envelope consists of cell membrane (&#x223C; 10 nm thick), peptidoglycan layer (&#x223C; 15 nm thick), outer membrane (&#x223C; 10 nm thick), and surface layer (&#x223C; 35 nm thick). The surface layer evident in Fig. <xref ref-type="fig" rid="F1">1</xref> is not evident in conventional, chemically-fixed preparations (data not shown, see Ref. <xref ref-type="bibr" rid="B16">16</xref>). Chemical fixation appears to cause detachment of the surface layer from the outer membrane whereas cryopreservation and freeze-substitution (data not shown) retain this layer.</p>
+            <fig position="float" id="F1">
+                <label>Figure 1</label>
+                <caption>
+                    <p>
+                        <italic>Synechococcus</italic> (strain WH8113) Cross fracture revealing concentric layers of cell envelope. The inset corresponds to the outlined section of cell envelope comprising cell membrane (CM), peptidoglycan layer (P), outer membrane (OM), and surface layer (S). A thylakoid layer (T) is also indicated. Scale bar, 200 nm.</p>
+                </caption>
+                <graphic xlink:href="1471-2180-1-4-1"/>
+            </fig>
+            <p>Convex fractures of the inner cell membrane exposing its inner leaflet (Fig. <xref ref-type="fig" rid="F2">2a</xref>) as well as concave fractures exposing its outer leaflet (Fig. <xref ref-type="fig" rid="F2">2b</xref>) are densely covered by ball-shaped intramembrane particles that likely represent a panoply of membrane proteins and channels. These particles range in diameter from 5 nm to 13 nm. There is no obvious pattern in their distribution on either face, although a subset may represent the roots of the spicules described below. Pits complementary to the intramembrane particles on both convex and concave fractures of the cell membrane were infrequent [<xref ref-type="bibr" rid="B12">12</xref>].</p>
+            <fig position="float" id="F2">
+                <label>Figure 2</label>
+                <caption>
+                    <p>(a) <italic>Synechococcus</italic> (strain WH8113). Membrane fracture uncovering the inner cell membrane (CMi) showing a dense distribution of intramembrane particles. Fracture plane then crosses the surface layer (S) into the surrounding medium showing spicules (arrowhead) that extend from the cell surface. Arrow shows fiber extending from outer membrane to cell membrane. Scale bar, 100 nm. (b) <italic>Synechococcus</italic> (strain WH8113) Complementary fracture plane showing the outer leaflet of the cell membrane (CMo) which has fewer intramembrane particles than the inner leaflet. The fracture then crosses to the outer leaflet of the outer membrane (OMo), and then turns to fracture across the surface layer (S). Scale bar, 100 nm.</p>
+                </caption>
+                <graphic xlink:href="1471-2180-1-4-2"/>
+            </fig>
+            <p>Convex fractures of the outer membrane exposing its inner leaflet (Fig. <xref ref-type="fig" rid="F3">3</xref>) are covered by pits. The pits range in diameter from 3 to 18 nm. The smaller pits occur in greater density than the larger pits. There is no obvious pattern in the distribution of pits. Concave fractures of the outer membrane exposing its outer leaflet appear rough and uneven, lacking clear structures like particles or pits (Fig. <xref ref-type="fig" rid="F2">2b</xref>).</p>
+            <fig position="float" id="F3">
+                <label>Figure 3</label>
+                <caption>
+                    <p>
+                        <italic>Synechococcus</italic> (strain WH8113). (OMi) and a patch of the inner leaflet of cell membrane (CMi) where the outer membrane has been pulled away. Typical of such outer membrane fractures, a profusion of spicules lie about the perimeter or lie flat along the outer membrane surface. Consideration of the fracture process explains the disposition of these spicules. If the spicules are tightly rooted to their bases, and the bond energy of their composition exceeds that of the interaction between their surfaces and the ambient ice, then the spicules would be pulled out of the frozen material that is cleaved away by the knife fracture, and would then fall onto the newly exposed surface thereby demonstrating their original continuity with it. Differences in angles of cleavage may explain the relative sparseness of the spicules on the top of the exposed surface compared to the edges. Scale bar, 100 nm.</p>
+                </caption>
+                <graphic xlink:href="1471-2180-1-4-3"/>
+            </fig>
+            <p>A surface layer uniformly covers the outer membrane. In cross section, the surface layer appears as cylindrical pillars of diameter &#x223C; 8 nm that extend radially &#x223C; 18 nm from the outer leaflet of the outer membrane (Figs. <xref ref-type="fig" rid="F1">1</xref>, <xref ref-type="fig" rid="F2">2</xref>). The pillars are separated by gaps of &#x223C; 4 nm that are revealed by freeze-etch, indicating that they were formerly filled with water. Beyond &#x223C; 18 nm, the adjacent pillars connect laterally forming a fused region &#x223C; 17 nm thick. In cross sections of the cell envelope, this region sometimes appears as a congealed layer (see Fig. <xref ref-type="fig" rid="F1">1</xref>) but sometimes appears as a row of balls (see upper-left quadrant of Fig. <xref ref-type="fig" rid="F2">2a</xref>). This variability may reflect cleavages along different axes of the surface layer, or simply different degrees of plastic deformation and damage during fracture. The surface layer is a crystalline lattice, as is evident in aerial views. Such views reveal balls packed in a rhomboid organization with spacing &#x223C; 12 nm and obtuse angle &#x223C; 110&#xB0; (Fig. <xref ref-type="fig" rid="F4">4a, 4b</xref>). These balls have the same size and spacing as those balls identified in cross-sections.</p>
+            <fig position="float" id="F4">
+                <label>Figure 4</label>
+                <caption>
+                    <p>(a) <italic>Synechococcus</italic> (strain WH8113) Crystalline outer surface of the surface layer (S) revealed where ambient ice is broken away. Arrowhead indicates fiber of 5 nm thickness that arises from cell membrane and extends to higher layers. Scale bar, 50 nm. (b) <italic>Synechococcus</italic> (strain WH8113) Patch of crystalline outer surface near fracture plane revealed by etching ambient ice. Since the bacterial surface is perpendicular to the line of sight, we used this image to measure the lattice arrangement: rhomboid with spacing &#x223C; 12 nm and obtuse angle &#x223C; 110&#xB0;. Scale bar, 50 nm.</p>
+                </caption>
+                <graphic xlink:href="1471-2180-1-4-4"/>
+            </fig>
+            <p>Spicules arise in profusion over the surface of the bacterium and extend up to 150 nm into the surrounding medium. The smallest observed separations between adjacent spicules are 12 nm and 24 nm, which corresponds to the spacing of the surface lattice. Spicules have uniform thickness of &#x223C; 5 nm along their length. Spicules are flexible; we have measured curvatures with radii as small as 30 nm.</p>
+            <p>It is difficult to trace the contour of a spicule through the entire cell envelope. Convex fractures of the outer membrane are characterized by a quantity of spicules projecting toward outer layers (Fig. <xref ref-type="fig" rid="F3">3</xref>). We frequently find spicules protruding outward between adjacent balls in cross-sections of the surface layer (arrow, Fig. <xref ref-type="fig" rid="F2">2a</xref>; arrowhead, Fig. <xref ref-type="fig" rid="F4">4a</xref>). We also frequently find fibers of 5 nm thickness that arise from the cell membrane before entering higher layers that could represent the lower stems of spicules (arrow, Fig <xref ref-type="fig" rid="F2">2a</xref>). These facts taken together suggest that the spicules extend outward through channels in the surface layer and extend inward through underlying layers to contact the cell membrane.</p>
+            <p>Pitta et al. [<xref ref-type="bibr" rid="B11">11</xref>] found that depriving <italic>Synechococcus</italic> of calcium inhibited motility and that the addition of calcium chelators EDTA or EGTA in excess of the initial concentration of calcium irreversibly arrested motility. We found that resuspension of <italic>Synechococcus</italic> in calcium-free seawater supplemented with 10 mM EDTA severely disrupted both the surface layer and internal thylakoid membranes. The surface layer lost its regularity, and would sometimes fall off entirely. Thylakoid layers that are ordinarily tightly apposed (see Fig. <xref ref-type="fig" rid="F1">1</xref>) separate by as much as 50 nm. Such severe damage (data not shown) could explain the abolition of motility by any of multiple causes, including the removal of the protein SwmA, an outer membrane protein which has been implicated in motility. Similar EDTA treatment is used to isolate SwmA from motile <italic>Synechococcus</italic> [<xref ref-type="bibr" rid="B3">3</xref>].</p>
+            <p>In the absence of flagella, the cell surface of <italic>Synechococcus</italic> sp. WH8113 must generate thrust. Theoretical work suggests that a cyanobacterium could swim at the observed speeds by oscillating its surface in the manner of a traveling wave [<xref ref-type="bibr" rid="B6">6</xref>,<xref ref-type="bibr" rid="B13">13</xref>]. Whereas motility is powered by an ion-motive force across the cell membrane [<xref ref-type="bibr" rid="B17">17</xref>] and the protein SwmA that is required for propulsion is associated with the outer membrane [<xref ref-type="bibr" rid="B3">3</xref>], the traveling wave must be formed at the very exterior of the cell body, outside the crystalline surface layer. Since the spicules contact the cell and outer membranes and protrude into the surrounding medium, they could be utilized to transmit motions in the cell membrane or outer membrane into the surrounding medium. If motors concealed in the cell membrane or outer membrane are capable of contracting and expanding in a regular manner (perhaps in analogy to the motor protein embedded in the basolateral membrane of cochlear outer hair cells that contract and expand to set the length of the cells [<xref ref-type="bibr" rid="B5">5</xref>]), these oscillations would be transduced into a rowing motion of the spicules. In this case, the crystalline surface layer could serve as oarlocks for the spicules, converting smaller motions at the bases of spicules into larger motions at the tips.</p>
+            <p>The motile mechanism of <italic>Synechococcus</italic> sp. WH8113 may be related to that of bacteria that glide over surfaces. Type IV pili (Tfp) have been implicated in the gliding movement of a species of the cyanobacterium <italic>Synechocystis</italic> [<xref ref-type="bibr" rid="B2">2</xref>], social gliding of <italic>Myxococcus</italic>, and twitching motility of <italic>Pseudomonas aeruginosa</italic> [<xref ref-type="bibr" rid="B14">14</xref>]. The spicules of <italic>Synechococcus</italic> sp. WH8113 could be related to Tfp, but comparison reveals differences. Tfp are generally much longer (1-2 &#x3BC;m), and stiffer than the spicules of <italic>Synechococcus</italic>. Tfp also tend to form bundles, playing roles in bacterial aggregation or attachment to surfaces. The spicules of <italic>Synechococcus</italic> do not tend to attach to one another, nor do cell bodies of <italic>Synechococcus</italic> tend to aggregate.</p>
+            <p>The motility apparatus of <italic>Synechococcus</italic> sp. WH8113 may be related to that of filamentous gliding cyanobacteria [<xref ref-type="bibr" rid="B6">6</xref>]. The cell envelopes of the gliding <italic>Oscillatoriaceae</italic> cyanobacterial species do have crystalline surface layers that resemble the outermost layer of <italic>Synechococcus</italic>, but the crystalline surface layer of <italic>Synechococcus</italic> is considerably thicker (&#x223C; 35 nm thick compared to &#x223C; 20 nm thick). Structures like the spicules of <italic>Synechococcus</italic> have not been described in <italic>Oscillatoriaceae</italic>. Arrangements of helical fibers with diameters of 8-12 nm lie flat along the crystalline surface layer of <italic>Oscillatoriaceae</italic>. No such fibers are evident on <italic>Synechococcus</italic>. The surface of <italic>Oscillatoriaceae</italic> continuously extrudes slime while moving, whereas the surface of <italic>Synechococcus</italic> does not.</p>
+            <p>
+                <italic>Synechococcus</italic> sp. WH8113 is but one of a large number of closely related species of <italic>Synechococcus</italic>, both motile and non-motile, that have been isolated. Comparative analysis of a selection of species could illuminate the motile mechanism of the cell envelope and the role of the structures described here.</p>
+            <p>Inactivation of the abundant outer membrane protein SwmA abolishes swimming motility [<xref ref-type="bibr" rid="B3">3</xref>]. However, when either motile wild-type or immotile SwmA cells collide with and become attached to a cover slip, cells will rotate about the point of attachment at rates &#x223C; 1 Hz [<xref ref-type="bibr" rid="B4">4</xref>]. This suggests that part, but not all, of the motility apparatus is disrupted in the absence of SwmA.</p>
+            <p>We uncovered no clear structural flaw in the mutant SwmA that would conclusively explain its motility phenotype or specify a role in motility for the structures described here. No images of spicules extending into the surrounding medium analogous to Fig. <xref ref-type="fig" rid="F2">2a</xref> have been obtained for SwmA. However, fibers crossing from the cell membrane to higher layers that we interpret as the lower stems of spicules are evident for SwmA, and spicules are evident on some convex fractures of the outer membrane of SwmA (data not shown). It remains possible that the cell envelope of the SwmA mutant has subtle flaws consistent with a partial disturbance of its motility apparatus.</p>
+        </sec>
+        <sec>
+            <title>Conclusions</title>
+            <p>The organelle that drives the motility of swimming cyanobacteria has not yet been identified. The spicules identified here could comprise part of the motility apparatus as they extend to both the site of energy transduction (the cell membrane) and the site of mechanical work (external to the surface layer). In any case, our elucidation of the surface structure (summarized in Fig. <xref ref-type="fig" rid="F5">5</xref>) provides new constraints on theoretical models for motility.</p>
+            <fig position="float" id="F5">
+                <label>Figure 5</label>
+                <caption>
+                    <p>Diagram imaging the present knowledge of the cell envelope structure of <italic>Synechococcus</italic>. Present observations taken together suggest that the spicules (SP) extend through the surface layer (S) and outer membrane (OM) to contact the cell membrane (CM) (as shown in the cutaway of the peptidoglycan layer (P)).</p>
+                </caption>
+                <graphic xlink:href="1471-2180-1-4-5"/>
+            </fig>
+        </sec>
+        <sec sec-type="materials|methods">
+            <title>Materials &amp; Methods</title>
+            <sec>
+                <title>Bacterial strains, culture conditions</title>
+                <p>The <italic>Synechococcus</italic> strain analyzed here was the motile wild-type strain WH8113 [<xref ref-type="bibr" rid="B15">15</xref>]. The laboratory of J. Waterbury provided the cultures of WH8113. Culture conditions are described elsewhere [<xref ref-type="bibr" rid="B16">16</xref>,<xref ref-type="bibr" rid="B17">17</xref>].</p>
+            </sec>
+            <sec>
+                <title>Sample preparation and viewing</title>
+                <p>The quick-freeze method used here is described elsewhere [<xref ref-type="bibr" rid="B8">8</xref>,<xref ref-type="bibr" rid="B9">9</xref>]. In summary, a few microliters of cell suspension were spread on a layer of gelatin mounted on a freezing stage that was then slammed against a super-cooled copper block. For freeze-fracture/freeze-etch preparations, quick-frozen specimens were then knife fractured at nominally -108&#xB0;C in a Balzer's 301 freeze-fracture apparatus equipped with a high-speed rotary stage. Fractures were within a few micrometers of the frozen surface. The fractured samples were lightly etched for 4 min at nominally -108&#xB0;C. The high concentration of salt in the artificial sea water used as culture medium precluded deeper etching. The etched surface was rotary shadowed with platinum, and then rotary coated with a carbon backing. Replicas were cleaned in commercial bleach, rinsed in distilled water, and picked up on 400-mesh grids.</p>
+                <p>For freeze-substitution, quick-frozen specimens were freeze substituted in 4% OsO<sub>4</sub> in acetone at -80&#xB0;C using standard procedures [<xref ref-type="bibr" rid="B10">10</xref>]. Additional staining was provided by immersion in 0.1% HfCl in acetone for 4 hr. Embedding was in araldite and sections were stained with uranyl acetate and lead citrate.</p>
+                <p>Samples were viewed in a JEOL 200CX electron microscope. Regions of the specimen with negligible ice crystal damage were chosen for analysis. Electron micrographs were scanned directly using an Agfa DuoScan scanner, and images were analyzed using stereo images generated in Adobe Photoshop.</p>
+            </sec>
+        </sec>
+    </body>
+    <back>
+        <ack>
+            <sec>
+                <title>Acknowledgements</title>
+                <p>We are indebted to J. Waterbury, F. Valois, and B. Brahamsha for kindly providing bacterial cultures and for helpful discussions. ADTS was supported by the Rowland Institute for Science and is an Amgen Fellow of the Life Sciences Research Foundation. ADTS dedicates his share of this work to his graduate advisor, Howard C. Berg.</p>
+            </sec>
+        </ack>
+        <ref-list>
+            <ref id="B1">
+                <citation citation-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Berg</surname>
+                            <given-names>HC</given-names>
+                        </name>
+                        <name>
+                            <surname>Anderson</surname>
+                            <given-names>RA</given-names>
+                        </name>
+                    </person-group>
+                    <article-title>Bacteria swim by rotating their flagellar filaments.</article-title>
+                    <source>Nature (London)</source>
+                    <year>1973</year>
+                    <volume>245</volume>
+                    <fpage>380</fpage>
+                    <lpage>384</lpage>
+                    <pub-id pub-id-type="pmid">4593496</pub-id>
+                </citation>
+            </ref>
+            <ref id="B2">
+                <citation citation-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Bhaya</surname>
+                            <given-names>D</given-names>
+                        </name>
+                        <name>
+                            <surname>Watanabe</surname>
+                            <given-names>N</given-names>
+                        </name>
+                        <name>
+                            <surname>Ogawa</surname>
+                            <given-names>T</given-names>
+                        </name>
+                        <name>
+                            <surname>Grossman</surname>
+                            <given-names>AR</given-names>
+                        </name>
+                    </person-group>
+                    <article-title>The role of an alternative sigma factor in motility and pilus formation in the cyanobacterium <italic>Synchecocystis</italic> sp. strain PCC6803.</article-title>
+                    <source>Proc Natl Acad Sci USA</source>
+                    <year>1999</year>
+                    <volume>96</volume>
+                    <fpage>3188</fpage>
+                    <lpage>3193</lpage>
+                    <pub-id pub-id-type="pmid">10077659</pub-id>
+                    <pub-id pub-id-type="doi">10.1073/pnas.96.6.3188</pub-id>
+                </citation>
+            </ref>
+            <ref id="B3">
+                <citation citation-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Brahamsha</surname>
+                            <given-names>B</given-names>
+                        </name>
+                    </person-group>
+                    <article-title>An abundant cell-surface polypeptide is required for swimming by the nonflagellated marine cyanobacterium <italic>Synechococcus</italic> .</article-title>
+                    <source>Proc Natl Acad Sci USA</source>
+                    <year>1996</year>
+                    <volume>93</volume>
+                    <fpage>6504</fpage>
+                    <lpage>6509</lpage>
+                    <pub-id pub-id-type="pmid">8692845</pub-id>
+                    <pub-id pub-id-type="doi">10.1073/pnas.93.13.6504</pub-id>
+                </citation>
+            </ref>
+            <ref id="B4">
+                <citation citation-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Brahamsha</surname>
+                            <given-names>B</given-names>
+                        </name>
+                    </person-group>
+                    <article-title>Non-flagellar swimming in marine <italic>Synechococcus.</italic>
+                    </article-title>
+                    <source>J Molec Microbiol Biotechnol</source>
+                    <year>1999</year>
+                    <volume>1</volume>
+                    <fpage>59</fpage>
+                    <lpage>62</lpage>
+                    <pub-id pub-id-type="pmid">10941785</pub-id>
+                </citation>
+            </ref>
+            <ref id="B5">
+                <citation citation-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Dallos</surname>
+                            <given-names>P</given-names>
+                        </name>
+                        <name>
+                            <surname>Evans</surname>
+                            <given-names>BN</given-names>
+                        </name>
+                    </person-group>
+                    <article-title>High-frequency motility of outer hair cells and the cochlear amplifier.</article-title>
+                    <source>Science</source>
+                    <year>1995</year>
+                    <volume>267</volume>
+                    <fpage>2006</fpage>
+                    <lpage>2009</lpage>
+                    <pub-id pub-id-type="pmid">7701325</pub-id>
+                </citation>
+            </ref>
+            <ref id="B6">
+                <citation citation-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Ehlers</surname>
+                            <given-names>KM</given-names>
+                        </name>
+                        <name>
+                            <surname>Samuel</surname>
+                            <given-names>ADT</given-names>
+                        </name>
+                        <name>
+                            <surname>Berg</surname>
+                            <given-names>HC</given-names>
+                        </name>
+                        <name>
+                            <surname>Montgomery</surname>
+                            <given-names>R</given-names>
+                        </name>
+                    </person-group>
+                    <article-title>Do cyanobacteria swim using traveling surface waves?</article-title>
+                    <source>Proc Natl Acad Sci USA</source>
+                    <year>1996</year>
+                    <volume>93</volume>
+                    <fpage>8340</fpage>
+                    <lpage>8343</lpage>
+                    <pub-id pub-id-type="pmid">8710872</pub-id>
+                    <pub-id pub-id-type="doi">10.1073/pnas.93.16.8340</pub-id>
+                </citation>
+            </ref>
+            <ref id="B7">
+                <citation citation-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Hoiczyk</surname>
+                            <given-names>E</given-names>
+                        </name>
+                        <name>
+                            <surname>Baumeister</surname>
+                            <given-names>W</given-names>
+                        </name>
+                    </person-group>
+                    <article-title>Envelope structure of four gliding filamentous cyanobacteria.</article-title>
+                    <source>J Bacteriol</source>
+                    <year>1995</year>
+                    <volume>177</volume>
+                    <fpage>2387</fpage>
+                    <lpage>2395</lpage>
+                    <pub-id pub-id-type="pmid">7730269</pub-id>
+                </citation>
+            </ref>
+            <ref id="B8">
+                <citation citation-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Khan</surname>
+                            <given-names>S</given-names>
+                        </name>
+                        <name>
+                            <surname>Dapice</surname>
+                            <given-names>M</given-names>
+                        </name>
+                        <name>
+                            <surname>Reese</surname>
+                            <given-names>TS</given-names>
+                        </name>
+                    </person-group>
+                    <article-title>Effects of <italic>mot</italic> gene expression on the structure of the flagellar motor.</article-title>
+                    <source>J Mol Biol</source>
+                    <year>1988</year>
+                    <volume>202</volume>
+                    <fpage>575</fpage>
+                    <lpage>584</lpage>
+                    <pub-id pub-id-type="pmid">3050128</pub-id>
+                </citation>
+            </ref>
+            <ref id="B9">
+                <citation citation-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Khan</surname>
+                            <given-names>S</given-names>
+                        </name>
+                        <name>
+                            <surname>Khan</surname>
+                            <given-names>IH</given-names>
+                        </name>
+                        <name>
+                            <surname>Reese</surname>
+                            <given-names>TS</given-names>
+                        </name>
+                    </person-group>
+                    <article-title>New structural features of the flagellar base in <italic>Salmonella typhimurium</italic> revealed by rapid-freeze electron microscopy.</article-title>
+                    <source>J Bacteriol</source>
+                    <year>1991</year>
+                    <volume>173</volume>
+                    <fpage>2888</fpage>
+                    <lpage>2896</lpage>
+                    <pub-id pub-id-type="pmid">2019561</pub-id>
+                </citation>
+            </ref>
+            <ref id="B10">
+                <citation citation-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Ornberg</surname>
+                            <given-names>RL</given-names>
+                        </name>
+                        <name>
+                            <surname>Reese</surname>
+                            <given-names>TS</given-names>
+                        </name>
+                    </person-group>
+                    <article-title>Beginning of exocytosis captured by rapid-freezing of <italic>Limulus</italic> amebocytes.</article-title>
+                    <source>J Cell Biol</source>
+                    <year>1981</year>
+                    <volume>90</volume>
+                    <fpage>40</fpage>
+                    <lpage>54</lpage>
+                    <pub-id pub-id-type="pmid">7195907</pub-id>
+                </citation>
+            </ref>
+            <ref id="B11">
+                <citation citation-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Pitta</surname>
+                            <given-names>TP</given-names>
+                        </name>
+                        <name>
+                            <surname>Sherwood</surname>
+                            <given-names>EE</given-names>
+                        </name>
+                        <name>
+                            <surname>Kobel</surname>
+                            <given-names>AM</given-names>
+                        </name>
+                        <name>
+                            <surname>Berg</surname>
+                            <given-names>HC</given-names>
+                        </name>
+                    </person-group>
+                    <article-title>Calcium is required for swimming by the nonflagellated cyanobacterium <italic>Synechococcus</italic> strain WH8113.</article-title>
+                    <source>J Bacteriol</source>
+                    <year>1997</year>
+                    <volume>179</volume>
+                    <fpage>2524</fpage>
+                    <lpage>2528</lpage>
+                    <pub-id pub-id-type="pmid">9098048</pub-id>
+                </citation>
+            </ref>
+            <ref id="B12">
+                <citation citation-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Rash</surname>
+                            <given-names>JE</given-names>
+                        </name>
+                        <name>
+                            <surname>Giddings</surname>
+                            <given-names>FD</given-names>
+                        </name>
+                    </person-group>
+                    <article-title>Counting and measuring IMPs and pits: why accurate counts are exceedingly rare.</article-title>
+                    <source>J Electron Microsc Techn</source>
+                    <year>1989</year>
+                    <volume>13</volume>
+                    <fpage>204</fpage>
+                    <lpage>215</lpage>
+                    <pub-id pub-id-type="pmid">2585119</pub-id>
+                </citation>
+            </ref>
+            <ref id="B13">
+                <citation citation-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Stone</surname>
+                            <given-names>HA</given-names>
+                        </name>
+                        <name>
+                            <surname>Samuel</surname>
+                            <given-names>ADT</given-names>
+                        </name>
+                    </person-group>
+                    <article-title>Propulsion of microorganisms by surface distortions.</article-title>
+                    <source>Phys Rev Lett</source>
+                    <year>1996</year>
+                    <volume>77</volume>
+                    <fpage>4102</fpage>
+                    <lpage>4104</lpage>
+                    <pub-id pub-id-type="pmid">10062388</pub-id>
+                    <pub-id pub-id-type="doi">10.1103/PhysRevLett.77.4102</pub-id>
+                </citation>
+            </ref>
+            <ref id="B14">
+                <citation citation-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Wall</surname>
+                            <given-names>D</given-names>
+                        </name>
+                        <name>
+                            <surname>Kaiser</surname>
+                            <given-names>D</given-names>
+                        </name>
+                    </person-group>
+                    <article-title>Type IV pili and cell motility.</article-title>
+                    <source>Mol Microbiol</source>
+                    <year>1999</year>
+                    <volume>32</volume>
+                    <fpage>1</fpage>
+                    <lpage>10</lpage>
+                    <pub-id pub-id-type="pmid">10216854</pub-id>
+                    <pub-id pub-id-type="doi">10.1046/j.1365-2958.1999.01339.x</pub-id>
+                </citation>
+            </ref>
+            <ref id="B15">
+                <citation citation-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Waterbury</surname>
+                            <given-names>JB</given-names>
+                        </name>
+                        <name>
+                            <surname>Willey</surname>
+                            <given-names>JM</given-names>
+                        </name>
+                        <name>
+                            <surname>Franks</surname>
+                            <given-names>DG</given-names>
+                        </name>
+                        <name>
+                            <surname>Valois</surname>
+                            <given-names>FW</given-names>
+                        </name>
+                        <name>
+                            <surname>Watson</surname>
+                            <given-names>SW</given-names>
+                        </name>
+                    </person-group>
+                    <article-title>A cyanobacterium capable of swimming motility.</article-title>
+                    <source>Science</source>
+                    <year>1985</year>
+                    <volume>230</volume>
+                    <fpage>74</fpage>
+                    <lpage>76</lpage>
+                    <pub-id pub-id-type="pmid">17817167</pub-id>
+                </citation>
+            </ref>
+            <ref id="B16">
+                <citation citation-type="other">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Willey</surname>
+                            <given-names>JM</given-names>
+                        </name>
+                    </person-group>
+                    <article-title>Ph.D. Thesis. Massachusetts Institute of Technology and Woods Hole Oceanographic Institution. Characterization of swimming motility in a marine unicellular cyanobacterium.</article-title>
+                    <year>1988</year>
+                </citation>
+            </ref>
+            <ref id="B17">
+                <citation citation-type="journal">
+                    <person-group person-group-type="author">
+                        <name>
+                            <surname>Willey</surname>
+                            <given-names>JM</given-names>
+                        </name>
+                        <name>
+                            <surname>Waterbury</surname>
+                            <given-names>JB</given-names>
+                        </name>
+                        <name>
+                            <surname>Greenberg</surname>
+                            <given-names>EP</given-names>
+                        </name>
+                    </person-group>
+                    <article-title>Sodium-coupled motility in a swimming cyanobacterium.</article-title>
+                    <source>J Bacteriol</source>
+                    <year>1987</year>
+                    <volume>169</volume>
+                    <fpage>3429</fpage>
+                    <lpage>3434</lpage>
+                    <pub-id pub-id-type="pmid">3112121</pub-id>
+                </citation>
+            </ref>
+        </ref-list>
+    </back>
+</article>
+            

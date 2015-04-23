@@ -1,8 +1,16 @@
 (function ($) {
+  /**
+   * A widget in charge of saving the current search state of the search engine
+   *
+   */
 
 AjaxSolr.CurrentSearchWidget = AjaxSolr.AbstractWidget.extend({
   start: 0,
 
+  /**
+   * Method called as soon as data is retrieved from Solr. This method is responsible for showing
+   * the current state as well as listen to any change (removing facets, making a new query, etc)
+   */
   afterRequest: function () {
     var self = this;
     var links = [];
@@ -49,6 +57,12 @@ AjaxSolr.CurrentSearchWidget = AjaxSolr.AbstractWidget.extend({
     }
   },
 
+  /**
+   * Safely removes a facet query from the widget and
+   * sends the new state as a request to Solr
+   *
+   * @param facet
+   */
   removeFacet: function (facet) {
     var self = this;
     return function () {
@@ -64,16 +78,17 @@ AjaxSolr.CurrentSearchWidget = AjaxSolr.AbstractWidget.extend({
     };
   },
 
+  /**
+   * Formats a facet query (basically pretty prints it).
+   * @param facet
+   * @returns {string}
+   */
   formatFacet: function (facet){
     var result = facet.replace(/_/g, " ");
     result = result.replace("%26", "&");
     result = result.replace(/:/g, ": ");
     result = result.replace(/\+/g, " ");
     return result;
-  },
-
-  clusterResults: function () {
-
   }
 });
 

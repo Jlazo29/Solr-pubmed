@@ -35,13 +35,6 @@ public class PMCParserTest {
     }
 
     @Test
-    public void testUnmarshallFromInputStream() throws Exception {
-        assertTrue(testFile.exists());
-        Article article = ingestion.unmarshall(new FileInputStream(testFile));
-        assertNotNull(article);
-    }
-
-    @Test
     public void testUnmarshallFromFile() throws Exception {
         assertTrue(testFile.exists());
         parsers.PMC.Article article = ingestion.unmarshall(testFile);

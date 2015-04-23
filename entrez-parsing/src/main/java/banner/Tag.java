@@ -26,17 +26,35 @@ public class Tag {
 	private final Tokenizer tokenizer;
 	private final CRFTagger crfTagger;
 	PostProcessor postProcessor;
-    private HashSet<String> mentionText; //mentions
+    private HashSet<String> mentionText;
 
-	public Tag() throws IOException {
-		banner.BannerProperties properties = banner.BannerProperties.load("banner-external/banner.properties");
+	/**
+	 * Constructor for {@link banner.Tag}, a {@link banner.tokenization.Tokenizer}, {@link banner.tagging.CRFTagger}
+	 * and a {@link banner.processing.PostProcessor} are created to tag text.
+	 *
+	 * @param dir: {@link String} representation of stem directory where
+	 *           	banner.properties and the models are located.
+	 * @throws IOException
+	 */
+	public Tag(String dir) throws IOException {
+		String bannerPropetiesLoc = dir + "banner.properties";
+		banner.BannerProperties properties = banner.BannerProperties.load(bannerPropetiesLoc);
 		tokenizer = properties.getTokenizer();
-		crfTagger = CRFTagger.load(new File("banner-external/models/model_BC2GM.bin"), properties.getLemmatiser(), properties.getPosTagger(), properties.getPreTagger());
+		String modelLoc = dir + "models/model_BC2GM.bin";
+		crfTagger = CRFTagger.load(new File(modelLoc), properties.getLemmatiser(), properties.getPosTagger(), properties.getPreTagger());
         postProcessor = properties.getPostProcessor();
 	}
 
 	/**
-	 * @param args
+	 * Main function, only used if {@link banner.Tag} is ran on its own (ie: no indexing or parsing,
+	 * only tagging of text files passed in).
+	 *
+	 * @param args: List of locations, each are relative to src folder (or absolute):
+	 *            	args[0]: location of banner.properties.
+	 *            	args[1]: location of the model.bin used.
+	 *            	args[2]: location of input sentences to tag (from a .txt file).
+	 *            	args[3]: location of output file (a .txt file).
+	 * @throws java.io.IOException
 	 */
 	public static void main(String[] args) throws IOException {
 		String propertiesFilename = args[0]; // banner.properties
@@ -84,8 +102,9 @@ public class Tag {
 	}
 
     /**
-     * author: Jorge Luis Lazo
-     * Adapated from the Main() function, to be used by any Parser as it indexes text into SolrInputDocuments
+     * Adapated from the Main() function, to be used by any Parser (such as {@link parsers.MedlineParser}
+	 * or {@link parsers.PMCParser} as it indexes text into a {@link org.apache.solr.common.SolrInputDocument}.
+	 *
      * @param text: The text to tag and extract mentions.
      * @return String: The new tagged text with HTML highlight spans.
      */
@@ -131,6 +150,9 @@ public class Tag {
         return result.toString();
 	}
 
+	/**
+	 * Method to return the list of {@link banner.tagging.Mention}
+	 */
     public HashSet<String> getMentionSet(){
         return mentionText;
     }

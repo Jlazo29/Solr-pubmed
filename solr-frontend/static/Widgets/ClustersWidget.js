@@ -2,6 +2,9 @@
  * Created by Jorge Lazo on 2/25/15.
  */
 (function ($) {
+    /**
+     * A widget in charge of presenting the cluster data and initiate further cluster requests.
+     */
 
     AjaxSolr.ClustersWidget = AjaxSolr.AbstractWidget.extend({
         width: 900,
@@ -16,13 +19,18 @@
             tab1.click(this.contractView);
         },
 
+        /**
+         * Method called before Manager.doRequest finishes.
+         */
         beforeRequest: function () {
             $(this.target).empty();
             this.all_fixed = false;
             $(this.target).append($('<p>Clustering Documents...</p>'));
             $(this.target).append($('<img id="Loading">').attr('src', '/static/images/Loading.gif'));
         },
-
+        /**
+         * Helper functions, changes css for a full view when opening clusters.
+         */
         expandView: function(){
             var sidebar = $('#sidebar');
             sidebar.css('width', "45%");
@@ -32,15 +40,19 @@
             sidebar.css('width', "30%");
         },
 
+        /**
+         * Method called immediately after cluster data comes back. Renders the data as well as the settings
+         *
+         */
         afterClusters: function(){
             $(this.target).empty();
             var self = this,
                 clusters = this.manager.response.clusters,
-                reset     = $("<span id='reset'>Recluster Documents</span>").button().click(function(){
+                reset = $("<span id='reset'>Recluster Documents</span>").button().click(function(){
                     self.beforeRequest();
                     self.manager.handleResponse(undefined,true);
                 }),
-                normalize = $("<span id='normalize'>Normalize</span>").button().click(function(){return self.normalize(data_nodes)});
+                normalize = $("<span id='normalize'>Make grid</span>").button().click(function(){return self.normalize(data_nodes)});
 
             var text_rows = $("<p id='text_rows'>Clustering "+ this.manager.clusterOptions.rows.substring(6) +" docs </p>"),
                 slider_rows = $("<div id='slider_rows'></div>").slider({
@@ -80,7 +92,12 @@
             this.renderNodeGraph(data_nodes);
         },
 
-
+        /**
+         * Method to create a d3 cluster node graph. This method also accounts for
+         * other interactive effects, such as selecting a cluster (to request the documents).
+         *
+         * @param graph the JSON object passed, needs to be curated first (from nodeify)
+         */
         renderNodeGraph: function(graph) {
             var self = this;
             var width = $("#general").width() * 0.35,
@@ -180,7 +197,9 @@
                 })
                 .on("mouseout", function(d){d3.select(this).style("fill", "black")});
 
-
+            /**
+             * D3 Method, handles the movement behaviour of every node at each tick (every fraction of a second)
+             */
             function tick() {
                 link.attr("x1", function(d) {
                     if (d.source.x < 8){ return 10;}
@@ -214,6 +233,10 @@
                 });
             }
 
+            /**
+             * D3 Method, handles a click to a node (both css effects, as well as initiating a manager.doRequest
+             * @param d a single data point.
+             */
             function toggle(d) {
                 ctrlKey = d3.event.ctrlKey;
                 if (ctrlKey){
@@ -254,6 +277,12 @@
             });
         },
 
+        /**
+         * This method takes the cluster data and creates an array of nodes and links to be used by D3.
+         *
+         * @param clusters
+         * @returns {{nodes: Array, links: Array, nuclei: Array}}
+         */
         nodeify: function(clusters){
             var graph = { "nodes": [], "links": [], "nuclei": [] };//results
             var list = { "docs": [], "group": []}, //for intersection
@@ -291,6 +320,11 @@
             return  graph;
         },
 
+        /**
+         * Helper function to render the cluster folders.
+         * @param nodes list of nodes.
+         * @returns {HTMLElement}
+         */
         create_folders: function(nodes){
         var table = $("<form></form>"),
             row1 = $("<div style='float:left'></div>"),
@@ -311,7 +345,13 @@
         }
         return table;
     },
-
+        /**
+         * Helper function when selecting a folder, calls requestClusterDocs on manager.
+         * @param node The node selected (array element).
+         * @param clust the cluster number to color.
+         * @param self self to call manager.
+         * @returns {Function}
+         */
         folderHandler: function(node, clust, self){
             return function(){
                 self.manager.clusterLabels = []; //resetting
@@ -332,6 +372,10 @@
             }
         },
 
+        /**
+         * Method called to create a grid of clusters (cosmetic effect only)
+         * @param data_nodes list of all nodes
+         */
         normalize: function(data_nodes){
             var nodes = data_nodes["nodes"];
 
@@ -371,6 +415,11 @@
             this.force.alpha(0.1);
         },
 
+        /**
+         * Helper function to remove a specific value on an array and preserve list order.
+         * @param arr
+         * @param item
+         */
         remove: function(arr, item) {
             for(var i = arr.length; i--;) {
                 if(arr[i] === item) {
@@ -381,7 +430,9 @@
 
 
     clusterResults: function(){
-
+        /**
+         * Placeholder function. Not used
+         */
         }
 
     });

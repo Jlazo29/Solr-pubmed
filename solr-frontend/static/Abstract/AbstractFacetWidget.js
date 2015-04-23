@@ -299,7 +299,11 @@ AjaxSolr.AbstractFacetWidget = AjaxSolr.AbstractWidget.extend(
    */
   fq: function (value, exclude) {
     return (exclude ? '-' : '') + this.field + ':' + AjaxSolr.Parameter.escapeValue(value);
-  }
+  },
+
+    clusterResults: function () {
+
+    }
 });
 
 }));

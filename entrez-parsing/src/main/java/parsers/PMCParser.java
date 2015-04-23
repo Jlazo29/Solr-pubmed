@@ -17,7 +17,8 @@ import java.util.*;
 import java.util.List;
 
 /**
- * Created by jlazo on 3/18/15.
+ * An object representation of a JAXB parser to convert Pubmed Open acess XML data into {@link org.apache.solr.common.SolrInputDocument}s.
+ * @author Jorge Lazo on 3/18/15.
  */
 public class PMCParser {
 
@@ -26,19 +27,39 @@ public class PMCParser {
     private String message;
     private Set<String> mentionTexts;
 
+    /**
+     * Constructor for {@link parsers.PMCParser}. Creates a {@link javax.xml.bind.JAXBContext}
+     * and a {@link javax.xml.bind.Unmarshaller} to work with.
+     *
+     * @throws JAXBException
+     * @throws IOException
+     */
     public PMCParser() throws JAXBException, IOException {
         JAXBContext jaxbContext = JAXBContext.newInstance("parsers.PMC", ObjectFactory.class.getClassLoader());
         unmarshaller = jaxbContext.createUnmarshaller();
     }
 
+    /**
+     * Unmarshalling step to read the data contents of an xml {@link File}.
+     *
+     * @param xml: A {@link File} to unmarshall.
+     * @return The {@link parsers.medline.MedlineCitationSet} associated with the {@link File}.
+     * @throws FileNotFoundException
+     * @throws JAXBException
+     */
     public Article unmarshall(File xml) throws FileNotFoundException, JAXBException {
-        return unmarshall(new FileInputStream(xml));
+        return (Article) unmarshaller.unmarshal(xml);
     }
 
-    public Article unmarshall(InputStream inputStream) throws JAXBException {
-        return (Article) unmarshaller.unmarshal(inputStream);
-    }
-
+    /**
+     * This method is called on each {@link parsers.PMC.Article} to map the data into a
+     * {@link org.apache.solr.common.SolrInputDocument} in order to be indexed.
+     *
+     * @param article: The {@link parsers.PMC.Article} to extract data from.
+     * @param tagger: the {@link banner.tagging.Tagger}to tag text.
+     * @return a {@link org.apache.solr.common.SolrInputDocument}, a java object with data
+     * ready for indexing.
+     */
     public SolrInputDocument mapToSolrInputDocument(Article article, Tag tagger) throws Exception {
         indexable = true;
         message = "!ERROR: ";

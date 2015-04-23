@@ -20,7 +20,7 @@ var Manager;
 
     var fields = [ 'journal', 'gene-mention', 'date'];
     for (var i = 0, l = fields.length; i < l; i++) {
-      Manager.addWidget(new AjaxSolr.TagcloudWidget({
+      Manager.addWidget(new AjaxSolr.FacetWidget({
         id: fields[i],
         target: '#' + fields[i],
         field: fields[i]

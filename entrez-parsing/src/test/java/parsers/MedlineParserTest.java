@@ -24,25 +24,16 @@ public class MedlineParserTest {
     private static final String TEST_FILE= "/samples/medsamp2014.xml";
     private MedlineParser ingestion;
     private File testFile;
-    private static Tag tagger;
 
     @Before
     public void setUp() throws Exception {
         ingestion = new MedlineParser();
         testFile = getTestFile();
-        tagger = new Tag();
     }
 
     private File getTestFile() {
         URL url = MedlineParser.class.getResource(TEST_FILE);
         return new File(url.getFile());
-    }
-
-    @Test
-    public void testUnmarshallFromInputStream() throws Exception {
-        InputStream inputStream = FileUtils.openInputStream(getTestFile());
-        MedlineCitationSet set = ingestion.unmarshall(inputStream);
-        assertNotNull(set);
     }
 
     @Test
@@ -69,7 +60,7 @@ public class MedlineParserTest {
         }
         MedlineCitationSet citationSet = mock(MedlineCitationSet.class);
         when(citationSet.getMedlineCitation()).thenReturn(medlineCitations);
-        Collection<SolrInputDocument> inputDocuments = ingestion.mapToSolrInputDocumentCollection(citationSet, tagger);
+        Collection<SolrInputDocument> inputDocuments = ingestion.mapToSolrInputDocumentCollection(citationSet, null);
         assertEquals(5, inputDocuments.size());
     }
 
@@ -91,8 +82,6 @@ public class MedlineParserTest {
         citation.setDateCreated(mockDate);
 
         Article mockArticle = new Article();
-        Abstract mockAbstract = new Abstract();
-        mockArticle.setAbstract(mockAbstract);
         citation.setArticle(mockArticle);
         Journal mockJournal = new Journal();
         mockJournal.setTitle("test");

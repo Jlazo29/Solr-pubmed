@@ -7,37 +7,54 @@ import org.apache.solr.client.solrj.impl.ConcurrentUpdateSolrServer;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrInputDocument;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Collection;
 
+/**
+ * A {@link org.apache.solr.client.solrj.SolrServer} placeholder, to be used by {@link ingestion.SolrUtils}.
+ * @author Jorge Lazo 2/2015
+ */
+
 public class SolrClient {
     private static final String BASE_URL = "http://localhost:8983/core0";
     private SolrServer solrServer;
-//    private final Logger logger;
 
+    /**
+     * Constructor for a {@link ingestion.SolrClient}.
+     *
+     * @param useConcurrentUpdate: {@link java.lang.Boolean} whether to use concurrent update or not.
+     */
     public SolrClient(boolean useConcurrentUpdate) {
         if (useConcurrentUpdate) {
-            /*TODO: determine parameters from environment*/
             this.solrServer = new ConcurrentUpdateSolrServer(BASE_URL, 400000, 4);
         } else {
             this.solrServer = new HttpSolrServer(BASE_URL);
         }
-//        logger = LoggerFactory.getLogger(SolrClient.class);
     }
 
+    /**
+     * This method is called to index data to Solr.
+     * See https://wiki.apache.org/solr/Solrj#Adding_Data_to_Solr
+     *
+     * @param documents: the {@link java.util.Collection} of {@link org.apache.solr.common.SolrInputDocument}
+     *                   to index to Solr.
+     */
     public void update(Collection<SolrInputDocument> documents) {
         try {
             solrServer.add(documents);
             solrServer.commit();
         } catch (SolrServerException | IOException e) {
-//            logger.error("Failed to update solr server", e);
+            e.printStackTrace();
         }
     }
 
-
+    /**
+     * Method to delete all indexed records in Solr.
+     *
+     * @throws IOException
+     * @throws SolrServerException
+     */
     public void deleteRecords() throws IOException, SolrServerException {
         solrServer.deleteByQuery("*:*");
         solrServer.commit();

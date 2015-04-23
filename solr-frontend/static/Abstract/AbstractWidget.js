@@ -78,7 +78,7 @@ AjaxSolr.AbstractWidget = AjaxSolr.Class.extend(
     this.manager.doRequest(start || this.start, servlet || this.servlet, cluster);
   },
 
-  clusterRequest: function(start, servlet, rows){
+  clusterRequest: function(start, servlet, rows) {
     this.manager.clusterRequest(start || this.start, servlet || this.servlet, rows);
   }
 });
