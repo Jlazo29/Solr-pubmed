@@ -48,7 +48,10 @@ public class PMCParser {
      * @throws JAXBException
      */
     public Article unmarshall(File xml) throws FileNotFoundException, JAXBException {
-        return (Article) unmarshaller.unmarshal(xml);
+        return unmarshall(new FileInputStream(xml));
+    }
+    public Article unmarshall(InputStream inputStream) throws JAXBException{
+        return (Article) unmarshaller.unmarshal(inputStream);
     }
 
     /**

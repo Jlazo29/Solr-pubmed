@@ -50,7 +50,10 @@ public class MedlineParser {
      * @throws JAXBException
      */
     public MedlineCitationSet unmarshall(File xml) throws FileNotFoundException, JAXBException {
-        return (MedlineCitationSet) unmarshaller.unmarshal(xml);
+        return unmarshall(new FileInputStream(xml));
+    }
+    public MedlineCitationSet unmarshall(InputStream inputStream) throws JAXBException{
+        return (MedlineCitationSet) unmarshaller.unmarshal(inputStream);
     }
 
     /**
