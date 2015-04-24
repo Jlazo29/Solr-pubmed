@@ -111,8 +111,9 @@ public class  SolrUtils {
                 }
             }catch(Exception e){
                 if (tries > 2){
+                    System.out.println("The file supplied is neither medline or PMC! " + f.getName() + " Located at: " + f.getAbsolutePath());
                     e.printStackTrace();
-                    throw new RuntimeException("The file supplied is neither medline or PMC! " + f.getName() + " Located at: " + f.getAbsolutePath());
+                    return;
                 }
                 //Try one more time as medline
                 pmc = false;
@@ -129,8 +130,9 @@ public class  SolrUtils {
                 System.out.println("Successfully parsed collection " + f.getName());
             }catch(Exception e){
                 if (tries > 2){
+                    System.out.println("The file supplied is neither medline or PMC! " + f.getName() + " Located at: " + f.getAbsolutePath());
                     e.printStackTrace();
-                    throw new RuntimeException("The file supplied is neither medline or PMC! " + f.getName() + " Located at: " + f.getAbsolutePath());
+                    return;
                 }
                 //try one more time as pmc
                 pmc = true;
