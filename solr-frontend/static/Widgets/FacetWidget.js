@@ -42,7 +42,7 @@ AjaxSolr.FacetWidget = AjaxSolr.AbstractFacetWidget.extend({
     //}
     //tagCloud_total = tagCloud_total / objectedItems.length;
 
-    console.log(objectedItems);
+    //console.log(objectedItems);
 
     for (var j = 0, l = objectedItems.length; j < l; j++) {
       if (objectedItems[j].facet == this.manager.curr[this.field][objectedItems[j].facet]){

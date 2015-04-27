@@ -99,7 +99,7 @@ public class MedlineParser {
         addGeneMentions(document, "gene-mention");
 
 //        System.out.println(document);
-        System.out.println(mentionText);
+//        System.out.println(mentionText);
 
         return document ;
     }
@@ -119,9 +119,9 @@ public class MedlineParser {
         for (AbstractText abstractText : abstractTexts) {
             result += abstractText.getvalue();
         }
-        if (tagger != null){
+        if (tagger != null && !(result.equals(""))){
             result = tagger.tagText(result);
-            System.out.println(result);
+//            System.out.println(result);
             mentionText = tagger.getMentionSet();
         }
         document.addField(name, result);

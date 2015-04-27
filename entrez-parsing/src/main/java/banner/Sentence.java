@@ -491,8 +491,7 @@ public class Sentence
 	{
 		List<TaggedToken> taggedTokens = getTaggedTokens();
 		StringBuffer text2 = new StringBuffer();
-		for (int i = 0; i < taggedTokens.size(); i++)
-		{
+		for (int i = 0; i < taggedTokens.size(); i++) {
 			TaggedToken token = taggedTokens.get(i);
 			TagPosition position = token.getPosition(TagFormat.IOBEW);
 			if (position == TagPosition.B || position == TagPosition.W)

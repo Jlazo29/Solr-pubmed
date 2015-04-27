@@ -132,12 +132,15 @@ public class Tag {
                     StringBuilder sentenceString = new StringBuilder(sentence.getText());
 
                     for(Mention m : sentence.getMentions()){
-                        int start_char = sentenceString.indexOf(m.getText(), left_char);
-                        int end_char = start_char + m.getText().length(); //end index
-                        sentenceString = sentenceString.insert(end_char, "</span>");//insert end tag first (so start char is preserved)
-                        sentenceString = sentenceString.insert(start_char, ("<span class=\"" + m.getType().getText() + "\">")); //start tag
+                        if (sentenceString.indexOf(m.getText(), left_char) > -1) {
+                            int start_char = sentenceString.indexOf(m.getText(), left_char);
+                            int end_char = start_char + m.getText().length(); //end index
+                            sentenceString = sentenceString.insert(end_char, "</span>");//insert end tag first (so start char is preserved)
+                            System.out.println(sentenceString);
+                            sentenceString = sentenceString.insert(start_char, ("<span class=\"" + m.getType().getText() + "\">")); //start tag
 
-                        left_char = end_char + 27; //27 is the amount of characters added <span class="GENE"></span>
+                            left_char = end_char + 27; //27 is the amount of characters added <span class="GENE"></span>
+                        }
                     }
                     result = result.append(sentenceString);
                 }

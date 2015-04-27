@@ -85,7 +85,7 @@ public class PMCParser {
         addGeneMentions(document, "gene-mention");
 
 //        System.out.println(document);
-        System.out.println(mentionTexts);
+//        System.out.println(mentionTexts);
 
         if (indexable){
             return document;
@@ -231,7 +231,7 @@ public class PMCParser {
             result = result.replaceAll(" +", " ");
 
             result = tagger.tagText(result);
-            System.out.println(result + "\n");
+//            System.out.println(result + "\n");
 
             mentionTexts = tagger.getMentionSet();
 

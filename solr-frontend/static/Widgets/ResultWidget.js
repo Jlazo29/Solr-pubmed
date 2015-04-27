@@ -44,7 +44,7 @@ AjaxSolr.ResultWidget = AjaxSolr.AbstractWidget.extend({
       return false;
 
     });
-    $("#tab-tagcloud").prepend($('<div id="filters">Apply Selected Filters</div>').button({disabled: true}).click(function(){return self.doRequest(null, "select", false)}));
+    $("#tab-tagcloud").prepend($('<div id="filters">Apply Selected Filters</div>').button({disabled: true}).click(function(){return self.doRequest(null, "select", true)}));
     $("#full_text").change(self.handleQueryChange(self));
   },
 
@@ -129,6 +129,10 @@ AjaxSolr.ResultWidget = AjaxSolr.AbstractWidget.extend({
         }
       }
     }
+      var allTags = $('.GENE');
+      for (var t =0; t<allTags.length; t++){
+          this.manager.widgets["tooltip"].tagInfo(allTags[t]);
+      }
   },
 
   /**

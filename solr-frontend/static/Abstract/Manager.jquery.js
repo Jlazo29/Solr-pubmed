@@ -120,7 +120,7 @@ AjaxSolr.Manager = AjaxSolr.AbstractManager.extend(
      * @param {boolean} cluster whether to ask for further cluster data or not.
      */
     executeRequest: function (start, servlet, cluster) {
-      console.log(start);
+      //console.log(start);
       var self = this,
           query = {dataType: 'json'},
           string_query = this.store.get("q").val(),
@@ -171,7 +171,7 @@ AjaxSolr.Manager = AjaxSolr.AbstractManager.extend(
 
     /**
      * This method is executed after the Solr response data arrives. Allows each
-     * widget to handle Solr's response separately. Additional sends the second request
+     * widget to handle Solr's response separately. Additionally, sends the second request
      * to Solr for clustering data, if true.
      *
      * @param {Object} data The Solr response.
@@ -190,6 +190,7 @@ AjaxSolr.Manager = AjaxSolr.AbstractManager.extend(
             string_query = "q=" + this.store.get("q").val()+ "&",
             query_options = this.store.string(),
             query = {dataType: 'json'},
+            string_fq = this.stringFq(this.store.values("fq")),
             clusterOptions = this.clusterOptions.rows + this.clusterOptions.baseCount;
 
         for (var i in this.clusterOptions){
@@ -201,7 +202,7 @@ AjaxSolr.Manager = AjaxSolr.AbstractManager.extend(
           query.type = 'POST';
         }
         else {
-          query.url = this.solrUrl + servlet + '?' + string_query + query_options + clusterOptions + '&wt=json&json.wrf=?';
+          query.url = this.solrUrl + servlet + '?' + string_query + query_options + string_fq + clusterOptions + '&wt=json&json.wrf=?';
           console.log(query.url);
         }
         jQuery.ajax(query).success(function(data){
