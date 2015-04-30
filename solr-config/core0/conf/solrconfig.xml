@@ -33,23 +33,23 @@
         </lst>
     </requestHandler>
 
-    <searchComponent class="solr.HighlightComponent" name="highlight">
-        <highlighting>
-            <!-- Configure the standard formatter -->
-            <formatter name="html"
-                       default="true"
-                       class="solr.highlight.HtmlFormatter">
-                <lst name="defaults">
-                    <str name="hl.simple.pre"><![CDATA[<mark>]]></str>
-                    <str name="hl.simple.post"><![CDATA[</mark>]]></str>
-                </lst>
-            </formatter>
+    <!--<searchComponent class="solr.HighlightComponent" name="highlight">-->
+        <!--<highlighting>-->
+            <!--&lt;!&ndash; Configure the standard formatter &ndash;&gt;-->
+            <!--<formatter name="html"-->
+                       <!--default="true"-->
+                       <!--class="solr.highlight.HtmlFormatter">-->
+                <!--<lst name="defaults">-->
+                    <!--<str name="hl.simple.pre"><![CDATA[<mark>]]></str>-->
+                    <!--<str name="hl.simple.post"><![CDATA[</mark>]]></str>-->
+                <!--</lst>-->
+            <!--</formatter>-->
 
-            <!-- Configure the standard encoder -->
-            <encoder name="html"
-                     class="solr.highlight.HtmlEncoder"/>
-        </highlighting>
-    </searchComponent>
+            <!--&lt;!&ndash; Configure the standard encoder &ndash;&gt;-->
+            <!--<encoder name="html"-->
+                     <!--class="solr.highlight.HtmlEncoder"/>-->
+        <!--</highlighting>-->
+    <!--</searchComponent>-->
 
     <requestHandler name="/select" class="solr.SearchHandler" default="true">
         <!-- default values for query parameters can be specified, these
@@ -58,16 +58,6 @@
         <lst name="defaults">
             <str name="echoParams">explicit</str>
             <int name="rows">50</int>
-
-            <!--highlighting defaults-->
-            <str name="hl">on</str>
-            <str name="hl.fl">query</str>
-
-            <!--faceting defaults-->
-            <!--<str name="facet">on</str>-->
-            <!--<str name="facet.field">mesh_term</str>-->
-            <!--<str name="facet.field">gene_symbol_list</str>-->
-            <!--<str name="facet.field">journal_title</str>>-->
 
             <!--default search field-->
             <str name="df">query</str>
@@ -83,13 +73,13 @@
          
             <!-- Logical field to physical field mapping. -->
             <str name="carrot.title">title</str>
-            <str name="carrot.snippet">query</str>
+            <str name="carrot.snippet">abstract</str>
          
             <str name="rows">100</str>
             <str name="fl">*,score</str>
 
             <!--default search field-->
-            <str name="df">abstract</str>
+            <str name="df">query</str>
           </lst>
          
           <!-- Append clustering at the end of the list of search components. -->
@@ -99,7 +89,7 @@
     </requestHandler>
 
     <requestHandler name="/admin/"
-                    class="solr.admin.AdminHandlers" />
+                    class="solr.admin.AdminHandlers"/>
 
     <searchComponent name="clustering" class="solr.clustering.ClusteringComponent">
           <!-- Lingo clustering algorithm -->

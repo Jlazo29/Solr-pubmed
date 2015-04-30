@@ -251,7 +251,7 @@
                     $("circle").css("fill", "#50c1cc");
                     var IDs = [];
                     for (var l = 0; l < d.cluster.length; l++) {
-                        $("." + d.cluster[l]).css("fill", "#08ff7e").each(function(){
+                        $("." + d.cluster[l]).css("fill", "#ff3c1f").each(function(){
                             var text =$(this).next().text();
                             if (text.length > 0){
                                 self.manager.clusterLabels.push(text);
@@ -361,7 +361,7 @@
                     var selector = $(".clust" + clust);
                     $("circle").css("fill", "#50c1cc");
                     var IDs = [];
-                    selector.css("fill", "#08ff7e").each(function(){
+                    selector.css("fill", "#ff3c1f").each(function(){
                         var text =$(this).next().text();
                         if (text.length > 0){
                         }

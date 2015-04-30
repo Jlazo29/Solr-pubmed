@@ -35,7 +35,7 @@ echo "Done!"
 
 # 3: Return files to schema folder
  
-mv JATS-archivearticle1.dtd src/main/resources/schema;
-mv JATS-archivearticle.dtd src/main/resources/schema;
-mv archivearticle.dtd src/main/resources/schema;
-mv archivearticle3.dtd src/main/resources/schema;
+#mv JATS-archivearticle1.dtd src/main/resources/schema;
+#mv JATS-archivearticle.dtd src/main/resources/schema;
+#mv archivearticle.dtd src/main/resources/schema;
+#mv archivearticle3.dtd src/main/resources/schema;

@@ -9,29 +9,19 @@
         <fieldType name="simple" class="solr.TextField" indexed="true" stored="true" multiValued="false"/>
 
         <fieldType name="word-list" class="solr.TextField" indexed="true" stored="true" multiValued="true">
-            <!--<analyzer type="index">-->
-                <!--<tokenizer class="solr.StandardTokenizerFactory"/>-->
-                <!--<filter class="solr.HyphenatedWordsFilterFactory"/>-->
                 <filter class="solr.ASCIIFoldingFilterFactory"/>
-            <!--</analyzer>-->
-            <!--<analyzer type="query">-->
-                <!--<tokenizer class="solr.StandardTokenizerFactory"/>-->
-                <!--<filter class="solr.HyphenatedWordsFilterFactory"/>-->
                 <filter class="solr.ASCIIFoldingFilterFactory"/>
-            <!--</analyzer>-->
         </fieldType>
 
         <fieldType name="text" class="solr.TextField" indexed="true" stored="true" multiValued="false" omitNorms="false"
                    termVectors="true" termPositions="true">
               <analyzer type="index">
-            <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="&lt;sub&gt;" replacement=""/>
-            <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="&lt;/sub&gt;" replacement=""/>
-            <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="&lt;sup&gt;" replacement=""/>
-            <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="&lt;/sup&gt;" replacement=""/>
+            <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="&lt;span*&gt;" replacement=""/> <!--cuts out <span class=GENE>-->
+            <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="&lt;/span&gt;" replacement=""/> <!--cuts out </span>-->
                 <tokenizer class="solr.StandardTokenizerFactory"/>
-                <filter class="solr.HyphenatedWordsFilterFactory"/>
-                <filter class="solr.LowerCaseFilterFactory"/>
-                <filter class="solr.ASCIIFoldingFilterFactory"/>
+                <filter class="solr.HyphenatedWordsFilterFactory"/><!--Eg when querying TNFα, "TNF-α" will be a hit as well -->
+                <filter class="solr.LowerCaseFilterFactory"/>      <!--Eg when querying "tnf-α", "TNF-α" will be a hit as well -->
+                <filter class="solr.ASCIIFoldingFilterFactory"/>   <!--Eg when querying "TNF-a", "TNF-α" will be a hit  as well -->
               </analyzer>
               <analyzer type="query">
                 <tokenizer class="solr.StandardTokenizerFactory"/>
@@ -43,10 +33,8 @@
         <fieldType name="all_text" class="solr.TextField" indexed="true" stored="true" multiValued="true" omitNorms="false"
                    termVectors="true" termPositions="true">
               <analyzer type="index">
-            <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="&lt;sub&gt;" replacement=""/>
-            <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="&lt;/sub&gt;" replacement=""/>
-            <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="&lt;sup&gt;" replacement=""/>
-            <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="&lt;/sup&gt;" replacement=""/>
+            <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="&lt;span*&gt;" replacement=""/>
+            <charFilter class="solr.PatternReplaceCharFilterFactory" pattern="&lt;/span&gt;" replacement=""/>
                 <tokenizer class="solr.StandardTokenizerFactory"/>
                 <filter class="solr.HyphenatedWordsFilterFactory"/>
                 <filter class="solr.LowerCaseFilterFactory"/>

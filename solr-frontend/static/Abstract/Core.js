@@ -5,7 +5,6 @@ AjaxSolr = function () {};
 
 /**
  * @namespace Baseclass for all classes
- * @see https://github.com/documentcloud/backbone/blob/51eed189bf4d25877be4acdf51e0a4c6039583c5/backbone.js#L243
  */
 AjaxSolr.Class = function(attributes) {
   AjaxSolr.extend(this, attributes);
@@ -17,7 +16,6 @@ AjaxSolr.Class = function(attributes) {
  * @static
  * @param protoProps The properties of the subclass.
  * @returns A function that represents the subclass.
- * @see https://github.com/documentcloud/backbone/blob/51eed189bf4d25877be4acdf51e0a4c6039583c5/backbone.js#L1516
  */
 AjaxSolr.Class.extend = function (protoProps, staticProps) {
   var parent = this;
@@ -54,7 +52,6 @@ AjaxSolr.Class.extend = function (protoProps, staticProps) {
 
 /**
  * @static
- * @see https://github.com/documentcloud/underscore/blob/7342e289aa9d91c5aacfb3662ea56e7a6d081200/underscore.js#L789
 */
 AjaxSolr.extend = function (child) {
   // From _.extend
@@ -139,8 +136,6 @@ AjaxSolr.equals = function (foo, bar) {
  * "[xpconnect wrapped native prototype]", which is undesirable.
  *
  * @static
- * @see http://thinkweb2.com/projects/prototype/instanceof-considered-harmful-or-how-to-write-a-robust-isarray/
- * @see http://ajax.googleapis.com/ajax/libs/prototype/1.6.0.3/prototype.js
  */
 AjaxSolr.isArray = function (obj) {
   return obj != null && typeof obj == 'object' && 'splice' in obj && 'join' in obj;

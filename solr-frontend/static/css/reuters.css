@@ -268,10 +268,10 @@ font-size: 180%;
   display: none;
 }
 .node.selected {
-  fill: #08ff7e;
+  fill: #ff3c1f;
 }
 .nucleus.selected {
-  fill: #08ff7e;
+  fill: #ff3c1f;
 }
 
 .tooltip_title{

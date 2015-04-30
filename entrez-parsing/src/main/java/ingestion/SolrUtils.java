@@ -60,6 +60,7 @@ public class  SolrUtils {
         pmcParser = new PMCParser();
         tagger = new Tag("banner-external/");
         File rootDir = new File(args[0]);
+        int batchSize = 500;
 
         if(args.length > 1){
             if(args[1].equals("del")){
@@ -68,7 +69,7 @@ public class  SolrUtils {
         }
 
         for (File f : Files.fileTreeTraverser().postOrderTraversal(rootDir)) {
-            if (collection.size() >= 500){ //batches of 500
+            if (collection.size() >= batchSize){
                 client.update(collection);
                 collection.clear();}
             if (f.isFile()){
@@ -84,11 +85,11 @@ public class  SolrUtils {
 
     /**
      * This method is called on every file inside the XML directory, it tries to unmarshall it as
-     * either a PMC or a medline file. If both fail, it wil throw a RuntimeException.
+     * either a PMC or a medline file. If both fail, it wil throw a {@link java.lang.RuntimeException}.
      *
      * @param f: a File to unmarshall and parse upon.
-     * @param tries: number of tries (starts as 0 when called using the FileTreeTraverser, so it is
-     *             reset on every new file call) if it reaches 2, a RuntimeException is thrown.
+     * @param tries: number of tries (starts as 0 when called using the TreeTraverser, so it is
+     *             reset on every new file call), if it reaches 2, a RuntimeException is thrown.
      *
      * @throws java.lang.RuntimeException
      */
@@ -111,9 +112,8 @@ public class  SolrUtils {
                 }
             }catch(Exception e){
                 if (tries > 2){
-                    System.out.println("The file supplied is neither medline or PMC! " + f.getName() + " Located at: " + f.getAbsolutePath());
                     e.printStackTrace();
-                    return;
+                    throw new RuntimeException("The file supplied is neither medline or PMC! " + f.getName() + " Located at: " + f.getAbsolutePath());
                 }
                 //Try one more time as medline
                 pmc = false;
@@ -130,9 +130,8 @@ public class  SolrUtils {
                 System.out.println("Successfully parsed collection " + f.getName());
             }catch(Exception e){
                 if (tries > 2){
-                    System.out.println("The file supplied is neither medline or PMC! " + f.getName() + " Located at: " + f.getAbsolutePath());
                     e.printStackTrace();
-                    return;
+                    throw new RuntimeException("The file supplied is neither medline or PMC! " + f.getName() + " Located at: " + f.getAbsolutePath());
                 }
                 //try one more time as pmc
                 pmc = true;
@@ -143,10 +142,6 @@ public class  SolrUtils {
 
     /**
      * Method to pretty print arguments for debugging.
-     *
-     * @param arguments: String, the arguments passed on to the main function
-     *                   to pretty print.
-     * @return result: String. a printable version of the arguments supplied
      */
     private static String printArgs(String[] arguments){
         String result = "";
@@ -161,9 +156,6 @@ public class  SolrUtils {
 
     /**
      * Method to pretty print time.
-     *
-     * @param time: int, time taken in seconds.
-     * @return result: String, pretty printed time taken.
      */
     private static String formatTime(int time){
         StringBuilder result = new StringBuilder("Total time taken: ");

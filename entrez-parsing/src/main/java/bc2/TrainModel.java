@@ -21,11 +21,25 @@ import banner.Sentence;
 import banner.tagging.CRFTagger;
 import banner.tokenization.Tokenizer;
 
+/**
+ * This class enables the training of new model.bin files, using training sentences files and
+ * mention files from different corpora. Make sure to specify the location and name of the model
+ * output (eg "../entrez-parsing/banner-external/models/example_model.bin" ) will create said model
+ * (directory needs to exist). Training could take an extended amount of time depending on training set (minutes to hours).
+ */
+
 public class TrainModel extends Base
 {
-
-	public static void main(String[] args) throws IOException
-	{
+	/**
+	 * Main function. called by train.sh with specified parameters.
+	 * @param args:
+	 *				$1 = location of BioCreative 2 Gene Mention sentence file ('train.in')
+	 *				$2 = location of BioCreative 2 Gene Mention mention file ('GENE.eval')
+	 *				$3 = name & location of the model to output
+	 *				$4 (optional) = proportion of the training data to use. Specify e.g. 0.01 to quickly verify everything is working. Leave off to use all of the data.
+	 * @throws IOException
+	 */
+	public static void main(String[] args) throws IOException {
 		BannerProperties properties = BannerProperties.load(args[0]);
 		BufferedReader sentenceFile = new BufferedReader(new FileReader(args[1]));
 		String tagFilename = args[2];
@@ -35,18 +49,7 @@ public class TrainModel extends Base
 			percentage = Double.valueOf(args[4]);
 
 		properties.log();
-
-		// Logger.getLogger(CRF.class.getName()).setLevel(Level.OFF);
-		// MalletLogger.getLogger(CRF.class.getName()).setLevel(Level.OFF);
-		//
-		// // Redirect the standard error stream
 		PrintStream sysOut = System.out;
-		// PrintStream fileOut = new PrintStream(new BufferedOutputStream(new
-		// FileOutputStream(directory + "/stdout.txt")));
-		// System.setOut(fileOut);
-		// PrintStream fileErr = new PrintStream(new BufferedOutputStream(new
-		// FileOutputStream(directory + "/stderr.txt")));
-		// System.setErr(fileErr);
 
 		BufferedReader tagFile = new BufferedReader(new FileReader(tagFilename));
 		HashMap<String, LinkedList<Base.Tag>> tags = Base.getTags(tagFile);

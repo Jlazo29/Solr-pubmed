@@ -27,7 +27,7 @@ AjaxSolr.AbstractManager = AjaxSolr.Class.extend(
    *   fully-qualified URL of the script.
    * @param {String} [attributes.servlet] The default Solr servlet. You may
    *   prepend the servlet with a core if using multiple cores. Defaults to
-   *   "servlet".
+   *   "select".
    */
   constructor: function (attributes) {
     AjaxSolr.extend(this, {
